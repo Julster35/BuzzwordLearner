@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Model artifacts (too large for git)
+models/*.pt
+models/*.pkl
+models/*.bin
+models/*.safetensors
+!models/.gitkeep
+
+# Data artifacts (if generated)
+data/processed/
+data/*.cache
+
+# Reports (generated, not tracked in git)
+reports/*.pdf
+!reports/figures/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# HuggingFace cache
+.cache/
