@@ -109,6 +109,61 @@ documentation also for the first prompt i gave you, to let the grader see what w
 
 ---
 
+## Session 3: Baseline Model Development (2026-01-05)
+
+### Tool Used
+**Gemini Code Assist**
+
+### Purpose
+Build and enhance rule-based and embedding-based baseline models with development notebooks for experimentation.
+
+### Prompts Used
+
+```
+Can you create the Rule Based models as a baseline for me and the embedded based labeling 
+to compare to? for my understanding it would make sense to outsource the models into their 
+separate python files in my project and compare them in a big notebook i can then use for 
+the submission with explanations between the model? would you suggest own notebooks for the 
+models to build and improve them in their own regards? Do the in the task description 
+suggested models need the same feature engineering or different feature engineering? 
+give me suggestions and a plan before implementing pls.
+```
+
+**AI Response Summary**: The AI proposed a structured approach:
+- Models in `src/models/*.py` with consistent APIs
+- Separate development notebooks for each approach
+- Final comparison notebook for submission (to be created later)
+- Explained that each approach has different feature engineering requirements
+
+```
+proceed with this plan without creating the comparison notebook. this will follow in the end, 
+when i've build all the different models. Use sequential thinking, build the models and 
+create the development notebooks for me then to tinker in. Don't forget to update the gen Ai docs
+```
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `src/models/rule_based.py` | Added `HybridRuleClassifier` combining exact match, substring, keyword patterns, and defaults. Extended multilingual keyword dictionaries (German/French). Added `RuleConfig` dataclass and factory functions. |
+| `src/models/embedding_classifier.py` | Changed default model to multilingual (`paraphrase-multilingual-MiniLM-L12-v2`). Added automatic GPU/CPU detection. Added `fit_from_examples()` for averaged embedding centroids. Added `predict_top_k()` for confidence analysis. |
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `notebooks/02_rule_based_baseline.ipynb` | Development notebook for rule-based approach with train/test split, hyperparameter tuning, and error analysis |
+| `notebooks/03_embedding_zero_shot.ipynb` | Development notebook for embedding approach with strategy comparison, confidence analysis, and model comparison |
+
+### Key Design Decisions
+
+1. **Hybrid matching strategy**: Cascade from exact → substring → keyword → default
+2. **Multilingual embeddings**: Using `paraphrase-multilingual-MiniLM-L12-v2` for German/French/English data
+3. **Centroid approach**: Average multiple example embeddings per label for robustness
+4. **Separate development notebooks**: Allow independent experimentation before final comparison
+
+---
+
 ## Guidelines for Future Documentation
 
 For each GenAI usage, document:
@@ -123,3 +178,4 @@ For each GenAI usage, document:
 ---
 
 *This document is continuously updated throughout the project development.*
+
