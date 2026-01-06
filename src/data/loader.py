@@ -74,17 +74,21 @@ def prepare_dataset(
     Convert raw CV data to a pandas DataFrame for model training/evaluation.
     
     Args:
-        cvs: List of CV dictionaries from JSON
+        cvs: List of CV dictionaries from JSON (each CV is a list of positions)
         include_history: Whether to include previous positions (for extensions)
     
     Returns:
-        DataFrame with columns: id, text, title, company, [domain, seniority if annotated]
+        DataFrame with columns: cv_id, text, title, company, [department, seniority if annotated]
     """
     records = []
     
-    for cv in cvs:
-        # Extract active position
-        positions = cv.get('positions', [])
+    for cv_idx, cv in enumerate(cvs):
+        # Each CV is a list of positions
+        if isinstance(cv, list):
+            positions = cv
+        else:
+            positions = cv.get('positions', cv) if isinstance(cv, dict) else []
+        
         active_positions = [p for p in positions if p.get('status') == 'ACTIVE']
         
         if not active_positions:
@@ -92,25 +96,28 @@ def prepare_dataset(
             
         active = active_positions[0]
         
+        # Build text from position title and organization
+        title = active.get('position', active.get('title', ''))
+        company = active.get('organization', active.get('companyName', ''))
+        
         record = {
-            'id': cv.get('id', ''),
-            'title': active.get('title', ''),
-            'company': active.get('companyName', ''),
-            'description': active.get('description', ''),
-            'text': f"{active.get('title', '')} {active.get('description', '')}".strip(),
+            'cv_id': cv_idx,
+            'title': title,
+            'company': company,
+            'text': f"{title} at {company}".strip() if company else title,
         }
         
-        # Add labels if annotated
-        if 'domain' in cv:
-            record['domain'] = cv['domain']
-        if 'seniority' in cv:
-            record['seniority'] = cv['seniority']
+        # Add labels if annotated (labels are at POSITION level, not CV level)
+        if 'department' in active:
+            record['department'] = active['department']
+        if 'seniority' in active:
+            record['seniority'] = active['seniority']
             
         # Optionally include history
         if include_history:
             past_positions = [p for p in positions if p.get('status') != 'ACTIVE']
             record['history'] = ' | '.join([
-                p.get('title', '') for p in past_positions
+                p.get('position', p.get('title', '')) for p in past_positions
             ])
             
         records.append(record)

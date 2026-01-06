@@ -179,3 +179,43 @@ For each GenAI usage, document:
 
 *This document is continuously updated throughout the project development.*
 
+---
+
+## Session 4: Advanced Model Implementation (2026-01-06)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Implement two advanced classification approaches: (1) Fine-tuned transformer model, and (2) Pseudo-labeling pipeline for semi-supervised learning.
+
+### Prompts Used
+
+```
+use sequential thinking: can you build me implementation plans for these two?: Fine-tuned classification model. Use the csv files to fine-tune a pre-trained classification model. Apply the model to the linked-in data
+Programmatic labeling + supervised learning: Use rule-based or embedding-based predictions to create pseudo-labels for a large set of LinkedIn profiles, then fine-tune a classifier on this expanded dataset.
+```
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `src/data/loader.py` | Fixed `prepare_dataset()` to extract labels from position level (`department`/`seniority`) instead of CV level |
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `src/models/transformer_classifier.py` | Transformer-based classifier using DistilBERT with two-stage training support |
+| `src/data/pseudo_labeler.py` | Pseudo-labeling pipeline combining rule-based and embedding classifiers |
+| `notebooks/04_transformer_classifier.ipynb` | Approach 1: Two-stage training (CSV patterns → LinkedIn adaptation) |
+| `notebooks/05_pseudo_labeling_exp.ipynb` | Approach 2: Pseudo-labeling with gold + silver data combination |
+
+### Key Design Decisions
+
+1. **Two-stage training**: Pre-train on ~20K CSV patterns, then domain-adapt on LinkedIn CVs
+2. **Confidence-based selection**: Trust rule-based for exact/substring matches, embedding for high-confidence (>0.85) predictions
+3. **Sample weighting**: Gold data weighted at 1.0, silver data at 0.7 to account for label noise
+4. **Prerequisite fix**: Corrected data loader to extract position-level labels as required by the JSON structure
+
+
