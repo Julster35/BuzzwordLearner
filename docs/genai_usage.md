@@ -219,3 +219,108 @@ Programmatic labeling + supervised learning: Use rule-based or embedding-based p
 4. **Prerequisite fix**: Corrected data loader to extract position-level labels as required by the JSON structure
 
 
+---
+
+## Session 5: Feature Engineering & Conventional ML (2026-01-06)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Implement feature engineering and conventional ML classifiers (TF-IDF + Logistic Regression, Combined Features + Random Forest) for interpretable baseline models.
+
+### Prompts Used
+
+```
+Use Sequential thinking: can you give me an implementation plan for those two? 
+Feature engineering and conventional machine learning. Look at the linked-In data 
+and generate meaningful features (e.g. number of previous jobs as an indicator 
+for seniority, etc.). Then train conventional algorithms (e.g. random forests) 
+to predict the labels.
+Simple interpretable baseline: E.g. a bag-of-words and TF–IDF + logistic 
+regression classifier for domain or seniority.
+```
+
+Follow-up clarifications:
+- Simplified features: Removed redundant `num_positions` (same as `num_previous_jobs + 1`)
+- Added bilingual EN/DE keyword support for German CVs
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `src/models/feature_ml.py` | Added `FeatureEngineer` class for LinkedIn-specific feature extraction, `CombinedFeatureClassifier` combining TF-IDF + structured features, bilingual keyword dictionaries for EN/DE seniority and department detection |
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `notebooks/06_feature_ml_baseline.ipynb` | Approach 5: Feature Engineering + Random Forest with career features |
+| `notebooks/07_tfidf_logreg_baseline.ipynb` | Approach 6: TF-IDF + Logistic Regression interpretable baseline |
+
+### Key Features Extracted
+
+| Feature | Description |
+|---------|-------------|
+| `num_previous_jobs` | Count of past positions (seniority indicator) |
+| `total_experience_months` | Time since earliest position start |
+| `avg_tenure_months` | Average job duration |
+| `num_companies` | Number of unique employers |
+| `has_senior_keyword` | EN/DE: Senior, Lead, Leiter, etc. |
+| `has_management_keyword` | EN/DE: Manager, Director, Geschäftsführer, etc. |
+| `has_entry_keyword` | EN/DE: Junior, Trainee, Praktikant, etc. |
+| `has_*_keyword` | Department-specific keyword flags (IT, HR, Finance, etc.) |
+
+### Key Design Decisions
+
+1. **Bilingual keywords**: Both English and German terms for seniority/department detection
+2. **Career features from position history**: Leverages startDate/endDate for experience calculation
+3. **Combined classifier**: Merges sparse TF-IDF matrix with dense structured features using scipy.sparse.hstack
+
+
+---
+
+## Session 6: Ensuring All Models Predict Both Targets (2026-01-06)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Audit and update all model notebooks to ensure they train classifiers for BOTH targets (department AND seniority), as some notebooks were only training for department.
+
+### Prompts Used
+
+```
+Improving Transformer Classifier - ensure notebook 04_transformer_classifier.ipynb correctly 
+predicts both department and seniority. Perform same audit for 05_pseudo_labeling_exp.ipynb.
+```
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `notebooks/04_transformer_classifier.ipynb` | **Complete rewrite**: Now trains TWO separate transformer classifiers (department + seniority) using same two-stage training approach. Previously only trained department. |
+| `notebooks/05_pseudo_labeling_exp.ipynb` | **Complete rewrite**: Now performs pseudo-labeling for BOTH targets. Creates separate classifiers and evaluates both. Previously only did department. |
+
+### Bug Fix
+
+| File | Issue Fixed |
+|------|-------------|
+| `notebooks/06_feature_ml_baseline.ipynb` | Fixed index mismatch bug: `train_idx`/`test_idx` from filtered `df` were incorrectly used to index into unfiltered `cvs_annotated`. Now uses `cv_id` column for correct mapping. |
+
+### Key Changes
+
+1. **Notebook 04**: Added sections 5-7 for seniority two-stage training (Stage 1: CSV patterns, Stage 2: LinkedIn adaptation)
+2. **Notebook 05**: Added sections 6-9 for seniority pseudo-labeling (separate classifiers, pseudo-label generation, training, evaluation)
+3. **Notebook 06**: Fixed critical indexing bug where filtered DataFrame indices didn't match original CV list positions
+
+### Verification
+
+All 6 model notebooks now predict **both** targets:
+- ✅ `02_rule_based_baseline.ipynb`
+- ✅ `03_embedding_zero_shot.ipynb`
+- ✅ `04_transformer_classifier.ipynb` (fixed)
+- ✅ `05_pseudo_labeling_exp.ipynb` (fixed)
+- ✅ `06_feature_ml_baseline.ipynb` (bug fix)
+- ✅ `07_tfidf_logreg_baseline.ipynb`
+

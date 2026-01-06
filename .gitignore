@@ -19,11 +19,10 @@ env/
 .ipynb_checkpoints/
 
 # Model artifacts (too large for git)
-models/*.pt
-models/*.pkl
-models/*.bin
-models/*.safetensors
-!models/.gitkeep
+models/
+
+# Training checkpoints (too large for git)
+notebooks/results/stage1_*/
 
 # Data artifacts (if generated)
 data/processed/

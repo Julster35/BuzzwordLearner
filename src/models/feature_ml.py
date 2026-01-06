@@ -254,3 +254,430 @@ def create_ensemble_features(
         ]
     
     return pd.DataFrame(features)
+
+
+# Bilingual keyword dictionaries for seniority detection
+SENIORITY_KEYWORDS = {
+    'senior': [
+        # English
+        'senior', 'sr.', 'sr ', 'lead', 'principal', 'staff', 'expert',
+        # German
+        'leitend', 'leiter', 'leiterin', 'haupt'
+    ],
+    'management': [
+        # English
+        'manager', 'director', 'head', 'vp', 'vice president', 'chief',
+        'executive', 'president', 'ceo', 'cfo', 'cto', 'coo', 'cmo',
+        # German
+        'direktor', 'direktorin', 'geschäftsführer', 'geschäftsführerin',
+        'vorstand', 'vorständin', 'bereichsleiter', 'abteilungsleiter',
+        'teamleiter', 'gruppenleiter', 'prokurist'
+    ],
+    'entry': [
+        # English
+        'junior', 'jr.', 'jr ', 'trainee', 'intern', 'assistant', 'associate',
+        'graduate', 'entry', 'apprentice',
+        # German
+        'praktikant', 'praktikantin', 'werkstudent', 'werkstudentin',
+        'auszubildende', 'azubi', 'volontär', 'assistent', 'assistentin',
+        'berufseinsteiger'
+    ]
+}
+
+# Department indicator keywords (bilingual)
+DEPARTMENT_KEYWORDS = {
+    'Information Technology': [
+        'software', 'developer', 'entwickler', 'engineer', 'ingenieur',
+        'programmer', 'data', 'daten', 'it ', 'tech', 'devops', 'cloud',
+        'frontend', 'backend', 'fullstack', 'architect', 'system'
+    ],
+    'Human Resources': [
+        'hr ', 'human resources', 'personal', 'personalwesen', 'recruiting',
+        'recruiter', 'talent', 'people', 'hr-', 'personaler'
+    ],
+    'Finance': [
+        'finance', 'finanzen', 'financial', 'accounting', 'buchhaltung',
+        'controller', 'controlling', 'treasurer', 'audit', 'investment',
+        'banking', 'analyst'
+    ],
+    'Sales': [
+        'sales', 'vertrieb', 'verkauf', 'account', 'business development',
+        'bd ', 'customer success', 'kundenbetreuer'
+    ],
+    'Marketing': [
+        'marketing', 'brand', 'marke', 'content', 'social media', 'seo',
+        'digital marketing', 'kommunikation', 'pr ', 'public relations'
+    ],
+    'Operations': [
+        'operations', 'betrieb', 'logistics', 'logistik', 'supply chain',
+        'procurement', 'einkauf', 'facility', 'produktion', 'production'
+    ],
+    'Legal': [
+        'legal', 'recht', 'rechts', 'lawyer', 'anwalt', 'jurist',
+        'compliance', 'counsel', 'attorney'
+    ]
+}
+
+
+@dataclass
+class FeatureEngineerConfig:
+    """Configuration for feature engineering."""
+    include_career_features: bool = True
+    include_keyword_features: bool = True
+    include_text_features: bool = True
+
+
+class FeatureEngineer:
+    """
+    Extract meaningful features from LinkedIn CV data.
+    
+    Extracts structured features like experience years, job count,
+    and keyword-based features for seniority/department detection.
+    Supports both English and German CVs.
+    """
+    
+    def __init__(self, config: Optional[FeatureEngineerConfig] = None):
+        """
+        Initialize the feature engineer.
+        
+        Args:
+            config: Configuration options
+        """
+        self.config = config or FeatureEngineerConfig()
+    
+    def extract_features(self, cvs: List[List[dict]]) -> pd.DataFrame:
+        """
+        Extract features from raw CV data.
+        
+        Args:
+            cvs: List of CVs, where each CV is a list of position dicts
+        
+        Returns:
+            DataFrame with extracted features
+        
+        Note:
+            Skips CVs without active positions to match prepare_dataset() behavior.
+        """
+        records = []
+        
+        for cv in cvs:
+            if not isinstance(cv, list):
+                cv = cv.get('positions', []) if isinstance(cv, dict) else []
+            
+            # Skip CVs without active positions (matches prepare_dataset behavior)
+            active_positions = [p for p in cv if p.get('status') == 'ACTIVE']
+            if not active_positions:
+                continue
+            
+            features = self._extract_cv_features(cv)
+            records.append(features)
+        
+        return pd.DataFrame(records)
+    
+    def _extract_cv_features(self, positions: List[dict]) -> dict:
+        """Extract features from a single CV's positions."""
+        features = {}
+        
+        # Get active position
+        active_positions = [p for p in positions if p.get('status') == 'ACTIVE']
+        past_positions = [p for p in positions if p.get('status') != 'ACTIVE']
+        
+        active = active_positions[0] if active_positions else {}
+        title = active.get('position', active.get('title', '')).lower()
+        
+        if self.config.include_career_features:
+            features.update(self._extract_career_features(positions, past_positions))
+        
+        if self.config.include_keyword_features:
+            features.update(self._extract_keyword_features(title))
+        
+        if self.config.include_text_features:
+            features.update(self._extract_text_features(title))
+        
+        return features
+    
+    def _extract_career_features(
+        self, 
+        all_positions: List[dict], 
+        past_positions: List[dict]
+    ) -> dict:
+        """Extract career-related numerical features."""
+        from datetime import datetime
+        
+        features = {
+            'num_previous_jobs': len(past_positions),
+            'total_experience_months': 0,
+            'avg_tenure_months': 0,
+            'num_companies': 0
+        }
+        
+        # Calculate experience
+        start_dates = []
+        companies = set()
+        tenures = []
+        
+        for pos in all_positions:
+            company = pos.get('organization', pos.get('companyName', ''))
+            if company:
+                companies.add(company.lower())
+            
+            start = pos.get('startDate')
+            end = pos.get('endDate')
+            
+            if start:
+                try:
+                    start_dt = datetime.strptime(start, '%Y-%m')
+                    start_dates.append(start_dt)
+                    
+                    if end:
+                        end_dt = datetime.strptime(end, '%Y-%m')
+                    else:
+                        end_dt = datetime.now()
+                    
+                    tenure = (end_dt.year - start_dt.year) * 12 + (end_dt.month - start_dt.month)
+                    if tenure > 0:
+                        tenures.append(tenure)
+                except (ValueError, TypeError):
+                    pass
+        
+        if start_dates:
+            earliest = min(start_dates)
+            now = datetime.now()
+            features['total_experience_months'] = (
+                (now.year - earliest.year) * 12 + (now.month - earliest.month)
+            )
+        
+        if tenures:
+            features['avg_tenure_months'] = np.mean(tenures)
+        
+        features['num_companies'] = len(companies)
+        
+        return features
+    
+    def _extract_keyword_features(self, title: str) -> dict:
+        """Extract keyword-based features from job title."""
+        title_lower = title.lower()
+        
+        features = {
+            'has_senior_keyword': 0,
+            'has_management_keyword': 0,
+            'has_entry_keyword': 0
+        }
+        
+        # Check seniority keywords
+        for keyword in SENIORITY_KEYWORDS['senior']:
+            if keyword in title_lower:
+                features['has_senior_keyword'] = 1
+                break
+        
+        for keyword in SENIORITY_KEYWORDS['management']:
+            if keyword in title_lower:
+                features['has_management_keyword'] = 1
+                break
+        
+        for keyword in SENIORITY_KEYWORDS['entry']:
+            if keyword in title_lower:
+                features['has_entry_keyword'] = 1
+                break
+        
+        # Check department keywords
+        for dept, keywords in DEPARTMENT_KEYWORDS.items():
+            feature_name = f'has_{dept.lower().replace(" ", "_")}_keyword'
+            features[feature_name] = 0
+            for keyword in keywords:
+                if keyword in title_lower:
+                    features[feature_name] = 1
+                    break
+        
+        return features
+    
+    def _extract_text_features(self, title: str) -> dict:
+        """Extract text-based features from job title."""
+        return {
+            'title_length': len(title),
+            'title_word_count': len(title.split()),
+            'title_has_numbers': 1 if any(c.isdigit() for c in title) else 0
+        }
+
+
+class CombinedFeatureClassifier:
+    """
+    Classifier combining TF-IDF text features with structured features.
+    
+    Merges sparse TF-IDF matrix with dense engineered features for
+    training Random Forest or Gradient Boosting classifiers.
+    """
+    
+    def __init__(
+        self, 
+        tfidf_config: Optional[TFIDFConfig] = None,
+        feature_config: Optional[FeatureEngineerConfig] = None,
+        classifier_type: str = "random_forest"
+    ):
+        """
+        Initialize the combined classifier.
+        
+        Args:
+            tfidf_config: TF-IDF vectorizer configuration
+            feature_config: Feature engineering configuration
+            classifier_type: 'random_forest' or 'gradient_boosting'
+        """
+        self.tfidf_config = tfidf_config or TFIDFConfig()
+        self.feature_config = feature_config or FeatureEngineerConfig()
+        self.classifier_type = classifier_type
+        
+        self.vectorizer = None
+        self.feature_engineer = FeatureEngineer(self.feature_config)
+        self.classifier = None
+        self.labels = None
+        self.feature_names = None
+    
+    def _create_vectorizer(self):
+        """Create TF-IDF vectorizer."""
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        
+        self.vectorizer = TfidfVectorizer(
+            max_features=self.tfidf_config.max_features,
+            ngram_range=self.tfidf_config.ngram_range,
+            min_df=self.tfidf_config.min_df,
+            max_df=self.tfidf_config.max_df,
+            strip_accents='unicode',
+            lowercase=True
+        )
+    
+    def _create_classifier(self):
+        """Create the underlying classifier."""
+        if self.classifier_type == "random_forest":
+            from sklearn.ensemble import RandomForestClassifier
+            self.classifier = RandomForestClassifier(
+                n_estimators=100,
+                class_weight='balanced',
+                random_state=42,
+                n_jobs=-1
+            )
+        elif self.classifier_type == "gradient_boosting":
+            from sklearn.ensemble import GradientBoostingClassifier
+            self.classifier = GradientBoostingClassifier(
+                n_estimators=100,
+                random_state=42
+            )
+        else:
+            raise ValueError(f"Unknown classifier type: {self.classifier_type}")
+    
+    def fit(
+        self, 
+        texts: List[str], 
+        cvs: List[List[dict]], 
+        labels: List[str]
+    ) -> 'CombinedFeatureClassifier':
+        """
+        Fit the classifier on training data.
+        
+        Args:
+            texts: List of text representations (e.g., "title at company")
+            cvs: Raw CV data for feature extraction
+            labels: Target labels
+        
+        Returns:
+            self
+        """
+        from scipy.sparse import hstack
+        
+        self._create_vectorizer()
+        self._create_classifier()
+        
+        self.labels = list(set(labels))
+        
+        # TF-IDF features
+        X_tfidf = self.vectorizer.fit_transform(texts)
+        
+        # Structured features
+        X_structured = self.feature_engineer.extract_features(cvs)
+        
+        # Store feature names for importance analysis
+        tfidf_names = list(self.vectorizer.get_feature_names_out())
+        structured_names = list(X_structured.columns)
+        self.feature_names = tfidf_names + structured_names
+        
+        # Combine features
+        X_combined = hstack([X_tfidf, X_structured.values])
+        
+        # Train
+        self.classifier.fit(X_combined, labels)
+        
+        return self
+    
+    def predict(self, texts: List[str], cvs: List[List[dict]]) -> List[str]:
+        """
+        Predict labels for new data.
+        
+        Args:
+            texts: Text representations
+            cvs: Raw CV data
+        
+        Returns:
+            List of predicted labels
+        """
+        from scipy.sparse import hstack
+        
+        if self.classifier is None:
+            raise ValueError("Classifier not fitted. Call fit() first.")
+        
+        X_tfidf = self.vectorizer.transform(texts)
+        X_structured = self.feature_engineer.extract_features(cvs)
+        X_combined = hstack([X_tfidf, X_structured.values])
+        
+        return self.classifier.predict(X_combined).tolist()
+    
+    def get_feature_importances(self, top_n: int = 30) -> pd.DataFrame:
+        """
+        Get top feature importances.
+        
+        Args:
+            top_n: Number of top features to return
+        
+        Returns:
+            DataFrame with feature names and importances
+        """
+        if not hasattr(self.classifier, 'feature_importances_'):
+            raise ValueError("Classifier doesn't support feature importances")
+        
+        importances = self.classifier.feature_importances_
+        top_indices = np.argsort(importances)[-top_n:][::-1]
+        
+        return pd.DataFrame({
+            'feature': [self.feature_names[i] for i in top_indices],
+            'importance': importances[top_indices]
+        })
+    
+    def save(self, filepath: Union[str, Path]):
+        """Save the trained model to disk."""
+        with open(filepath, 'wb') as f:
+            pickle.dump({
+                'vectorizer': self.vectorizer,
+                'classifier': self.classifier,
+                'labels': self.labels,
+                'feature_names': self.feature_names,
+                'tfidf_config': self.tfidf_config,
+                'feature_config': self.feature_config,
+                'classifier_type': self.classifier_type
+            }, f)
+    
+    @classmethod
+    def load(cls, filepath: Union[str, Path]) -> 'CombinedFeatureClassifier':
+        """Load a trained model from disk."""
+        with open(filepath, 'rb') as f:
+            data = pickle.load(f)
+        
+        instance = cls(
+            tfidf_config=data['tfidf_config'],
+            feature_config=data['feature_config'],
+            classifier_type=data['classifier_type']
+        )
+        instance.vectorizer = data['vectorizer']
+        instance.classifier = data['classifier']
+        instance.labels = data['labels']
+        instance.feature_names = data['feature_names']
+        
+        return instance
+
