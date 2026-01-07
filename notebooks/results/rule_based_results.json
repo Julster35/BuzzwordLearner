@@ -1,0 +1,60 @@
+{
+  "approach": "Rule-Based (Exact + Fuzzy Matching)",
+  "department": {
+    "accuracy": 0.6569037656903766,
+    "precision": 0.6127833470634432,
+    "recall": 0.3223881174759215,
+    "f1_macro": 0.3862659786902211,
+    "f1_weighted": 0.5859910790175784,
+    "per_class_f1": {
+      "Administrative": 0.18181818181818182,
+      "Business Development": 0.3333333333333333,
+      "Consulting": 0.6666666666666666,
+      "Customer Support": 0.0,
+      "Human Resources": 0.0,
+      "Information Technology": 0.1,
+      "Marketing": 0.4,
+      "Other": 0.7623456790123457,
+      "Project Management": 0.5714285714285714,
+      "Purchasing": 0.5,
+      "Sales": 0.7333333333333333
+    }
+  },
+  "seniority": {
+    "accuracy": 0.2698744769874477,
+    "precision": 0.3874622779912507,
+    "recall": 0.27029634062137226,
+    "f1_macro": 0.28695233212763405,
+    "f1_weighted": 0.33632513300248956,
+    "per_class_f1": {
+      "Director": 0.4745762711864407,
+      "Junior": 0.19047619047619047,
+      "Lead": 0.46715328467153283,
+      "Management": 0.6439024390243903,
+      "Other": 0.0,
+      "Professional": 0.0,
+      "Senior": 0.23255813953488372
+    }
+  },
+  "metadata": {
+    "training_samples": 19573,
+    "dept_training_samples": 10145,
+    "sen_training_samples": 9428,
+    "fuzzy_threshold": 0.8,
+    "match_methods": {
+      "department": {
+        "exact": 24,
+        "substring": 26,
+        "keyword": 0,
+        "default": 264
+      },
+      "seniority": {
+        "exact": 91,
+        "substring": 77,
+        "keyword": 0,
+        "default": 146
+      }
+    }
+  },
+  "timestamp": "2026-01-07T11:33:20.777617"
+}

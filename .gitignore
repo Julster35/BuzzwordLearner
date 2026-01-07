@@ -18,15 +18,16 @@ env/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Model artifacts (too large for git)
-models/
-
 # Training checkpoints (too large for git)
-notebooks/results/stage1_*/
+notebooks/results/*/
+checkpoint-*
 
 # Data artifacts (if generated)
 data/processed/
 data/*.cache
+
+# models
+models/
 
 # Reports (generated, not tracked in git)
 reports/*.pdf

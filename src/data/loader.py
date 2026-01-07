@@ -22,6 +22,36 @@ def load_linkedin_data(filepath: str) -> List[Dict]:
     return data
 
 
+def load_inference_dataset(data_dir: str) -> pd.DataFrame:
+    """
+    Load the unannotated dataset for inference/classification.
+    
+    Args:
+        data_dir: Path to data directory
+        
+    Returns:
+        DataFrame of unannotated CV positions
+    """
+    data_path = Path(data_dir)
+    cvs = load_linkedin_data(str(data_path / 'linkedin-cvs-not-annotated.json'))
+    return prepare_dataset(cvs)
+
+
+def load_evaluation_dataset(data_dir: str) -> pd.DataFrame:
+    """
+    Load the annotated dataset for evaluation.
+    
+    Args:
+        data_dir: Path to data directory
+        
+    Returns:
+        DataFrame of annotated CV positions with ground truth labels
+    """
+    data_path = Path(data_dir)
+    cvs = load_linkedin_data(str(data_path / 'linkedin-cvs-annotated.json'))
+    return prepare_dataset(cvs)
+
+
 def load_label_lists(data_dir: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Load the department and seniority label lists.
