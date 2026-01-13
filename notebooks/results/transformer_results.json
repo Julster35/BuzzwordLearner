@@ -1,0 +1,52 @@
+{
+  "approach": "Transformer (DistilBERT Fine-Tuned)",
+  "department": {
+    "in_distribution_accuracy": 0.9692307692307692,
+    "real_world_accuracy": 0.3158995815899582,
+    "real_world_precision": 0.4663443911402169,
+    "real_world_recall": 0.46303545906823457,
+    "real_world_f1_macro": 0.36138312940831036,
+    "real_world_f1_weighted": 0.23365659226221713,
+    "per_class_f1": {
+      "Administrative": 0.0784313725490196,
+      "Business Development": 0.2702702702702703,
+      "Consulting": 0.2926829268292683,
+      "Customer Support": 0.2857142857142857,
+      "Human Resources": 0.5454545454545454,
+      "Information Technology": 0.4723618090452261,
+      "Marketing": 0.46808510638297873,
+      "Other": 0.046511627906976744,
+      "Project Management": 0.6363636363636364,
+      "Purchasing": 0.4,
+      "Sales": 0.4793388429752066
+    }
+  },
+  "seniority": {
+    "in_distribution_accuracy": 0.970954356846473,
+    "real_world_accuracy": 0.47280334728033474,
+    "real_world_precision": 0.42509108125892764,
+    "real_world_recall": 0.6241290136886027,
+    "real_world_f1_macro": 0.44332196557740683,
+    "real_world_f1_weighted": 0.44503203305901234,
+    "per_class_f1": {
+      "Director": 0.7246376811594203,
+      "Junior": 0.14583333333333334,
+      "Lead": 0.6744186046511628,
+      "Management": 0.7954545454545454,
+      "Professional": 0.0,
+      "Senior": 0.31958762886597936
+    }
+  },
+  "metadata": {
+    "model_name": "distilbert-base-multilingual-cased",
+    "training_samples": 4004,
+    "dept_train_samples": 2077,
+    "dept_val_samples": 520,
+    "sen_train_samples": 1927,
+    "sen_val_samples": 482,
+    "epochs": 3,
+    "batch_size": 16,
+    "learning_rate": 2e-05
+  },
+  "timestamp": "2026-01-12T17:36:38.557067"
+}

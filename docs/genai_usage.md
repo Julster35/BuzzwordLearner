@@ -614,3 +614,129 @@ do we neeed to update the gen ai docs?
    - **Seniority**: Accuracy: 0.3285, F1 (macro): 0.2498
 
 ---
+
+## Session 11: Tier 1 Model Improvements (2026-01-12)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Implement Tier 1 improvements to address model performance issues identified through systematic analysis:
+1. Fix encoding issues (mojibake) in lookup tables
+2. Add deduplication to prevent embedding centroid collapse
+3. Add class-weighted loss to Transformer for handling class imbalance
+
+### Analysis Approach
+Used sequential thinking MCP tool to systematically analyze improvement opportunities:
+- Language matching potential
+- Training data extraction issues
+- Embedding model improvements
+- Feature engineering gaps
+- Pseudo-labeling improvements
+- Domain adaptation strategies
+
+---
+
+## Session 12: Data Usage Compliance & Refactoring (2026-01-12)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Ensure all models and notebooks comply with strict data usage instructions:
+1. Train exclusively on CSV lookup files.
+2. Use train/test split (80/20) for in-distribution evaluation on CSVs.
+3. Use JSON files solely for out-of-distribution, "real-world" inference evaluation.
+4. Refactor Notebook 06 (Feature Engineering) which was incorrectly training on JSON data.
+5. Harmonize all notebooks (02-07) to report both In-Distribution and Real-World metrics.
+
+### Prompts Used
+
+```
+The data usage has been specified further:
+1. All models MUST be trained on the csv lookup files. These will have to be split in a train and test set to have an in-distibution evaluation.
+2. The json files (labeled and unlabeled) are only for measuring the inference-time accuracy / real world accuracy on unseen, out-of-distibution data. 
+3. This means that Notebook 06 should be refactored as well to comply with this instruction. 
+4. All notebooks (02-07) should clearly report the in-distibution (test set of the csv training set) and the real world (annotated json files) accuracy. 
+
+Develop an implementation plan for that and once it's approved implement it. 
+```
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `notebooks/06_feature_engineering.ipynb` | **Complete Rebuild**: Switched training data from JSON CVs to CSV lookup tables. Added 80/20 split for in-distribution evaluation. Implemented feature extraction that handles CSV job titles (by setting history features to dummy values) while preserving full metadata extraction for JSON inference. |
+| `notebooks/02_rule_based_baseline.ipynb` | Added CSV train/test split. Initialized model on train split and evaluated on test split. Harmonized reporting. |
+| `notebooks/03_embedding_baseline.ipynb` | Added CSV train/test split. Built centroids on train split and evaluated on test split. Harmonized reporting. |
+| `notebooks/04_transformer_on_lookups.ipynb` | Updated labels in final reporting cell to clearly distinguish between "In-Distribution (CSV)" and "Real-World (JSON)". |
+| `notebooks/05_pseudo_labeling.ipynb` | Updated labels in final reporting cell and clarified that "Gold" training set is the CSV training data. |
+| `notebooks/07_tfidf_logreg.ipynb` | Updated labels in final reporting cell to clearly distinguish between "In-Distribution (CSV)" and "Real-World (JSON)". |
+
+### Key Design Decisions
+
+1. **Notebook 06 Adaptation**: Since CSVs lacks career history, features like `num_previous_jobs` are set to `0` during training. During inference on JSON CVs, the model uses the real history from the CVs. This ensures a consistent feature vector while respecting the "train on CSV only" rule.
+
+2. **Dual Perspective Reporting**: Every notebook now explicitly reports:
+   - **In-Distribution (CSV)**: How well the model generalizes to unseen job titles that match the training data distribution.
+   - **Real-World (JSON)**: How well the model generalizes to completely unseen CVs from a different source (LinkedIn).
+
+3. **Robust Rebuilding**: Notebook 06 was rebuilt from scratch to ensure no legacy cells from the previous JSON-training approach remained, preventing potential confusion or leakage.
+
+### Verification
+
+All notebooks (02-07) now clearly differentiate between the two evaluation regimes. Notebooks 04, 06, and 07 have been upgraded to **semi-supervised** training, successfully integrating 314 unannotated LinkedIn positions as "Silver" data to bridge the domain gap.
+
+#### Unannotated Data Integration (Semi-Supervised Pivot)
+Following user clarification, I implemented a robust pipeline to leverage the unannotated JSON for training:
+
+1. **Pseudo-Labeling Pipeline**: Created `scripts/generate_pseudo_labels.py` which uses an ensemble of Rules + Embeddings (threshold > 0.8) to assign silver labels to the unannotated LinkedIn CVs.
+2. **Feature Engineering (NB 06)**: Now trains on **Gold (CSV) + Silver (Pseudo-labeled JSON)**. This allows the Random Forest to learn from real LinkedIn career history features during the training phase.
+3. **Transformer & LogReg (NB 04/07)**: Now train on the combined Gold + Silver dataset, improving domain adaptation to the LinkedIn text style.
+
+
+### Improvement Opportunities Identified (Moving Forward)
+
+**Tier 2 (Medium Effort - Highly Viable)**:
+- **German Compound Word Splitting**: Essential for German job titles (e.g., *Softwareentwickler*).
+- **Language Detection Feature**: Adding an `is_german` flag to help models use language-specific features.
+- **Career History Refinement**: Extending the "Dummy History" pattern to more features like tenure and company diversity for a better real-world inference boost.
+- **Confidence Calibration**: Implementing Platt Scaling or Isotonic Regression for the embedding and transformer models to improve ensembling.
+
+**Tier 3 (High Effort - Advanced Adaptation)**:
+- **SetFit Fine-tuning**: Training a sentence transformer on CSV pairs (Contrastive Learning) for better zero-shot/few-shot performance.
+- **LLM-based Data Augmentation**: Using LLMs to generate LinkedIn-style variations of CSV titles to bridge the distribution gap.
+- **Multi-round Pseudo-labeling**: Iteratively labeling unannotated data to improve the "Silver" training set in Notebook 05.
+- **Ensemble Meta-classifier**: Training a model to weigh predictions from all 6 approaches.
+
+---
+
+## Session 13: Tier 1 Data Balancing (2026-01-12)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Implement data balancing to address severe class imbalance in the training data (e.g., HR has 31 samples vs. Marketing with 4,295).
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `src/data/loader.py` | Added `balance_dataset()` function which oversamples minority classes (via duplication) to `min_samples` (default 500) and undersamples majority classes to `max_samples` (default 2,000). Also returns sample weights for use in `.fit()`. |
+| `notebooks/04_transformer_on_lookups.ipynb` | Patched to apply `balance_dataset()` after the train/test split. |
+| `notebooks/06_feature_engineering.ipynb` | Patched to apply `balance_dataset()` to the combined Gold + Silver training set. |
+| `notebooks/07_tfidf_logreg.ipynb` | Patched to apply `balance_dataset()` after the train/test split. |
+
+### Key Design Decisions
+
+1. **Oversampling via Duplication**: Chose simple duplication over SMOTE because text data does not benefit from "interpolating" between samples. Duplicated samples are given a lower weight (0.8) to prevent overfitting.
+2. **Undersampling with Retention**: Instead of capping at 500 (losing 3,795 Marketing samples), we now keep up to 2,000 samples from majority classes. This preserves vocabulary diversity.
+3. **Sample Weights**: The function returns a weights list that can be passed to `model.fit(sample_weight=...)` for classifiers that support it.
+
+### Verification
+
+The `balance_dataset()` function was tested successfully:
+- **Before**: Human Resources had 31 samples, Marketing had 4,295.
+- **After**: Human Resources has 500 samples (oversampled), Marketing has 2,000 (undersampled).
+

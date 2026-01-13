@@ -1,60 +1,60 @@
 {
   "approach": "Rule-Based (Exact + Fuzzy Matching)",
   "department": {
-    "accuracy": 0.6569037656903766,
-    "precision": 0.6127833470634432,
-    "recall": 0.3223881174759215,
-    "f1_macro": 0.3862659786902211,
-    "f1_weighted": 0.5859910790175784,
+    "accuracy": 0.5878661087866108,
+    "precision": 0.6456147616919706,
+    "recall": 0.21331250349121664,
+    "f1_macro": 0.2500547704558922,
+    "f1_weighted": 0.48011727033214757,
     "per_class_f1": {
-      "Administrative": 0.18181818181818182,
-      "Business Development": 0.3333333333333333,
-      "Consulting": 0.6666666666666666,
+      "Administrative": 0.0,
+      "Business Development": 0.36363636363636365,
+      "Consulting": 0.1935483870967742,
       "Customer Support": 0.0,
       "Human Resources": 0.0,
-      "Information Technology": 0.1,
-      "Marketing": 0.4,
-      "Other": 0.7623456790123457,
-      "Project Management": 0.5714285714285714,
+      "Information Technology": 0.07017543859649122,
+      "Marketing": 0.10526315789473684,
+      "Other": 0.7198838896952104,
+      "Project Management": 0.56,
       "Purchasing": 0.5,
-      "Sales": 0.7333333333333333
+      "Sales": 0.23809523809523808
     }
   },
   "seniority": {
-    "accuracy": 0.2698744769874477,
-    "precision": 0.3874622779912507,
-    "recall": 0.27029634062137226,
-    "f1_macro": 0.28695233212763405,
-    "f1_weighted": 0.33632513300248956,
+    "accuracy": 0.12761506276150628,
+    "precision": 0.41742160278745644,
+    "recall": 0.12047921592033031,
+    "f1_macro": 0.167810483167626,
+    "f1_weighted": 0.19862208862731875,
     "per_class_f1": {
-      "Director": 0.4745762711864407,
-      "Junior": 0.19047619047619047,
-      "Lead": 0.46715328467153283,
-      "Management": 0.6439024390243903,
+      "Director": 0.1875,
+      "Junior": 0.2,
+      "Lead": 0.23931623931623933,
+      "Management": 0.4228571428571429,
       "Other": 0.0,
       "Professional": 0.0,
-      "Senior": 0.23255813953488372
+      "Senior": 0.125
     }
   },
   "metadata": {
-    "training_samples": 19573,
-    "dept_training_samples": 10145,
-    "sen_training_samples": 9428,
+    "training_samples": 5006,
+    "dept_training_samples": 2597,
+    "sen_training_samples": 2409,
     "fuzzy_threshold": 0.8,
     "match_methods": {
       "department": {
-        "exact": 24,
-        "substring": 26,
+        "exact": 11,
+        "substring": 12,
         "keyword": 0,
-        "default": 264
+        "default": 291
       },
       "seniority": {
-        "exact": 91,
-        "substring": 77,
+        "exact": 30,
+        "substring": 54,
         "keyword": 0,
-        "default": 146
+        "default": 230
       }
     }
   },
-  "timestamp": "2026-01-07T11:33:20.777617"
+  "timestamp": "2026-01-13T09:48:05.977042"
 }

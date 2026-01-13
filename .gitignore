@@ -27,7 +27,7 @@ data/processed/
 data/*.cache
 
 # models
-models/
+/models/
 
 # Reports (generated, not tracked in git)
 reports/*.pdf
