@@ -740,3 +740,36 @@ The `balance_dataset()` function was tested successfully:
 - **Before**: Human Resources had 31 samples, Marketing had 4,295.
 - **After**: Human Resources has 500 samples (oversampled), Marketing has 2,000 (undersampled).
 
+---
+
+## Session 14: Career Feature Extraction Bugfix (2026-01-14)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Debug and fix a row count mismatch error in `06_feature_engineering.ipynb` where career features (461 rows) didn't align with evaluation data (478 rows).
+
+### Problem Identified
+
+The `CareerFeatureExtractor.extract_features()` method was skipping some CVs when date parsing failed, resulting in fewer extracted features (461) than evaluation rows (478). The notebook incorrectly assumed row alignment via index position.
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `src/models/feature_ml.py` | Added `return_cv_ids` parameter to `extract_features()`. When True, returns a 'cv_id' column containing the original CV index for proper merging. |
+| `notebooks/06_feature_engineering.ipynb` | Rewrote cell 4 to merge on `cv_id` instead of assuming row alignment. Rebuilt eval_df with cv_id tracking. CVs with no parseable career dates get 0-filled features. |
+
+### Key Design Decisions
+
+1. **cv_id Tracking**: The extractor now tracks which CV index each row came from, enabling proper left-join merging.
+2. **Left Join Merge**: Keep all eval rows, fill missing career features with 0 for CVs that couldn't be parsed.
+3. **Backward Compatibility**: `return_cv_ids=False` by default to avoid breaking existing code.
+
+### Verification
+
+Successfully executed notebook end-to-end:
+- **Department (no "Other")**: 61.0% accuracy
+- **Seniority**: 47.5% accuracy (baseline), 35.1% with career adjustment (needs tuning)
+
