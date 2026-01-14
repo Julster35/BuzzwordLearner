@@ -1,52 +1,36 @@
 {
   "approach": "Feature Engineering + Random Forest",
   "department": {
-    "accuracy": 0.1694560669456067,
-    "precision": 0.22757817095796187,
-    "recall": 0.1875954600294776,
-    "f1_macro": 0.14247068260571638,
-    "f1_weighted": 0.09389707707859421,
-    "per_class_f1": {
-      "Administrative": 0.0,
-      "Business Development": 0.0,
-      "Consulting": 0.0,
-      "Customer Support": 0.0,
-      "Human Resources": 0.3,
-      "Information Technology": 0.22365591397849463,
-      "Marketing": 0.5,
-      "Other": 0.0,
-      "Project Management": 0.17142857142857143,
-      "Purchasing": 0.0,
-      "Sales": 0.37209302325581395
-    }
+    "in_distribution_accuracy": 0.9497289305076392,
+    "real_world_accuracy": 0.29916317991631797
   },
   "seniority": {
-    "accuracy": 0.3284518828451883,
-    "precision": 0.19030820991411376,
-    "recall": 0.4019158511912135,
-    "f1_macro": 0.2498346867508255,
-    "f1_weighted": 0.20638946737615668,
-    "per_class_f1": {
-      "Director": 0.6865671641791045,
-      "Junior": 0.0,
-      "Lead": 0.0,
-      "Management": 0.4892086330935252,
-      "Professional": 0.0,
-      "Senior": 0.32323232323232326
-    }
+    "in_distribution_accuracy": 0.9432661717921527,
+    "real_world_accuracy": 0.48535564853556484
   },
-  "metadata": {
-    "training_data": "unannotated_cvs (with lookup table labels)",
-    "validation_data": "annotated_cvs",
-    "training_samples_dept": 97,
-    "training_samples_sen": 146,
-    "validation_samples_dept": 478,
-    "validation_samples_sen": 478,
-    "career_features": 11,
-    "tfidf_features": 159,
-    "total_features": 170,
-    "n_estimators": 100,
-    "max_depth": 20
-  },
-  "timestamp": "2026-01-07T13:13:30.939507"
+  "num_features": 2013,
+  "top_dept_features": [
+    "business",
+    "operations",
+    "marketing",
+    "consultant",
+    "has_marketing_keyword",
+    "has_operations_keyword",
+    "support",
+    "has_sales_keyword",
+    "hr",
+    "einkauf"
+  ],
+  "top_sen_features": [
+    "director",
+    "manager",
+    "has_management_keyword",
+    "has_senior_keyword",
+    "has_entry_keyword",
+    "junior",
+    "gesch\u00e4ftsf\u00fchrer",
+    "head of",
+    "leiter",
+    "head"
+  ]
 }

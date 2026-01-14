@@ -325,138 +325,325 @@ class FeatureEngineerConfig:
     include_career_features: bool = True
     include_keyword_features: bool = True
     include_text_features: bool = True
+    include_timeline_features: bool = True
+    include_progression_features: bool = True
+    include_company_features: bool = True
 
 
-class FeatureEngineer:
+class CareerFeatureExtractor:
     """
-    Extract meaningful features from LinkedIn CV data.
+    Comprehensive career feature extraction from LinkedIn CV data.
     
-    Extracts structured features like experience years, job count,
-    and keyword-based features for seniority/department detection.
+    Extracts rich features including:
+    - Career timeline (total experience, tenures, gaps)
+    - Job counts (positions, companies, concurrent roles)
+    - Career progression (promotions, title diversity, velocity)
+    - Company-based features (self-employment, industry indicators)
+    
     Supports both English and German CVs.
     """
     
     def __init__(self, config: Optional[FeatureEngineerConfig] = None):
         """
-        Initialize the feature engineer.
+        Initialize the career feature extractor.
         
         Args:
             config: Configuration options
         """
         self.config = config or FeatureEngineerConfig()
+        self.feature_names_ = None
     
-    def extract_features(self, cvs: List[List[dict]]) -> pd.DataFrame:
+    def _parse_date(self, date_str: Optional[str]):
+        """Parse 'YYYY-MM' date string to datetime."""
+        from datetime import datetime
+        if not date_str:
+            return None
+        try:
+            return datetime.strptime(date_str, '%Y-%m')
+        except (ValueError, TypeError):
+            return None
+    
+    def _parse_positions(self, positions: List[dict]) -> List[dict]:
+        """Parse position dates and normalize structure."""
+        from datetime import datetime
+        now = datetime.now()
+        
+        parsed = []
+        for pos in positions:
+            start = self._parse_date(pos.get('startDate'))
+            end = self._parse_date(pos.get('endDate'))
+            
+            if start is None:
+                continue  # Skip positions without valid start date
+            
+            # Use now for active/ongoing positions
+            if end is None:
+                end = now
+            
+            parsed.append({
+                'title': pos.get('position', pos.get('title', '')),
+                'company': pos.get('organization', pos.get('companyName', '')),
+                'start': start,
+                'end': end,
+                'is_active': pos.get('status') == 'ACTIVE',
+                'tenure_months': max(0, (end.year - start.year) * 12 + (end.month - start.month))
+            })
+        
+        # Sort by start date
+        parsed.sort(key=lambda x: x['start'])
+        return parsed
+    
+    def extract_features(self, cvs: List[List[dict]], return_cv_ids: bool = False) -> pd.DataFrame:
         """
-        Extract features from raw CV data.
+        Extract comprehensive features from raw CV data.
         
         Args:
             cvs: List of CVs, where each CV is a list of position dicts
+            return_cv_ids: If True, include 'cv_id' column for merging
         
         Returns:
-            DataFrame with extracted features
+            DataFrame with extracted features (one row per CV)
         
         Note:
             Skips CVs without active positions to match prepare_dataset() behavior.
         """
         records = []
+        cv_ids = []
         
-        for cv in cvs:
+        for cv_idx, cv in enumerate(cvs):
             if not isinstance(cv, list):
                 cv = cv.get('positions', []) if isinstance(cv, dict) else []
             
-            # Skip CVs without active positions (matches prepare_dataset behavior)
+            # Skip CVs without active positions
             active_positions = [p for p in cv if p.get('status') == 'ACTIVE']
             if not active_positions:
                 continue
             
-            features = self._extract_cv_features(cv)
+            features = self._extract_all_features(cv)
+            if features:
+                records.append(features)
+                cv_ids.append(cv_idx)
+        
+        df = pd.DataFrame(records)
+        if return_cv_ids:
+            df['cv_id'] = cv_ids
+        self.feature_names_ = list(df.columns)
+        return df
+    
+    def extract_features_for_titles(self, titles: List[str]) -> pd.DataFrame:
+        """
+        Extract features from job titles only (for CSV lookup data).
+        
+        Args:
+            titles: List of job title strings
+        
+        Returns:
+            DataFrame with keyword and text features only
+        """
+        records = []
+        for title in titles:
+            features = {}
+            if self.config.include_keyword_features:
+                features.update(self._extract_keyword_features(title.lower() if title else ''))
+            if self.config.include_text_features:
+                features.update(self._extract_text_features(title if title else ''))
             records.append(features)
         
         return pd.DataFrame(records)
     
-    def _extract_cv_features(self, positions: List[dict]) -> dict:
-        """Extract features from a single CV's positions."""
+    def _extract_all_features(self, positions: List[dict]) -> Optional[dict]:
+        """Extract all feature types from a single CV."""
+        parsed = self._parse_positions(positions)
+        if not parsed:
+            return None
+        
+        # Get active position for title-based features
+        active = next((p for p in parsed if p['is_active']), parsed[-1])
+        title = active['title'].lower()
+        
         features = {}
         
-        # Get active position
-        active_positions = [p for p in positions if p.get('status') == 'ACTIVE']
-        past_positions = [p for p in positions if p.get('status') != 'ACTIVE']
+        # Timeline features
+        if self.config.include_timeline_features:
+            features.update(self._extract_timeline_features(parsed))
         
-        active = active_positions[0] if active_positions else {}
-        title = active.get('position', active.get('title', '')).lower()
-        
+        # Career features (basic counts)
         if self.config.include_career_features:
-            features.update(self._extract_career_features(positions, past_positions))
+            features.update(self._extract_career_features(parsed))
         
+        # Progression features
+        if self.config.include_progression_features:
+            features.update(self._extract_progression_features(parsed))
+        
+        # Company-based features
+        if self.config.include_company_features:
+            features.update(self._extract_company_features(parsed))
+        
+        # Keyword features
         if self.config.include_keyword_features:
             features.update(self._extract_keyword_features(title))
         
+        # Text features
         if self.config.include_text_features:
             features.update(self._extract_text_features(title))
         
         return features
     
-    def _extract_career_features(
-        self, 
-        all_positions: List[dict], 
-        past_positions: List[dict]
-    ) -> dict:
-        """Extract career-related numerical features."""
+    def _extract_timeline_features(self, parsed_positions: List[dict]) -> dict:
+        """Extract career timeline features."""
         from datetime import datetime
+        now = datetime.now()
         
-        features = {
-            'num_previous_jobs': len(past_positions),
-            'total_experience_months': 0,
-            'avg_tenure_months': 0,
-            'num_companies': 0
+        if not parsed_positions:
+            return {
+                'total_career_months': 0,
+                'current_tenure_months': 0,
+                'avg_tenure_months': 0,
+                'max_tenure_months': 0,
+                'min_tenure_months': 0,
+                'tenure_std_months': 0,
+            }
+        
+        tenures = [p['tenure_months'] for p in parsed_positions if p['tenure_months'] > 0]
+        
+        # Total career span
+        first_start = parsed_positions[0]['start']
+        last_end = max(p['end'] for p in parsed_positions)
+        total_career = (last_end.year - first_start.year) * 12 + (last_end.month - first_start.month)
+        
+        # Current position tenure
+        active = next((p for p in parsed_positions if p['is_active']), None)
+        current_tenure = 0
+        if active:
+            current_tenure = (now.year - active['start'].year) * 12 + (now.month - active['start'].month)
+        
+        return {
+            'total_career_months': max(0, total_career),
+            'current_tenure_months': max(0, current_tenure),
+            'avg_tenure_months': np.mean(tenures) if tenures else 0,
+            'max_tenure_months': max(tenures) if tenures else 0,
+            'min_tenure_months': min(tenures) if tenures else 0,
+            'tenure_std_months': np.std(tenures) if len(tenures) > 1 else 0,
         }
+    
+    def _extract_career_features(self, parsed_positions: List[dict]) -> dict:
+        """Extract job count and company features."""
+        companies = set(p['company'].lower().strip() for p in parsed_positions if p['company'])
+        titles = [p['title'].lower().strip() for p in parsed_positions if p['title']]
         
-        # Calculate experience
-        start_dates = []
-        companies = set()
-        tenures = []
+        num_positions = len(parsed_positions)
+        num_companies = len(companies)
+        num_active = sum(1 for p in parsed_positions if p['is_active'])
         
-        for pos in all_positions:
-            company = pos.get('organization', pos.get('companyName', ''))
+        # Career velocity: jobs per year
+        total_months = self._extract_timeline_features(parsed_positions)['total_career_months']
+        career_years = max(total_months / 12, 1)
+        positions_per_year = num_positions / career_years
+        
+        # Company loyalty ratio
+        company_loyalty = num_companies / num_positions if num_positions > 0 else 1
+        
+        return {
+            'num_positions': num_positions,
+            'num_previous_jobs': max(0, num_positions - 1),
+            'num_unique_companies': num_companies,
+            'num_active_positions': num_active,
+            'positions_per_year': positions_per_year,
+            'company_diversity_ratio': company_loyalty,
+            'num_unique_titles': len(set(titles)),
+        }
+    
+    def _extract_progression_features(self, parsed_positions: List[dict]) -> dict:
+        """Extract career progression indicators."""
+        if not parsed_positions:
+            return {
+                'has_concurrent_jobs': 0,
+                'internal_promotions': 0,
+                'has_career_progression': 0,
+                'title_diversity_ratio': 0,
+            }
+        
+        # Check for concurrent/overlapping jobs
+        has_concurrent = 0
+        for i, p1 in enumerate(parsed_positions):
+            for p2 in parsed_positions[i+1:]:
+                # Overlap if p1.end > p2.start
+                if p1['end'] > p2['start']:
+                    has_concurrent = 1
+                    break
+            if has_concurrent:
+                break
+        
+        # Internal promotions: same company, different title
+        internal_promotions = 0
+        company_titles = {}
+        for p in parsed_positions:
+            company = p['company'].lower().strip()
+            title = p['title'].lower().strip()
             if company:
-                companies.add(company.lower())
-            
-            start = pos.get('startDate')
-            end = pos.get('endDate')
-            
-            if start:
-                try:
-                    start_dt = datetime.strptime(start, '%Y-%m')
-                    start_dates.append(start_dt)
-                    
-                    if end:
-                        end_dt = datetime.strptime(end, '%Y-%m')
-                    else:
-                        end_dt = datetime.now()
-                    
-                    tenure = (end_dt.year - start_dt.year) * 12 + (end_dt.month - start_dt.month)
-                    if tenure > 0:
-                        tenures.append(tenure)
-                except (ValueError, TypeError):
-                    pass
+                if company not in company_titles:
+                    company_titles[company] = set()
+                company_titles[company].add(title)
         
-        if start_dates:
-            earliest = min(start_dates)
-            now = datetime.now()
-            features['total_experience_months'] = (
-                (now.year - earliest.year) * 12 + (now.month - earliest.month)
-            )
+        for titles in company_titles.values():
+            if len(titles) > 1:
+                internal_promotions += len(titles) - 1
         
-        if tenures:
-            features['avg_tenure_months'] = np.mean(tenures)
+        # Career progression: junior -> senior pattern
+        titles_text = ' '.join(p['title'].lower() for p in parsed_positions)
+        entry_keywords = ['junior', 'intern', 'trainee', 'assistant', 'praktikant', 'werkstudent']
+        senior_keywords = ['senior', 'lead', 'principal', 'manager', 'director', 'head', 'leiter']
         
-        features['num_companies'] = len(companies)
+        has_entry = any(kw in titles_text for kw in entry_keywords)
+        has_senior = any(kw in titles_text for kw in senior_keywords)
+        has_progression = 1 if has_entry and has_senior else 0
         
-        return features
+        # Title diversity
+        unique_titles = len(set(p['title'].lower().strip() for p in parsed_positions if p['title']))
+        title_diversity = unique_titles / len(parsed_positions) if parsed_positions else 0
+        
+        return {
+            'has_concurrent_jobs': has_concurrent,
+            'internal_promotions': internal_promotions,
+            'has_career_progression': has_progression,
+            'title_diversity_ratio': title_diversity,
+        }
+    
+    def _extract_company_features(self, parsed_positions: List[dict]) -> dict:
+        """Extract company-based features."""
+        companies_text = ' '.join(p['company'].lower() for p in parsed_positions if p['company'])
+        titles_text = ' '.join(p['title'].lower() for p in parsed_positions if p['title'])
+        
+        # Self-employment indicators
+        self_employed_keywords = [
+            'self-employed', 'selbstständig', 'selbständig', 'freelance', 'freiberuflich',
+            'owner', 'inhaber', 'founder', 'gründer', 'co-founder', 'mitgründer',
+            'consultant', 'berater', 'unternehmer', 'entrepreneur'
+        ]
+        is_self_employed = 1 if any(kw in companies_text or kw in titles_text for kw in self_employed_keywords) else 0
+        
+        # Startup indicators
+        startup_keywords = ['startup', 'start-up', 'gmbh i.g.', 'ug ', 'venture']
+        is_startup = 1 if any(kw in companies_text for kw in startup_keywords) else 0
+        
+        # Large company indicators (common suffixes)
+        large_company_keywords = ['ag ', ' se ', 'corporation', 'corp.', 'inc.', 'gmbh', 'ltd']
+        has_large_company = 1 if any(kw in companies_text for kw in large_company_keywords) else 0
+        
+        # Average company name length (proxy for established companies)
+        company_names = [p['company'] for p in parsed_positions if p['company']]
+        avg_company_name_len = np.mean([len(c) for c in company_names]) if company_names else 0
+        
+        return {
+            'is_self_employed': is_self_employed,
+            'has_startup_experience': is_startup,
+            'has_large_company_experience': has_large_company,
+            'avg_company_name_length': avg_company_name_len,
+        }
     
     def _extract_keyword_features(self, title: str) -> dict:
         """Extract keyword-based features from job title."""
-        title_lower = title.lower()
+        title_lower = title.lower() if title else ''
         
         features = {
             'has_senior_keyword': 0,
@@ -493,11 +680,22 @@ class FeatureEngineer:
     
     def _extract_text_features(self, title: str) -> dict:
         """Extract text-based features from job title."""
+        title = title if title else ''
         return {
             'title_length': len(title),
-            'title_word_count': len(title.split()),
+            'title_word_count': len(title.split()) if title else 0,
             'title_has_numbers': 1 if any(c.isdigit() for c in title) else 0
         }
+    
+    def get_feature_names(self) -> List[str]:
+        """Get list of feature names from last extraction."""
+        return self.feature_names_ or []
+
+
+# Keep old class as alias for backward compatibility
+class FeatureEngineer(CareerFeatureExtractor):
+    """Alias for CareerFeatureExtractor (backward compatibility)."""
+    pass
 
 
 class CombinedFeatureClassifier:

@@ -1,0 +1,13 @@
+{
+  "approach": "Feature Engineering + Career Features (Improved)",
+  "department": {
+    "real_world_accuracy_no_other": 0.6096491228070176,
+    "real_world_f1_no_other": 0.614535204138736
+  },
+  "seniority": {
+    "baseline_accuracy": 0.47489539748953974,
+    "baseline_f1": 0.4430268180212052,
+    "with_career_adjustment_accuracy": 0.3514644351464435,
+    "with_career_adjustment_f1": 0.2957421988146156
+  }
+}
