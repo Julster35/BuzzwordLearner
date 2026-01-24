@@ -1,0 +1,624 @@
+cv_id,position_idx,organization,linkedin,position,startDate,endDate,status,department,seniority,title_length,title_word_count,detected_language
+0,0,Depot4Design GmbH,https://www.linkedin.com/company/depot4design-gmbh,Prokurist,2019-08,,ACTIVE,Other,Management,9,1,Other
+0,1,Depot4Design GmbH,https://www.linkedin.com/company/depot4design-gmbh,CFO,2019-07,,ACTIVE,Other,Management,3,1,Other
+0,2,Depot4Design GmbH,https://www.linkedin.com/company/depot4design-gmbh,Betriebswirtin,2019-07,,ACTIVE,Other,Professional,14,1,Other
+0,3,Depot4Design GmbH,https://www.linkedin.com/company/depot4design-gmbh,Prokuristin,2019-07,,ACTIVE,Other,Management,11,1,Other
+0,4,Depot4Design GmbH,https://www.linkedin.com/company/depot4design-gmbh,CFO,2019-07,,ACTIVE,Other,Management,3,1,Other
+1,0,Computer Solutions,https://www.linkedin.com/company/computer-solutions,Solutions Architect,2024-03,,ACTIVE,Information Technology,Professional,19,2,English
+2,0,Udo Weber,https://www.linkedin.com/company/udo-weber,Medizintechnik Beratung,2025-01,,ACTIVE,Consulting,Professional,23,2,Other
+3,0,Grupo Viajes Kontiki.,,Director expansión de negocio.,2024-09,,ACTIVE,Business Development,Director,30,4,Spanish
+3,1,Air & Ground Operations Consultancy,https://www.linkedin.com/company/agoc-spain,Gerente comercial,2024-04,,ACTIVE,Sales,Lead,17,2,Spanish
+3,2,Viajes Oceano S.L.,,Administrador Unico,2010-12,,ACTIVE,Administrative,Professional,19,2,Spanish
+4,0,Himmelstalunds Utbildningscentrum,,"APL-ansvarig, samordning",2019-08,,ACTIVE,Administrative,Lead,24,2,Other
+5,0,FSD Fahrzeugsystemdaten GmbH,,Kaufmännischer Leiter,2007-05,,ACTIVE,Sales,Lead,21,2,German
+6,0,MacDermid Enthone Industrial Solutions,https://www.linkedin.com/company/macdermid-enthone-industrial-solutions,Lab-Supervisor,2007,,ACTIVE,Other,Lead,14,1,English
+7,0,Boise Cascade Company,https://www.linkedin.com/company/boise-cascade,Human Resources Generalist,2023-12,,ACTIVE,Human Resources,Professional,26,3,Other
+8,0,PhoboSys GmbH,https://www.linkedin.com/company/phobosys-gmbh,Managing Director,2016-01,,ACTIVE,Other,Management,17,2,English
+11,0,Twentieth Century Fox,https://www.linkedin.com/company/20th-century-studios,Set Lighting,2000-01,,ACTIVE,Other,Professional,12,2,Other
+11,1,Sony,https://www.linkedin.com/company/sony,Set Lighting,2000-01,,ACTIVE,Other,Professional,12,2,Other
+11,2,Warner Bros. Studios,https://www.linkedin.com/company/warner-bros.-studios,Set Lighting,2000-01,,ACTIVE,Other,Professional,12,2,Other
+11,3,Paramount,https://www.linkedin.com/company/paramountco,Set Lighting,2000-01,,ACTIVE,Other,Professional,12,2,Other
+11,4,NBCUniversal,https://www.linkedin.com/company/nbcuniversal-inc-,Set Lighting,2000-01,,ACTIVE,Other,Professional,12,2,Other
+12,0,msg systems ag,,Projektmanager,2018-02,,ACTIVE,Project Management,Professional,14,1,English
+13,0,Landeshauptstadt Wiesbaden,https://www.linkedin.com/company/stadt-wiesbaden,Leistungssachbearbeiter SGB II,2017-12,,ACTIVE,Other,Professional,30,3,German
+14,0,ee concept gmbh,,energy and sustainability consultant bei,2014-01,,ACTIVE,Consulting,Professional,40,5,English
+15,0,ACCOPPIATURA DI ASOLO S.P.A.,https://www.linkedin.com/company/asoltex,Purchasing Manager,2019-09,,ACTIVE,Purchasing,Professional,18,2,English
+16,0,Team Jösten,https://www.linkedin.com/company/team-jösten,Geschäftsführer,2005-07,,ACTIVE,Other,Management,15,1,German
+18,0,Swiss Life Asset Managers Deutschland,https://www.linkedin.com/company/swiss-life-asset-managers-deutschland,Senior Project Manager,2021-09,,ACTIVE,Project Management,Senior,22,3,English
+20,0,Selbstständig,,Dr. phil.,2024-09,,ACTIVE,Other,Professional,9,2,Other
+21,0,Thurm GmbH,https://www.linkedin.com/company/thurm-gmbh,"Geschäftsführer, CMO",2014-07,,ACTIVE,Marketing,Management,20,2,German
+21,1,Gebrüder Weiß & Cie. KG,,Geschäftsführender Gesellschafter,2012-01,,ACTIVE,Other,Management,33,2,German
+22,0,Vorruhestand,,Bereichsleiter Maschinen,1996-07,,ACTIVE,Other,Lead,24,2,German
+23,0,Etse Electronics (Pty) Ltd,https://www.linkedin.com/company/etse-electronics,Principal RF Design Engineer,2003-09,,ACTIVE,Information Technology,Senior,28,4,English
+24,0,Tallahassee Orthopedic Clinic,https://www.linkedin.com/company/tocorthopedics,Physician Assistant,2023-01,,ACTIVE,Other,Professional,19,2,English
+27,0,Stork Lijmen,,Co-Owner,2002-01,,ACTIVE,Other,Management,8,1,Other
+27,1,Stork Lijmen,,CEO,2002-01,,ACTIVE,Other,Management,3,1,Other
+27,2,ESBA Horti Solutions BV,,CEO/Founder,2015-12,,ACTIVE,Other,Management,11,1,German
+30,1,VR Bank Lahn-Dill,https://www.linkedin.com/company/vrbanklahndill,Qualifizierter Kreditsachbearbeiter im risikorelevanten Kreditgeschäft,1992-08,,ACTIVE,Other,Professional,70,5,German
+31,0,Consultant Juridique International Ltd,https://www.linkedin.com/company/oliver-charles-associates,Director,2025-03,,ACTIVE,Other,Director,8,1,English
+32,0,TALLY WEiJL,https://www.linkedin.com/company/tally-weijl,IT Systems and Network Engineer,2021-11,,ACTIVE,Information Technology,Professional,31,5,English
+33,0,ALIUD PHARMA GmbH,https://www.linkedin.com/company/aliud-pharma®-gmbh,IT-Teamleiter,2022-08,,ACTIVE,Information Technology,Lead,13,1,German
+33,1,ALIUD PHARMA GmbH,https://www.linkedin.com/company/aliud-pharma®-gmbh,Senior IT-Sicherheitsbeauftragter,2010-01,,ACTIVE,Information Technology,Senior,33,2,English
+33,2,ALIUD PHARMA GmbH,https://www.linkedin.com/company/aliud-pharma®-gmbh,IT-Systemadministrator,2002-09,,ACTIVE,Information Technology,Professional,22,1,English
+34,0,Hypergene,https://www.linkedin.com/company/hypergene,Senior Project Manager,2022-10,,ACTIVE,Project Management,Senior,22,3,English
+36,0,Giesecke+Devrient,https://www.linkedin.com/company/giesecke-devrient,Head of HR/CHRO,2021-10,,ACTIVE,Human Resources,Lead,15,3,Other
+39,0,Quest ontheFRONTIER,https://www.linkedin.com/company/quest-onthefrontier,Human Resources Consultant,2024-12,,ACTIVE,Consulting,Professional,26,3,English
+41,0,Exelonix GmbH,https://www.linkedin.com/company/exelonix-gmbh,Managing Director,2013-02,,ACTIVE,Other,Management,17,2,English
+44,0,FRANK GmbH,https://www.linkedin.com/company/frank-gmbh,Product Manager,2023-11,,ACTIVE,Project Management,Professional,15,2,English
+45,0,Norra Halland,https://www.linkedin.com/company/norrahalland,Reporter,2024-06,,ACTIVE,Other,Professional,8,1,Other
+45,1,Levantine Bistro,,Waiter & Bartender,2024-03,,ACTIVE,Other,Professional,18,3,German
+46,0,EnBet Consulting,https://www.linkedin.com/company/enbet-consulting,Geschäftsführer,2021-02,,ACTIVE,Other,Management,15,1,German
+47,0,TOPMOTIVE,https://www.linkedin.com/company/topmotive,CEO / Managing Shareholder,2013,,ACTIVE,Other,Management,26,4,German
+47,2,DigitalNativeAlliance,https://www.linkedin.com/company/digitalnativealliance,Member of the Advisory Board,2025-01,,ACTIVE,Other,Management,28,5,Other
+47,3,Studien- und Fördergesellschaft der Schleswig-Holsteinischen Wirtschaft e.V.,,Member of the Advisory Board,2022-08,,ACTIVE,Other,Management,28,5,Other
+49,0,Wehner Consulting GmbH,https://www.linkedin.com/company/goodman-marketing,Geschäftsführer,2019-06,,ACTIVE,Other,Management,15,1,German
+50,0,Kampffmeyer Food Innovation GmbH,,Director Sales,1989-01,,ACTIVE,Sales,Director,14,2,English
+51,0,Lufthansa,https://www.linkedin.com/company/lufthansa,Sub-Stream Lead Simplify | Turnaround Programs,2025-01,,ACTIVE,Project Management,Lead,46,6,English
+52,0,noury AG,https://www.linkedin.com/company/noury-ag,Chief Revenue Officer (CRO),2024-11,,ACTIVE,Sales,Management,27,4,English
+54,0,Nordson Adhesive Dispensing Systems,https://www.linkedin.com/company/nordson-adhesive,Business Development Manager,2024-03,,ACTIVE,Business Development,Professional,28,3,English
+55,0,myclimate,https://www.linkedin.com/company/myclimate,Projektleiterin Bildung,2021-06,,ACTIVE,Other,Lead,23,2,German
+56,0,Dreamcatcher Alley,,Co Owner,2007,,ACTIVE,Other,Management,8,2,Other
+57,0,Desjardins,https://www.linkedin.com/company/desjardins,"Practice Leader, Data Valorization Strategy",2025,,ACTIVE,Consulting,Lead,43,5,French
+58,0,Sedef Shipbuilding Inc.,https://www.linkedin.com/company/sedef-shipyard,iş güvenliği,2020-02,,ACTIVE,Other,Professional,12,2,Turkish
+59,0,Giganet Services GmbH,,Geschäftsführer bei Giganet Services GmbH,2024-09,,ACTIVE,Other,Management,41,5,German
+59,1,Expert Link GmbH,https://www.linkedin.com/company/expert-link-gmbh,Owner,2010-02,,ACTIVE,Other,Management,5,1,Other
+60,0,moodley,https://www.linkedin.com/company/moodley,Strategic Design Director,2021-09,,ACTIVE,Marketing,Director,25,3,Spanish
+61,0,FC Bayern München,https://www.linkedin.com/company/fcbayern,Museumspädagoge,2024-10,,ACTIVE,Other,Professional,15,1,Other
+61,1,Vulkankultour GmbH,,Geschäftsführer,2005-06,,ACTIVE,Other,Management,15,1,German
+62,0,Nextwo Co.,https://www.linkedin.com/company/nextwo.ae,Technical Team Lead,2024-02,,ACTIVE,Information Technology,Lead,19,3,English
+63,0,WIDMER Skippers,https://www.linkedin.com/company/widmerskippers,Managing Director,2017,,ACTIVE,Other,Management,17,2,English
+64,0,Augustin Entsorgung Holding GnbH,,Gesellschafter,1993-01,,ACTIVE,Other,Management,14,1,Other
+65,0,VTA Verfahrenstechnische Anlagen GmbH & Co. KG,https://www.linkedin.com/company/vta-process,Maschinenbautechniker,2008-09,,ACTIVE,Other,Professional,21,1,Other
+66,0,Henkel,https://www.linkedin.com/company/henkel,Technical Customer Service Manager - Flexible Packaging,2021-01,,ACTIVE,Customer Support,Lead,55,7,English
+67,0,Selecty,https://www.linkedin.com/company/selecty-hr,Java Software Engineer,2023-01,,ACTIVE,Information Technology,Professional,22,3,English
+68,0,Fieldspace Property Group,https://www.linkedin.com/company/fieldspace-property-group,New Business Manager,2024-06,,ACTIVE,Business Development,Lead,20,3,English
+69,0,Atlassian,https://www.linkedin.com/company/atlassian,Strategic Engagement Manager,2023-06,,ACTIVE,Business Development,Lead,28,3,English
+70,1,EDAG Engineering GmbH,,Projektmanager,1987,,ACTIVE,Project Management,Professional,14,1,English
+72,0,Austria Wirtschaftsservice,https://www.linkedin.com/company/austria-wirtschaftsservice,Head of aws Preseed and Seedfinancing - Innovative Solutions,2023-05,,ACTIVE,Other,Lead,60,9,Turkish
+72,4,Vitamin Well AB,https://www.linkedin.com/company/vitamin-well,Brand Ambassador,2019-09,,ACTIVE,Marketing,Professional,16,2,Other
+73,0,Murata Vios,,Director of Product Management,2022-01,,ACTIVE,Project Management,Director,30,4,English
+74,0,Children's Wisconsin,https://www.linkedin.com/company/childrenswi,Executive Director of Therapies and Developmental Services,2024-10,,ACTIVE,Other,Director,58,7,English
+76,0,Axians NEO Solutions & Technology GmbH,,Projektmanager,2025-01,,ACTIVE,Project Management,Professional,14,1,English
+77,0,Körber Technologies,https://www.linkedin.com/company/körber-technologies,Project Engineer Process Technology - Future Farming,2024-07,,ACTIVE,Information Technology,Professional,52,7,English
+78,0,SOR Eğitim Danışmanlık,https://www.linkedin.com/company/sor-eğitim-danışmanlık,Kurucu Ortak,2021-12,,ACTIVE,Other,Management,12,2,Other
+78,1,Serbest çalışan,,Danışmanlık,2017-01,,ACTIVE,Consulting,Professional,11,1,Turkish
+79,0,Cranfield University School of Management,,Digital Marketing Manager,2008-06,,ACTIVE,Marketing,Professional,25,3,English
+80,0,"Bureau Maaiveld, het breed inzetbare bureau voor ontwikkeling",,Eigenaar,2015-01,,ACTIVE,Other,Management,8,1,Other
+80,1,Theatergroep Maaistoff,,Theatermaker,2017-04,,ACTIVE,Other,Professional,12,1,Other
+80,2,Het Betere Goede Gesprek,https://www.linkedin.com/company/het-betere-goede-gesprek,Trainer/coach,2017-06,,ACTIVE,Project Management,Professional,13,1,Other
+80,3,Dubbel E Acteerservice B.V.: voor Echte Trainingsacteurs,https://www.linkedin.com/company/dubbel-e-acteerservice,Trainingsacteur en trainer,2019-01,,ACTIVE,Consulting,Professional,26,3,Other
+80,4,Ministerie van Justitie en Veiligheid - NIFP,https://www.linkedin.com/company/ministerie-van-justitie-en-veiligheid-,Co trainer/trainingsacteur,2006-08,,ACTIVE,Other,Professional,26,2,Other
+80,5,Theater A la Carte,,Acteur en theatermaker,2015-01,,ACTIVE,Other,Professional,22,3,Other
+80,7,Hogeschool Utrecht,,Trainer/docent,2019-09,,ACTIVE,Human Resources,Professional,14,1,Other
+80,8,Diverse opdrachtgevers,,"Freelance acteur, regisseur en scriptschrijver",1995,,ACTIVE,Other,Professional,46,5,French
+81,0,Byldis,https://www.linkedin.com/company/byldis,Procurement Manager Strategische Inkoop,2024-02,,ACTIVE,Purchasing,Professional,39,4,English
+81,1,Byldis,https://www.linkedin.com/company/byldis,Strategisch inkoper,2024-02,,ACTIVE,Purchasing,Professional,19,2,Other
+83,0,Rüdisühli Rechtsanwälte Part mbB,,Partner,2019-07,,ACTIVE,Business Development,Management,7,1,Other
+84,0,Naval Sea Systems Command (NAVSEA) SUPSHIP San Diego,,Lead Naval Architect,2024-11,,ACTIVE,Other,Lead,20,3,English
+85,0,Nidec Control Techniques,https://www.linkedin.com/company/nidecdrives,Inside Sales,1988-08,,ACTIVE,Sales,Professional,12,2,French
+86,0,"Detlef Meyer ""DM108.de - LEH Vertrieb""",,Key-Account-Manager,2020-08,,ACTIVE,Sales,Professional,19,1,English
+89,0,s h e d,https://www.linkedin.com/company/s-h-e-d,Managing Director,2011-11,,ACTIVE,Other,Management,17,2,English
+90,0,Paul Schockemöhle Logistics GmbH & Co. KG,https://www.linkedin.com/company/paul-schockemoehle-logistics-group,Berufskraftfahrer,2009-02,,ACTIVE,Other,Professional,17,1,Other
+91,0,HEINZ-GLAS Produktion GmbH & Co KGaA,,Head of Glass Technology,2013,,ACTIVE,Other,Lead,24,4,French
+93,0,Nagel-Group,https://www.linkedin.com/company/nagel-group,Key-Account-Manager,2022-01,,ACTIVE,Sales,Professional,19,1,English
+95,0,Dow Jones Local Media Group,,Accounting Manager,2004-10,,ACTIVE,Other,Lead,18,2,English
+96,0,TTS NMF GmbH,,Interims Technical Manager,2014-02,,ACTIVE,Information Technology,Lead,26,3,English
+97,0,"MADELINE STUART & ASSOCIATES, INC.",https://www.linkedin.com/company/madeline-stuart-&-associates-inc.,Project Manager,2022-04,,ACTIVE,Project Management,Professional,15,2,English
+98,0,Cassini Consulting AG,https://www.linkedin.com/company/cassini-consulting-ag,Management Consultant Information Security and Privacy,2022-12,,ACTIVE,Consulting,Professional,54,6,English
+99,0,Dr. Zanda Martens MdB | Büro Düsseldorf,,Büroleiter | Pressesprecher,2021-12,,ACTIVE,Administrative,Lead,27,3,German
+101,0,Stadt Zug,https://www.linkedin.com/company/stadt-zug,Departementssekretär Finanz,2005-09,,ACTIVE,Other,Professional,27,2,French
+102,0,Aximpro,https://www.linkedin.com/company/aximpro,Managing Director,2024-10,,ACTIVE,Other,Management,17,2,English
+105,0,PwC Switzerland,https://www.linkedin.com/company/pwc_switzerland,Senior Manager Strategy & Business Transformation Health,2023-03,,ACTIVE,Consulting,Senior,56,7,English
+105,1,Berner Fachhochschule BFH,,Lehrbeauftragter,2024-10,,ACTIVE,Consulting,Lead,16,1,French
+106,0,Deloitte,https://www.linkedin.com/company/deloitte,Manager | Mergers & Acquisitions,2022-12,,ACTIVE,Other,Professional,32,5,English
+107,0,Roche Pharmaceuticals,https://www.linkedin.com/company/roche,Technical Transfer Leader,2010-12,,ACTIVE,Consulting,Lead,25,3,French
+108,0,Helly Hansen,https://www.linkedin.com/company/helly-hansen,Account manager / Sælger Helly Hansen Workwear Sjælland & Bornholm,2024-01,,ACTIVE,Sales,Professional,66,10,English
+109,0,agn Gruppe,https://www.linkedin.com/company/agn-niederberghaus-&-partner-gmbh,Geschäftsführender Gesellschafter,2004-01,,ACTIVE,Other,Management,33,2,German
+110,0,Peter van Setten Transport B.V.,https://www.linkedin.com/company/p-van-setten-transport-b-v,Director,1996-02,,ACTIVE,Other,Director,8,1,English
+112,0,Herz Transporte und Spedition,https://www.linkedin.com/company/herz-transporte-und-spedition,Unternehmensinhaber,2016-11,,ACTIVE,Other,Management,19,1,Other
+113,0,KZVK,https://www.linkedin.com/company/kzvk,"Board Member, CFO / Asset Management",2018-04,,ACTIVE,Other,Management,36,6,Other
+114,0,Tirol Werbung,https://www.linkedin.com/company/tirol-werbung,CEO,2022-05,,ACTIVE,Other,Management,3,1,Other
+114,1,Tirol Werbung,https://www.linkedin.com/company/tirol-werbung,Arbeitgeber,2022-05,,ACTIVE,Other,Management,11,1,German
+115,0,Amazon Web Services (AWS),https://www.linkedin.com/company/amazon-web-services,Finance - AWS Global Private Pricing,2022-05,,ACTIVE,Other,Professional,36,6,Other
+116,0,Harmonic,https://www.linkedin.com/company/harmonic,Software Developer,2020-07,,ACTIVE,Information Technology,Professional,18,2,English
+117,0,SSI SCHÄFER,https://www.linkedin.com/company/ssischaefer,Vice President Global Head Order Processing / Prokurist,2020-04,,ACTIVE,Other,Management,55,8,German
+119,0,DDV Mediengruppe,https://www.linkedin.com/company/ddv-mediengruppe,CEO Morgenpost & TAG 24 | Vertriebsleiter Sächsische Zeitung / Lesermark | CEO MVD Ökoflitzer,1991-10,,ACTIVE,Other,Lead,93,15,German
+120,0,Equipnor AS,https://www.linkedin.com/company/equipnor-as,Key Account / Supply Manager,2002-09,,ACTIVE,Other,Lead,28,5,English
+120,1,Hellemyr Eiendom AS,,Styreleder / Partner,2003-03,,ACTIVE,Other,Management,20,3,French
+124,0,Mercedes-Benz AG,https://www.linkedin.com/company/mercedes-benz_ag,Projektleiter Qualität HV-Batterie,2019-12,,ACTIVE,Project Management,Lead,34,3,German
+125,0,Giesecke+Devrient,https://www.linkedin.com/company/giesecke-devrient,Global Director Head of Portfolio and Business Development Global Service,2021-07,,ACTIVE,Business Development,Director,73,10,English
+127,0,Thayer Academy,,Summer Camp Counselor,2019-06,,ACTIVE,Other,Professional,21,3,Other
+128,0,Davidson Kempner Capital Management,https://www.linkedin.com/company/davidson-kempner-capital-management,Project Lead for Swap Re-engineering Project,2024-09,,ACTIVE,Project Management,Lead,44,6,English
+128,1,FILLY BROOK LTD,https://www.linkedin.com/company/filly-brook-ltd,Business Owner,2019-03,,ACTIVE,Other,Management,14,2,English
+129,0,Frankfurt School of Finance & Management,,Kanzler / CFO,2017-11,,ACTIVE,Other,Management,13,3,French
+129,1,Frankfurt School of Finance & Management,,Kaufmännische Leiterin,2015-04,,ACTIVE,Other,Lead,22,2,German
+129,2,Frankfurt School of Finance & Management,,Head of Accounting & Controlling,2009-01,,ACTIVE,Other,Lead,32,5,Other
+129,3,Frankfurt School of Finance & Management,,"Member of the Board, Frankfurt School Stiftung",2010-03,,ACTIVE,Other,Management,46,7,Other
+131,0,Lebenhilfe Augsburg,,Personalleiter,2025-04,,ACTIVE,Human Resources,Lead,14,1,German
+131,1,Selbstständig,,Rechtsanwalt,1995-06,,ACTIVE,Other,Professional,12,1,Other
+132,0,The Johns Hopkins University,,Assistant Director of Prospect Management and Data Analytics,2023-07,,ACTIVE,Other,Director,60,8,English
+132,1,michaelbtager.com,,"Writer, Editor, Publisher",2012-08,,ACTIVE,Marketing,Professional,25,3,Other
+133,0,Jugendmusikschule Württembergisches Allgäu,,"Klavierlehrer, Korrepetitor",2001-09,,ACTIVE,Other,Professional,27,2,French
+134,0,Alexander Hughes Germany / Alexander Hughes International,https://www.linkedin.com/company/alexander-hughes,Managing Partner / Group Managing Board,2006-02,,ACTIVE,Other,Management,39,6,Other
+135,0,Queensland Corrective Services,https://www.linkedin.com/company/queensland-corrective-services,Manager,2025-01,,ACTIVE,Other,Professional,7,1,English
+136,0,Black Forest Business Solutions,,Founder and Senior Partner,2012-01,,ACTIVE,Consulting,Management,26,4,German
+137,0,LÖHR & BECKER Aktiengesellschaft,,Vorsitzender des Vorstandes,2002-06,,ACTIVE,Other,Management,27,3,German
+138,0,FTI Engineering Network GmbH,https://www.linkedin.com/company/fti-engineering-network-gmbh,Head of Engineering,2022-07,,ACTIVE,Information Technology,Lead,19,3,English
+140,0,FedEx Express,https://www.linkedin.com/company/fedex,District Sales manager,1995-06,,ACTIVE,Sales,Lead,22,3,English
+141,0,EFG Bank,https://www.linkedin.com/company/efginternational,Assistant Treasurer Real Estate,2017-04,,ACTIVE,Other,Junior,31,4,English
+141,1,BSI Bank,https://www.linkedin.com/company/bsi-s-a-,Assistant Treasurer Real Estate,2008-07,,ACTIVE,Other,Junior,31,4,English
+142,0,NP4 GmbH,https://www.linkedin.com/company/np4-gmbh,Managing Dircector,1997-11,,ACTIVE,Other,Management,18,2,Other
+143,0,SouthEast Bank,https://www.linkedin.com/company/southeast-bank,Director of Business Analysts and Special Projects,2025-02,,ACTIVE,Information Technology,Director,50,7,English
+144,0,EDAG Austria,,Robotertechniker,2020,,ACTIVE,Information Technology,Professional,16,1,Other
+145,0,Sozialversicherung der Selbständigen,https://www.linkedin.com/company/deinesvs,OÖ Koordinator für das Team der Bereiche Beschlagwortung / Zustellproblem,2023-01,,ACTIVE,Purchasing,Lead,73,10,German
+145,1,Sozialversicherung der Selbständigen,https://www.linkedin.com/company/deinesvs,Sachbearbeiter in der Beschlagwortung / Rückpost,2020-08,,ACTIVE,Purchasing,Professional,48,6,German
+146,0,IBM iX DACH,https://www.linkedin.com/company/ibm-ix-dach,Head of Content & Workflows,2024-01,,ACTIVE,Marketing,Lead,27,5,Other
+146,1,IBM iX DACH,https://www.linkedin.com/company/ibm-ix-dach,Head Of Business Consulting | Content & Digital Assets,2022-04,,ACTIVE,Other,Lead,54,9,English
+147,0,SCIERIE COLLIGNON,https://www.linkedin.com/company/scierie-collignon,Scierie collignon,2015-01,,ACTIVE,Other,Professional,17,2,Other
+149,0,Deichmann SE,,Senior Microsoft 365 Engineer,2024-04,,ACTIVE,Information Technology,Senior,29,4,English
+150,0,ZF Group,https://www.linkedin.com/company/zf-group,Product Manager Online Catalog & Shop,2024-04,,ACTIVE,Other,Professional,37,6,English
+151,0,ISP Stahlbauplanung,,Diplom Bauingenieur,1998-11,,ACTIVE,Other,Professional,19,2,German
+152,0,JPMorgan Chase & Co.,https://www.linkedin.com/company/jpmorganchase,"Executive Director, Marketing Strategy Director",2014-07,,ACTIVE,Marketing,Management,47,5,English
+153,0,VRG GmbH,,Leiter Controlling und Rechnungswesen,1990-01,,ACTIVE,Other,Lead,37,4,German
+154,0,"Liberty Civil Construction, LLC",,President,2016-08,,ACTIVE,Other,Management,9,1,French
+155,0,Kreisverwaltung Darmstadt-Dieburg,,"Architektin, Fachgebietsleitung Technisches und Strategisches Gebäudemanagement",2024-10,,ACTIVE,Project Management,Lead,79,6,French
+157,0,VIRTWO,https://www.linkedin.com/company/virtwo,Co-CEO,2022-10,,ACTIVE,Other,Management,6,1,Other
+160,0,Bogner Construction Company,https://www.linkedin.com/company/bogner-construction-company,Vice President,1997-05,,ACTIVE,Other,Management,14,2,French
+161,0,Hospital Management Group GmbH,https://www.linkedin.com/company/hospital-management-group-gmbh,Krankenhausgeschäftsführer,2021,,ACTIVE,Other,Management,26,1,German
+162,0,Atos Information Technology GmbH,https://www.linkedin.com/company/atos-information-technology-gmbh,Co-Head of Bid Management CE,2023-10,,ACTIVE,Sales,Lead,28,5,Other
+162,1,Atos Information Technology GmbH,https://www.linkedin.com/company/atos-information-technology-gmbh,Bid Manager,2011-10,,ACTIVE,Sales,Lead,11,2,English
+163,0,GO! Express & Logistics,https://www.linkedin.com/company/go-express-&-logistics,Leiter IT-Service- und Betriebsmanagement,2025-04,,ACTIVE,Information Technology,Lead,41,4,German
+164,0,Independent Contractor,,Senior Human Resources Consultant,2022-04,,ACTIVE,Consulting,Senior,33,4,English
+165,0,Telenor,https://www.linkedin.com/company/telenor-group,Senior Legal Advisor,2023-09,,ACTIVE,Other,Senior,20,3,English
+166,0,TZ Garsten,,Physiotherapeutin,2007-10,,ACTIVE,Other,Professional,17,1,Other
+167,0,Fraunhofer Institute of Machine Tools and Forming Technology,https://www.linkedin.com/company/fraunhoferiwu,Research Associate,2019-10,,ACTIVE,Consulting,Junior,18,2,Other
+168,0,medpirica,,Geschäftsführender Gesellschafter,2011-04,,ACTIVE,Other,Management,33,2,German
+169,0,Harvey Nash,https://www.linkedin.com/company/harvey-nash,Finance Director Central Europe 🇩🇪🇨🇭🇵🇱,2023-06,,ACTIVE,Other,Director,38,5,English
+170,0,U.S. Department of Labor,https://www.linkedin.com/company/u-s-department-of-labor,Senior Program Analyst (Immigration),2022-02,,ACTIVE,Other,Senior,36,4,English
+171,0,Benteler Distribution,,Betriebsleiter,2012-09,,ACTIVE,Other,Lead,14,1,German
+172,0,ZF Group,https://www.linkedin.com/company/zf-group,Chief Executive Officer,2023-01,,ACTIVE,Other,Management,23,3,English
+173,0,Mediaschneider AG,https://www.linkedin.com/company/mediaschneider-ag,Chief Strategy Officer (CSO),2023-01,,ACTIVE,Other,Management,28,4,English
+176,0,AVL,https://www.linkedin.com/company/avl,Software Developer,2011-01,,ACTIVE,Information Technology,Professional,18,2,English
+177,0,Vejle Brand,https://www.linkedin.com/company/vejlebrand,CTO,2024-03,,ACTIVE,Information Technology,Management,3,1,Other
+177,1,Kodestuen,https://www.linkedin.com/company/kodestuen,Self-Employed at Kodestuen ApS,2009-05,,ACTIVE,Other,Professional,30,4,French
+179,0,ACE Auto Club Europa e. V.,https://www.linkedin.com/company/ace-auto-club-europa-e-v-,Projektkoordinator,2022-01,,ACTIVE,Project Management,Lead,18,1,German
+179,1,ACE Auto Club Europa e. V.,https://www.linkedin.com/company/ace-auto-club-europa-e-v-,"Regionalbeauftragter Club Sachsen, Thüringen, Sachsen-Anhalt Süd",2021-06,,ACTIVE,Other,Lead,64,6,Other
+180,0,Kroon & de Koning BV,https://www.linkedin.com/company/kroon-de-koning,Hoofd Bouwbureau,2021-09,,ACTIVE,Other,Lead,16,2,Other
+181,0,Siemens Energy,https://www.linkedin.com/company/siemens-energy,Head of Package & Installation Design IGC,2023-09,,ACTIVE,Project Management,Lead,41,7,French
+182,0,Deutsche Gesellschaft für Internationale Zusammenarbeit GmbH,https://www.linkedin.com/company/gizgmbh,Director General Sector and Global Programmes,2025-05,,ACTIVE,Other,Director,45,6,English
+182,1,Deutsche Gesellschaft für Internationale Zusammenarbeit GmbH,https://www.linkedin.com/company/gizgmbh,Landesdirektor,2023-09,,ACTIVE,Other,Director,14,1,French
+183,0,Ground2air Assistance,,Station Manager at Ground2Air in Palma de Mallorca,2021-05,,ACTIVE,Other,Lead,50,8,English
+184,0,St. Walburga Krankenhaus Meschede GmbH,https://www.linkedin.com/company/st-walburga-krankenhaus-meschede-gmbh,Bereichs PDL,2005-12,,ACTIVE,Other,Lead,12,2,Other
+186,0,TouchPoint Communication AG,https://www.linkedin.com/company/touchpoint-communication-ag,Geschäftsinhaber,1985,,ACTIVE,Other,Management,16,1,Other
+187,0,APOGEPHA Arzneimittel GmbH,https://www.linkedin.com/company/apogepha-arzneimittel-gmbh-dresden,Geschäftsführer CFO,2024-03,,ACTIVE,Other,Management,19,2,German
+189,0,ALPS ALPINE Europe,https://www.linkedin.com/company/alps-alpine-europe,Senior Project Leader,2021-09,,ACTIVE,Project Management,Lead,21,3,English
+192,0,Alium Technology AG,,Verwaltungsratsvorsitzender,2015-01,,ACTIVE,Other,Management,27,1,German
+193,0,HWK Erfurt,,Dozent/ Ausbilder,2005-11,,ACTIVE,Other,Professional,17,2,German
+194,0,VID vitenskapelige høgskole,,"Teamleder arkitektur, drift og sikkerhet IT-seksjonen VID",2019-06,,ACTIVE,Information Technology,Lead,57,7,French
+197,0,Ecole Hôtelière de Genève | EHG,,Responsable technique,2016-08,,ACTIVE,Information Technology,Lead,21,2,French
+198,0,Luxcenture,https://www.linkedin.com/company/luxcentureconnect,Partner,2023-08,,ACTIVE,Business Development,Management,7,1,Other
+198,1,Weber Advisory Consulting,https://www.linkedin.com/company/weber-advisory-consulting,Founder,2015-12,,ACTIVE,Other,Management,7,1,German
+199,0,Mittelstars,https://www.linkedin.com/company/mittelstars,Geschäftsführer und Podcast-Host,2024-01,,ACTIVE,Other,Management,32,3,German
+199,1,Firstlead GmbH / ADCELL,https://www.linkedin.com/company/adcell-firstlead-gmbh,Geschäftsführender Gesellschafter,2004-05,,ACTIVE,Other,Management,33,2,German
+199,2,Bermuc Holding GmbH,,Geschäftsführender Gesellschafter,2015-04,,ACTIVE,Other,Management,33,2,German
+199,3,Businessangels.de,,Geschäftsführender Gesellschafter,2003-01,,ACTIVE,Other,Management,33,2,German
+199,4,Smartbroker Holding AG,https://www.linkedin.com/company/smartbroker-holding,Aufsichtsrat,2020-08,,ACTIVE,Other,Management,12,1,Other
+200,0,F Henningsen ApS,,Business Consultant,2016-06,,ACTIVE,Consulting,Professional,19,2,English
+201,0,Instituto Vladimir Herzog,https://www.linkedin.com/company/instituto-vladimir-herzog,President Of The Board Of Directors,2017-07,,ACTIVE,Other,Management,35,6,Spanish
+203,0,Raiffeisen Bank International AG,https://www.linkedin.com/company/raiffeisen-bank-international,Head of Group Capital Markets,2023-09,,ACTIVE,Other,Lead,29,5,Other
+205,0,European Patent Office,https://www.linkedin.com/company/european-patent-office,Chairman of Board of Appeal and Member of Enlarged Board of Appeal,2018-04,,ACTIVE,Other,Management,66,12,French
+206,0,Raymond James,https://www.linkedin.com/company/raymond-james-financial-inc-,Citrix Systems Engineer,2024-10,,ACTIVE,Information Technology,Professional,23,3,English
+207,0,Amsterdam UMC,https://www.linkedin.com/company/amsterdamumc,Anesthesiemedewerker,2024-02,,ACTIVE,Other,Professional,20,1,French
+210,0,VR Payment GmbH,https://www.linkedin.com/company/vrpayment,Vertriebsdirektor,2024-01,,ACTIVE,Sales,Director,17,1,German
+210,1,VR Payment GmbH,https://www.linkedin.com/company/vrpayment,Regionalleiter Bankenbetreuung Baden-Württemberg,2019-01,,ACTIVE,Sales,Lead,48,3,French
+211,0,Montera ApS,https://www.linkedin.com/company/monteradk,Projektleder,2024-03,,ACTIVE,Project Management,Lead,12,1,French
+212,0,GENUSSMOMENTE für digitales Zusammensein,,Geschäftsführer,2020-03,,ACTIVE,Other,Management,15,1,German
+212,1,GENUSSMOMENTE für digitales Zusammensein,,Geschäftsführer,2020-03,,ACTIVE,Other,Management,15,1,German
+212,2,GENUSSMOMENTE für digitales Zusammensein,,Geschäftsführer,2020-03,,ACTIVE,Other,Management,15,1,German
+212,3,KAISERSCHOTE Feinkost Catering GmbH,https://www.linkedin.com/company/kaiserschote,CEO,1992-11,,ACTIVE,Other,Management,3,1,Other
+212,4,KAISERSCHOTE Feinkost Catering GmbH,https://www.linkedin.com/company/kaiserschote,Impulsgeber bei KAISERSCHOTE GmbH,1992-03,,ACTIVE,Other,Professional,33,4,German
+212,5,KAISERSCHOTE Feinkost Catering GmbH,https://www.linkedin.com/company/kaiserschote,Geschäftsführer,1992-02,,ACTIVE,Other,Management,15,1,German
+212,6,KAISERSCHOTE | GENUSSMOMENTE für reales und digitales Zusammensein,,Geschäftsführer,1992-02,,ACTIVE,Other,Management,15,1,German
+213,0,BBHT Beratungsgesellschaft mbH & Co. KG,https://www.linkedin.com/company/bbht-beratungsgesellschaft-mbh-&-co-kg,Geschäftsführender Gesellschafter,2015-02,,ACTIVE,Other,Management,33,2,German
+213,1,BBHT Beratungsgesellschaft mbH & Co. KG,https://www.linkedin.com/company/bbht-beratungsgesellschaft-mbh-&-co-kg,Senior Managing Consultant,2015-01,,ACTIVE,Consulting,Senior,26,3,English
+213,2,BBHT Solutions S.R.L.,https://www.linkedin.com/company/bbht-solutions,Geschäftsführer,2019-02,,ACTIVE,Other,Management,15,1,German
+214,0,Ing. Büro W.Meier GmbH,,CEO,1989-03,,ACTIVE,Other,Management,3,1,Other
+215,0,Casas André Luiz,https://www.linkedin.com/company/casasandreluiz,Gerente de Comunicação e Marketing,2024-06,,ACTIVE,Marketing,Professional,34,5,Spanish
+218,0,Karwendel-Werke Huber GmbH & Co. KG,https://www.linkedin.com/company/karwendel-werke-huber-gmbh-co-kg,Geschäftsführer Finanzen,2006-05,,ACTIVE,Other,Management,24,2,German
+219,0,A-ROSA Kreuzfahrten,https://www.linkedin.com/company/a-rosa-kreuzfahrten,CEO,2025-02,,ACTIVE,Other,Management,3,1,Other
+221,0,de Taxatheek,,Algemeen directeur,1996-01,,ACTIVE,Other,Management,18,2,French
+222,0,JPMorgan Chase & Co.,https://www.linkedin.com/company/jpmorganchase,Executive Director,2017-03,,ACTIVE,Other,Management,18,2,English
+224,0,ENOUGH,https://www.linkedin.com/company/enough-food,Supply Chain Lead & Master Planning,2024-10,,ACTIVE,Other,Lead,35,6,French
+225,0,Switch GmbH,https://www.linkedin.com/company/switchgmbh,Chief Executive Officer,2022-02,,ACTIVE,Other,Management,23,3,English
+226,0,"Triad Technologies, LLC",https://www.linkedin.com/company/triad-technologies-llc,Information Technology Business Analyst,2023-04,,ACTIVE,Information Technology,Professional,39,4,English
+227,0,SAP,https://www.linkedin.com/company/sap,Global VP and Head of Sustainability Innovation,2021-04,,ACTIVE,Other,Management,47,7,Other
+227,1,SAP,https://www.linkedin.com/company/sap,Head of Startup Engagements for S/4HANA and Digital Supply Chain,2019-09,,ACTIVE,Business Development,Lead,64,10,Other
+229,0,EIKONA AG,https://www.linkedin.com/company/eikona-logistics,Vorstandsvorsitzender,2019-03,,ACTIVE,Other,Management,21,1,German
+229,1,EIKONA AG,https://www.linkedin.com/company/eikona-logistics,Geschäftsführer,2019-03,,ACTIVE,Other,Management,15,1,German
+230,0,Principal Vermögensverwaltung AG,https://www.linkedin.com/company/principal-vermögensverwaltung-ag,Private Equity Investments,2017-12,,ACTIVE,Other,Professional,26,3,Turkish
+231,0,University of Central Lancashire,,DevOps Orchestration Manager,2025-01,,ACTIVE,Information Technology,Professional,28,3,English
+232,0,SPAR Österreich,https://www.linkedin.com/company/spar-oesterreich,Leiter Expansion und Projektentwicklung,2010-09,,ACTIVE,Project Management,Lead,39,4,German
+234,0,Amphasys,https://www.linkedin.com/company/amphasys,Head of Marketing: Promoting label-free cell analysis technology,2024-03,,ACTIVE,Marketing,Lead,64,8,English
+235,0,Autohaus Walter Mulfinger GmbH,https://www.linkedin.com/company/autohaus-walter-mulfinger-gmbh,Kfz-Mechatroniker,2006-09,,ACTIVE,Other,Professional,17,1,Other
+236,0,HEUSSINGER.de,https://www.linkedin.com/company/heussinger.de,Grafik Designer,1989-10,,ACTIVE,Marketing,Professional,15,2,English
+237,0,Solid Technology Solutions,,Chief Technology Officer,2009-08,,ACTIVE,Information Technology,Management,24,3,English
+238,0,Qatar Airways,https://www.linkedin.com/company/qatar-airways,Manager Regional Key Accounts Americas,2024-01,,ACTIVE,Sales,Professional,38,5,English
+239,0,GE Healthcare,https://www.linkedin.com/company/gehealthcare,Digital Project Managerin Marketing,2020-03,,ACTIVE,Marketing,Professional,35,4,English
+240,0,Beckmann Verlag,https://www.linkedin.com/company/beckmann-verlag,Mediaberater DpS - Fachzeitschrift f. Schädlingsbekämpfung/SalesManager DpS - Pest Control Magazine,2014-10,,ACTIVE,Sales,Professional,99,11,English
+242,1,European Union Mission in Armenia,https://www.linkedin.com/company/european-union-mission-in-armenia,Head of Logistics,2023-03,,ACTIVE,Other,Lead,17,3,Other
+243,0,AXRO GmbH,https://www.linkedin.com/company/axro-gmbh,Data Analyst,2024-09,,ACTIVE,Information Technology,Professional,12,2,English
+245,0,WEVG Salzgitter GmbH & Co. KG,,kfm. Prokurist,2010-01,,ACTIVE,Other,Management,14,2,Other
+246,0,CEIR - Center for Enterprise Information Research at University of Koblenz,https://www.linkedin.com/company/ceir,Professor,2006-10,,ACTIVE,Other,Professional,9,1,Other
+246,1,IBD | Integrated Business Design,https://www.linkedin.com/company/integrated-business-design,Founding Partner,2021-12,,ACTIVE,Other,Management,16,2,German
+247,0,Edusco construction,,Directeur de la construction,2025-01,,ACTIVE,Other,Director,28,4,French
+247,1,Groupe Pelco/Dmo,,Directeur projet,2023-03,,ACTIVE,Project Management,Director,16,2,French
+247,2,Concept SJDL inc,,Entrepreneur general et consultat construction,2022-01,,ACTIVE,Consulting,Management,46,5,Other
+249,0,M H windows decor pvt ltd,,Director of Business Development,2000,,ACTIVE,Business Development,Director,32,4,English
+250,0,Scheck Lagerhaus Transporte GmbH,https://www.linkedin.com/company/scheck-lagerhaus-transporte-gmbh,Neutraubling,1993-04,,ACTIVE,Other,Professional,12,1,Other
+251,0,ALTE OLDENBURGER Krankenversicherung AG,https://www.linkedin.com/company/alte-oldenburger-krankenversicherung-ag,Abteilungsdirektor Vertrieb,2009-04,,ACTIVE,Sales,Director,27,2,German
+252,0,Tetrao,https://www.linkedin.com/company/tetrao,Data Analyst (Sustainable & Fund Finance),2020-03,,ACTIVE,Other,Professional,41,6,English
+253,0,Itsy,https://www.linkedin.com/company/itsy-se,Kundansvarig,2025-01,,ACTIVE,Sales,Professional,12,1,German
+254,0,FalkenSteg,https://www.linkedin.com/company/falkensteg-gmbh,Geschäftsführer,2016-01,,ACTIVE,Other,Management,15,1,German
+255,0,Bürgeramt Bremen,,Referatsleiter,2023-10,,ACTIVE,Other,Lead,14,1,German
+255,3,Freie Hansestadt Bremen - Der Senator für Inneres - Bürgeramt,,Verwaltungsangestellter,2005-10,,ACTIVE,Administrative,Professional,23,1,German
+256,0,Evonik,https://www.linkedin.com/company/evonik,Global IT | Solution Architect Supply Chain Transportation,2021-09,,ACTIVE,Information Technology,Professional,58,8,English
+258,0,Musik Hug AG,https://www.linkedin.com/company/musikhug,Leiterin E-Commerce,2023-09,,ACTIVE,Marketing,Lead,19,2,German
+259,0,Agentur Rinn,,Büroleiter,2018-10,,ACTIVE,Administrative,Lead,10,1,German
+260,0,Eagle International Logistics,https://www.linkedin.com/company/eagleintlog,Managing Director,2021-08,,ACTIVE,Other,Management,17,2,English
+261,0,TMD Friction,https://www.linkedin.com/company/tmd-friction,ppa. Head of Treasury & Insurance,2023-04,,ACTIVE,Other,Lead,33,6,Other
+262,0,GRUNDFOS,https://www.linkedin.com/company/grundfos,Sourcing Specialist,2025-04,,ACTIVE,Purchasing,Professional,19,2,English
+266,0,Suregen Health-IT consulting,,"Founder, Owner",2023-01,,ACTIVE,Other,Management,14,2,German
+267,0,ONSKINERY,https://www.linkedin.com/company/onskinery,Marketplace Manager / Online Shop Manager,2022-05,,ACTIVE,Sales,Professional,41,6,English
+268,0,Deutsche Bahn,https://www.linkedin.com/company/deutschebahn,Vorsitzender des Vorstandes (CEO),2017,,ACTIVE,Other,Management,33,4,German
+269,0,Bodensee Pharma GmbH,,Geschäftsführer,2016-03,,ACTIVE,Other,Management,15,1,German
+270,0,Kanton Aargau,https://www.linkedin.com/company/kantonaargau,Teamleiter Disposition Fahrzeuge und Stv. Ressourcenplaner,2012-05,,ACTIVE,Other,Lead,58,6,German
+272,0,Cisco,https://www.linkedin.com/company/cisco,Account Manager,2025-05,,ACTIVE,Sales,Professional,15,2,English
+273,0,Oxford Instruments plc,https://www.linkedin.com/company/oxford-instruments,Head of Marketing Communications EMEA - Oxford Instruments Group,2024-10,,ACTIVE,Marketing,Lead,64,9,English
+274,0,URBANCONCEPT,,Unternehmensinhaber,2022-07,,ACTIVE,Other,Management,19,1,Other
+274,1,URBANBOX.Container,,Unternehmensinhaber,2020-05,,ACTIVE,Other,Management,19,1,Other
+274,2,URBANSHOF,,Unternehmensinhaber,1999-07,,ACTIVE,Other,Management,19,1,Other
+275,0,Holland Pharma,,Marktondersteuning,2010-10,,ACTIVE,Sales,Junior,18,1,German
+275,1,Nederlandse Drogisterij Service & Holland Pharma,,Account Manager,2010-10,,ACTIVE,Sales,Professional,15,2,English
+276,0,OpenValue,https://www.linkedin.com/company/openvalue,Director OpenValue Amsterdam,2020-11,,ACTIVE,Other,Director,28,3,English
+276,1,Code Nomads,https://www.linkedin.com/company/code-nomads,Director Code Nomads Amsterdam,2023-08,,ACTIVE,Information Technology,Director,30,4,Spanish
+277,0,FedEx,https://www.linkedin.com/company/fedex,Senior Customer Care Representative,2024-10,,ACTIVE,Customer Support,Senior,35,4,English
+279,0,VORWERK ELEKTROWERKE GMBH & CO.KG,https://www.linkedin.com/company/vorwerk-elektrowerke-gmbh-&-co.kg,CTO,2024-01,,ACTIVE,Information Technology,Management,3,1,Other
+280,0,BMW Group,https://www.linkedin.com/company/bmw-group,Group Design Strategy & -targets,2018-01,,ACTIVE,Other,Professional,32,5,French
+281,0,vsonix GmbH,https://www.linkedin.com/company/vsonix-gmbh,CEO,2012-01,,ACTIVE,Other,Management,3,1,Other
+282,0,CPS Anwendungsberatung für die Wellpappenindustrie,,Managing Director,2006-04,,ACTIVE,Other,Management,17,2,English
+283,0,KPMG Austria,https://www.linkedin.com/company/kpmg-austria,Assistant Manager,2025-01,,ACTIVE,Other,Lead,17,2,English
+283,1,KPMG Austria,https://www.linkedin.com/company/kpmg-austria,Senior Audit Associate,2023-01,,ACTIVE,Other,Senior,22,3,English
+286,0,SCALES Group A/S,https://www.linkedin.com/company/scales-group-a-s,Lead consultant,2025-01,,ACTIVE,Consulting,Lead,15,2,English
+287,0,123BAG GmbH,https://www.linkedin.com/company/123bag-gmbh,Geschäftsführender Gesellschafter,2019-11,,ACTIVE,Other,Management,33,2,German
+287,1,Alexander Böhler,,Werteorientiertes Führungskräftetraining,2016-01,,ACTIVE,Consulting,Professional,40,2,Other
+288,0,JACOB Group,https://www.linkedin.com/company/jacobgroup,Head of IT Services & Operations Management,2021-04,,ACTIVE,Information Technology,Lead,43,7,Other
+289,0,hGears,https://www.linkedin.com/company/hgears,Teamleader IT Operations Management,2024-01,,ACTIVE,Information Technology,Lead,35,4,French
+290,0,N+S Bürocenter,,Vertrieb,1997-02,,ACTIVE,Sales,Professional,8,1,German
+291,0,Siemens,https://www.linkedin.com/company/siemens,Technischer Experte für Stellwerkstechnik,2020-01,,ACTIVE,Information Technology,Senior,41,4,German
+292,0,HvS-Consulting AG,https://www.linkedin.com/company/hvs-consulting-gmbh,HR-Manager,2019-01,,ACTIVE,Human Resources,Professional,10,1,English
+294,0,TAV Operation Services,https://www.linkedin.com/company/tavos,Operation Supervisor,2024-08,,ACTIVE,Other,Lead,20,2,English
+296,0,MorgenFund,https://www.linkedin.com/company/morgenfund,Geschäftsführer,2024-05,,ACTIVE,Other,Management,15,1,German
+297,0,Bosch,https://www.linkedin.com/company/bosch,Konstrukteur,2024-02,,ACTIVE,Other,Professional,12,1,Other
+298,0,Daimler Buses GmbH,https://www.linkedin.com/company/daimlerbuses,Projektleiter in der Engineering IT,2022-10,,ACTIVE,Information Technology,Lead,35,5,German
+299,0,Evidentia bv,,Sales & Marketing Management,2010-01,,ACTIVE,Other,Professional,28,4,English
+299,1,Jaguar Land Rover Belux,https://www.linkedin.com/company/jaguar-land-rover_1,Retail Marketing Management,2018-01,,ACTIVE,Marketing,Professional,27,3,English
+301,0,blueReport (cognita AG),https://www.linkedin.com/company/cognita-ag,Ruby Fullstack Developer,2022-10,,ACTIVE,Information Technology,Professional,24,3,English
+302,0,Fischer-Plastik GesmbH,,CEO,1990-04,,ACTIVE,Other,Management,3,1,Other
+303,0,EQUANS France,https://www.linkedin.com/company/equans-france,Chef de projet senior,2021-07,,ACTIVE,Project Management,Senior,21,4,French
+305,0,Adform,https://www.linkedin.com/company/adform,Country Manager Czech Republic and Slovakia,2020-03,,ACTIVE,Other,Lead,43,6,English
+305,1,Adform,https://www.linkedin.com/company/adform,Executive Director at Adform s.r.o.,2018-11,,ACTIVE,Other,Director,35,5,English
+307,0,Yatego GmbH,https://www.linkedin.com/company/yatego-gmbh,Geschäftsführer,2017-01,,ACTIVE,Other,Management,15,1,German
+307,1,Yatego GmbH,https://www.linkedin.com/company/yatego-gmbh,Head of Account Management,2013-04,,ACTIVE,Sales,Lead,26,4,Other
+308,0,AYRES Composite Panels,https://www.linkedin.com/company/ayres-composite-panels,Group CEO,2018-07,,ACTIVE,Other,Management,9,2,Other
+310,0,Thames Valley Children's Centre,https://www.linkedin.com/company/thames-valley-children's-centre,"Director, Finance and Information Technology",2018,,ACTIVE,Other,Director,44,5,English
+311,0,Abschleppdienst Potsdam Nord Süd gmbh,,Bergungsleiter,2004-04,,ACTIVE,Other,Lead,14,1,German
+313,0,Yorizon Cloud,https://www.linkedin.com/company/yorizon-cloud,Co-CEO,2024-06,,ACTIVE,Other,Management,6,1,Other
+313,1,SCHWEINAR CONSULTING,https://www.linkedin.com/company/schweinar-consulting,Founder,2017-12,,ACTIVE,Other,Management,7,1,German
+314,0,Airbus,https://www.linkedin.com/company/airbusgroup,Aircraft Physical Security Expert,2006-10,,ACTIVE,Other,Senior,33,4,Other
+316,0,BASF,https://www.linkedin.com/company/basf,General Manager,1994-10,,ACTIVE,Other,Management,15,2,English
+318,0,FNZ Bank SE,,Head of Regulatory Projects,2023-09,,ACTIVE,Consulting,Lead,27,4,English
+319,0,GBOH Technology,https://www.linkedin.com/company/gboh-technologies,Owner,2021-07,,ACTIVE,Other,Management,5,1,Other
+320,0,Syrena Real Estate,https://www.linkedin.com/company/syrena-re,Financial Analyst,2024-10,,ACTIVE,Other,Professional,17,2,English
+321,0,Tandem 50,,Mentor,2017-07,,ACTIVE,Other,Senior,6,1,Other
+322,0,Interstarch,https://www.linkedin.com/company/interstarch-ukraine,Vertriebsingenieur,2024-10,,ACTIVE,Sales,Professional,18,1,German
+323,0,Westfälisches Energieinstitut,,Professor im Ruhestand,2023-03,,ACTIVE,Other,Professional,22,3,Other
+323,1,Westfälisches Energieinstitut,,Vorstandsmitglied,2001-12,,ACTIVE,Other,Management,17,1,Other
+325,0,Liebherr Group,https://www.linkedin.com/company/liebherr,Vedoucí pobočky Popůvky,2024-01,,ACTIVE,Administrative,Lead,23,3,Turkish
+326,1,Strukton,,Lead engineer/ groepscoordinator,1999,,ACTIVE,Information Technology,Lead,32,3,English
+327,0,Raff Sanitär GmbH,https://www.linkedin.com/company/raff-sanitär-gmbh,Geschäftsfüherer,1994-01,,ACTIVE,Other,Management,16,1,Other
+328,0,Landeshauptstadt Mainz,https://www.linkedin.com/company/landeshauptstadt-mainz,"Dezernat für Wirtschaft, Stadtentwicklung, Liegenschaften und Ordnungswesen - Büroleitung/Referent",2019-02,,ACTIVE,Other,Lead,98,9,German
+329,0,CETIN Serbia,https://www.linkedin.com/company/cetin-serbia,Senior Enterprise IT Systems Specialist,2024-04,,ACTIVE,Information Technology,Senior,39,5,English
+330,0,Botilbuddet Katrinebjerg,,Vikar,2024-11,,ACTIVE,Other,Junior,5,1,Other
+331,0,Rescop,https://www.linkedin.com/company/rescop-b.v.,General Manager,2023-01,,ACTIVE,Other,Management,15,2,English
+332,0,"GROB Systems, Inc",https://www.linkedin.com/company/grob-systems-inc,Chief Sales Officer (CSO),2024-01,,ACTIVE,Sales,Management,25,4,English
+333,0,Nestlé Waters Deutschland GmbH,,Key Account Manager,2006-09,,ACTIVE,Sales,Professional,19,3,English
+334,0,Sleeping Bird,,Selbstständig,2019-05,,ACTIVE,Other,Professional,13,1,Other
+334,1,Verkehrsbetriebe St.Gallen,,Projektleiter,2018-03,,ACTIVE,Project Management,Lead,13,1,German
+335,0,D18 Partners,,Project Manager,2023-01,,ACTIVE,Project Management,Professional,15,2,English
+336,0,Université du Maine-Le Mans-Laval,,Enseignant,2013-09,,ACTIVE,Other,Professional,10,1,Other
+338,0,Eviden,https://www.linkedin.com/company/eviden,Senior Account Manager Public Sector,2023-05,,ACTIVE,Sales,Senior,36,5,English
+339,0,ThyssenKrupp AG,https://www.linkedin.com/company/thyssenkrupp,Senior Consultant Procurement Excellence,2022-08,,ACTIVE,Consulting,Senior,40,4,English
+340,0,Anwaltskanzlei Heinemann,https://www.linkedin.com/company/anwaltskanzlei-heinemann,Rechtsanwalt,1995-07,,ACTIVE,Other,Professional,12,1,Other
+340,1,Anwaltskanzlei Heinemann,https://www.linkedin.com/company/anwaltskanzlei-heinemann,Rechtsanwalt,1976-01,,ACTIVE,Other,Professional,12,1,Other
+341,0,Wipotec,https://www.linkedin.com/company/wipotec,Commercial Service Manager,2023-07,,ACTIVE,Customer Support,Professional,26,3,English
+341,1,Wipotec,https://www.linkedin.com/company/wipotec,Teamleitung - Ersatzteile,2019-07,,ACTIVE,Purchasing,Lead,25,3,French
+342,0,Bayer,https://www.linkedin.com/company/bayer,Head of CapEx Delivery Management and Planning Site Leverkusen,2025-01,,ACTIVE,Project Management,Lead,62,9,French
+343,0,Letec-Terem,,Quality Manager,2002-02,,ACTIVE,Other,Professional,15,2,English
+344,0,Bechtle Schweiz AG,https://www.linkedin.com/company/bechtle-schweiz-ag,Senior IT-Lizenzspezialist,2010-08,,ACTIVE,Information Technology,Senior,26,2,English
+345,0,Sodexo Defence (UK),https://www.linkedin.com/company/sodexo,Strategy Director,2009,,ACTIVE,Business Development,Director,17,2,English
+346,0,Richnerstutz AG,https://www.linkedin.com/company/richnerstutz-ag,Unternehmensinhaber,2023-01,,ACTIVE,Other,Management,19,1,Other
+346,1,Richnerstutz AG,https://www.linkedin.com/company/richnerstutz-ag,Geschäftsleiter,1988-01,,ACTIVE,Other,Lead,15,1,German
+347,0,doxx GmbH,https://www.linkedin.com/company/doxx-gmbh,Unternehmensinhaber,2010-03,,ACTIVE,Other,Management,19,1,Other
+348,0,AWEX,https://www.linkedin.com/company/awexgmbh,Managing Director,2021-01,,ACTIVE,Other,Management,17,2,English
+349,0,EMEA Business Group,https://www.linkedin.com/company/emea-business-group,Director Commercial Operations,2012-01,,ACTIVE,Marketing,Director,30,3,English
+350,0,Roche Pharmaceuticals,https://www.linkedin.com/company/roche,Betriebsleiter API-Produktion,2001,,ACTIVE,Information Technology,Lead,29,2,French
+351,0,RACE FX LIMITED,https://www.linkedin.com/company/race-fx-limited,Human Resources Specialist,2021-06,,ACTIVE,Human Resources,Professional,26,3,English
+352,0,BAUKING AG,https://www.linkedin.com/company/bauking,49504,2009-08,,ACTIVE,Other,Professional,5,1,Other
+353,0,PATTON STATE HOSPITAL,,Family Nurse Practitioner,2012-12,,ACTIVE,Other,Professional,25,3,Other
+354,0,Stellantis,https://www.linkedin.com/company/stellantis,Global Chief Engineer / Manager - Power Electronics (OBC/DCDC),2024-09,,ACTIVE,Information Technology,Lead,62,9,English
+355,0,rido gmbh,,Inhaber rido gmbh,2018-08,,ACTIVE,Other,Management,17,3,Other
+355,2,Selbstständig,,Einrichtungsberater,2001-01,,ACTIVE,Other,Professional,19,1,German
+356,0,All for One Switzerland AG,https://www.linkedin.com/company/allforoneswitzerland,SAP Solutions Consultant,2022-10,,ACTIVE,Consulting,Professional,24,3,English
+357,0,LR Global Holding GmbH,https://www.linkedin.com/company/lr-global-holding-gmbh,Senior Treasury Manager,2017-09,,ACTIVE,Other,Senior,23,3,English
+358,0,Randstad Deutschland,https://www.linkedin.com/company/randstad-deutschland,Senior Consultant,2024-07,,ACTIVE,Consulting,Senior,17,2,English
+359,0,Alexander Klaus Freelance- & Interims- Marketing Consulting,,Freelance Marketing Consulting / Client Service / Interim Marketing & Branding,2022-04,,ACTIVE,Consulting,Professional,78,11,English
+360,0,Anyline,https://www.linkedin.com/company/anyline,VP Product Management,2025-01,,ACTIVE,Project Management,Management,21,3,French
+361,0,VON ARDENNE GmbH,https://www.linkedin.com/company/von-ardenne,Head of Mechanical Engiuneering,2017,,ACTIVE,Other,Lead,31,4,Other
+361,1,VON ARDENNE GmbH,https://www.linkedin.com/company/von-ardenne,Senior Manager Product Development,2014-06,,ACTIVE,Information Technology,Senior,34,4,English
+362,0,Masmec S.p.A.,https://www.linkedin.com/company/masmec-spa,Progettista Finanza Agevolata - Research Funding & Administration,2024-04,,ACTIVE,Other,Professional,65,8,German
+364,0,Oracle,https://www.linkedin.com/company/oracle,Software Engineer IV,2022-10,,ACTIVE,Information Technology,Senior,20,3,English
+365,0,Whitefish Lake First Nation #459,,Communications Coordinator,2019-10,,ACTIVE,Marketing,Lead,26,2,English
+366,0,Australian Museum,https://www.linkedin.com/company/australian-museum,Head of ICT,2023-12,,ACTIVE,Information Technology,Lead,11,3,Other
+367,0,aquantus gmbh,,Managing Director,2017-02,,ACTIVE,Other,Management,17,2,English
+367,1,Simulation Technology,,Chief Researcher,1997-08,,ACTIVE,Information Technology,Professional,16,2,Other
+368,0,OCB RENOV,,Responsable,2022-07,,ACTIVE,Other,Lead,11,1,French
+369,0,PREO Software AG,https://www.linkedin.com/company/preo-software-ag,Head of Sales DACH,2022-10,,ACTIVE,Sales,Lead,18,4,English
+370,0,IBM Deutschland GmbH,,Senior Partner,2022-11,,ACTIVE,Business Development,Senior,14,2,English
+370,1,IBM,https://www.linkedin.com/company/ibm,Partner,2018-11,,ACTIVE,Business Development,Management,7,1,Other
+371,0,Uhlmann Pac-Systeme,https://www.linkedin.com/company/uhlmann-pac-systeme,Application Consultant,2000-10,,ACTIVE,Consulting,Professional,22,2,English
+372,0,Oppskvær AS - for team som må lykkes,https://www.linkedin.com/company/oppskvaer,Partner,2020-05,,ACTIVE,Business Development,Management,7,1,Other
+372,1,"KAI KRÜGER Krüger Kommunikasjon AS Liaveien 16, 1369 Stabekk",,CEO Krüger Kommunikasjon AS,2018-03,,ACTIVE,Other,Management,27,4,Other
+372,2,Modus Design AS,,Board Member,2019-01,,ACTIVE,Other,Management,12,2,Other
+372,3,Veidekke ASA,https://www.linkedin.com/company/veidekke-asa,"Executive Vice President,Special Adviser",2013-06,,ACTIVE,Other,Management,40,4,English
+373,0,Technische Universität Kaiserslautern,,Postdoctoral Researcher and Lecturer,2020-05,,ACTIVE,Other,Professional,36,4,French
+374,0,Benchmark Electrical Solutions,https://www.linkedin.com/company/benchmark-electrical-solutions,Purchasing Manager,2018-04,,ACTIVE,Purchasing,Professional,18,2,English
+375,0,University of New Brunswick,,Postdoctoral Research Fellow,2024-01,,ACTIVE,Other,Professional,28,3,Other
+377,0,Schleuniger Global,https://www.linkedin.com/company/schleuniger,Strategic Purchasing Manager • Group Purchasing,2024-05,,ACTIVE,Purchasing,Professional,47,6,English
+378,0,Egen verksamhet,https://www.linkedin.com/company/egen-verksamhet,Konsult HR,2018-01,,ACTIVE,Human Resources,Professional,10,2,Other
+379,0,Oldenburgische Landesbank AG,https://www.linkedin.com/company/oldenburgische-landesbank-ag,Leiter Vergütung & Versorgung,1983-07,,ACTIVE,Human Resources,Lead,29,4,German
+380,0,Vision Lasertechnik für Forschung und Industrie GmbH,,Produktmanager Optomechanik,2017-04,,ACTIVE,Project Management,Professional,27,2,English
+381,0,LPL Financial,https://www.linkedin.com/company/lpl-financial,Senior Vice President,2023-04,,ACTIVE,Other,Management,21,3,English
+382,0,Beeldvorming MUMC+,https://www.linkedin.com/company/beeldvorming-mumc,Clinical Physicist,2023-07,,ACTIVE,Other,Professional,18,2,Other
+382,1,"Institute of Radiology, Friedrich-Alexander University, Erlangen",,Researcher,2023-11,,ACTIVE,Other,Professional,10,1,Other
+382,2,"Eberhard Karls Universität, Tübingen",,apl. Professor (adjunct professor),2011-08,,ACTIVE,Other,Professional,34,4,Other
+383,0,keine Angabe,https://www.linkedin.com/company/loesche.-kreationen-f-r-licht,Arbeitslos,2023-07,,ACTIVE,Other,Professional,10,1,German
+384,0,UNSW,,"Senior Lecturer, Education-Focused",2020-05,,ACTIVE,Other,Senior,34,3,French
+386,0,NEIS Collective,https://www.linkedin.com/company/neis-collective,Director of Sales & Marketing,2023-01,,ACTIVE,Sales,Director,29,5,English
+387,0,KALORIMETA GmbH,https://www.linkedin.com/company/kalorimeta-gmbh,Master Data & Demand Manager Supply Chain Management,2024-06,,ACTIVE,Other,Professional,52,8,English
+389,0,Gaugler & Lutz GmbH & Co.KG,,Verkaufsleitung,1991-09,,ACTIVE,Sales,Lead,15,1,French
+390,0,Siemens Gamesa,https://www.linkedin.com/company/siemensgamesa,Platform Support Direct Drive,2023-01,,ACTIVE,Customer Support,Professional,29,4,French
+392,0,ErgaNet,https://www.linkedin.com/company/erganet,Recruitment Manager,2022-05,,ACTIVE,Human Resources,Professional,19,2,English
+393,0,Schwab Retirement Plan Services,https://www.linkedin.com/company/schwab-retirement-services,"Vice President, National Sales Manager",2019-02,,ACTIVE,Sales,Management,38,5,English
+394,0,SPIE Deutschland & Zentraleuropa,https://www.linkedin.com/company/spie-germany-switzerland-austria,Geschäftsführer SPIE GfT GmbH,2024-02,,ACTIVE,Other,Management,29,4,German
+395,0,University of Tuebingen,https://www.linkedin.com/company/university-of-tuebingen,Professor,1990-01,,ACTIVE,Other,Professional,9,1,Other
+396,0,Helios Kliniken GmbH,,Head of Marketing Technology (Teamlead),2018-09,,ACTIVE,Marketing,Lead,39,5,English
+397,0,Saint-Gobain Isover,,AUTOMATICIEN ELECTRICIEN,2008-01,,ACTIVE,Other,Professional,24,2,French
+400,0,CCL Label,https://www.linkedin.com/company/ccl-label,General Manager,2018-01,,ACTIVE,Other,Management,15,2,English
+400,1,CCL Kontur,,Commercial Director,2014-07,,ACTIVE,Other,Director,19,2,English
+401,0,marcoloeschdesign,,Grafikdesigner (Freelance),2023-07,,ACTIVE,Marketing,Professional,26,2,French
+402,0,SaiVa SysTem – a CMMI Level III Company,https://www.linkedin.com/company/saivasystem,Account Manager & Talent Acquisition Lead,2019-06,,ACTIVE,Human Resources,Lead,41,6,English
+403,0,Selbstständig,,Geschäftsführender Gesellschafter,1995-02,,ACTIVE,Other,Management,33,2,German
+403,1,BAUMA Vermiet- und Handels GmbH,https://www.linkedin.com/company/bauma-vermiet-und-handels-gmbh,Geschäftsführender Gesellschafter CEO,1995-02,,ACTIVE,Other,Management,37,3,German
+404,0,Domtar,https://www.linkedin.com/company/domtar,Maintenance & Engineering Manager,2010,,ACTIVE,Information Technology,Professional,33,4,English
+406,0,Bank-Verlag GmbH,https://www.linkedin.com/company/bank-verlag-gmbh,Bereichsleiter Central Service Center,2022-12,,ACTIVE,Customer Support,Lead,37,4,German
+406,1,Christmann & Pfeifer GmbH & Co.,,Mitglied des Aufsichtsrats,2014-09,,ACTIVE,Other,Management,26,3,French
+407,0,AI in Complex Systems Lab - CEHC - UAlbany,https://www.linkedin.com/company/ai-complex-lab,Researcher,2024-07,,ACTIVE,Other,Professional,10,1,Other
+408,0,Wagener,,Schornsteinfeger Meisterbetrieb,1999-01,,ACTIVE,Other,Lead,31,2,Other
+411,0,Europris,https://www.linkedin.com/company/europris-as,Senior UX Designer,2022-03,,ACTIVE,Information Technology,Senior,18,3,English
+412,0,Accenture DACH,https://www.linkedin.com/company/accenture-dach,Cloud Advisory Analyst,2024-07,,ACTIVE,Consulting,Professional,22,3,English
+413,0,MSH Medien System Haus GmbH & Co. KG,https://www.linkedin.com/company/msh-medien-system-haus-gmbh-&-co.-kg,Leiter Managed IT | Cloud Services,1999-04,,ACTIVE,Information Technology,Lead,34,6,German
+415,0,Magenta Telekom,https://www.linkedin.com/company/magenta-telekom,Senior Manager B2B Contract & Implementation Management,2022-01,,ACTIVE,Project Management,Senior,55,7,English
+416,0,Automotive Lighting,https://www.linkedin.com/company/marelligroup,Research Development Group Manager,2020-01,,ACTIVE,Information Technology,Professional,34,4,English
+417,0,Pirelli Deutschland GmbH,,Head of accounting and tax department,1984-10,,ACTIVE,Other,Lead,37,6,French
+418,0,Liegenschaften Stadt Zürich,https://www.linkedin.com/company/liegenschaften-stadt-zürich,Teamleiter Bestandesentwicklung,2024-05,,ACTIVE,Other,Lead,31,2,German
+418,1,Liegenschaften Stadt Zürich,https://www.linkedin.com/company/liegenschaften-stadt-zürich,Projektleiter Bestandesentwicklung bei Liegenschaften Stadt Zürich,2023-06,,ACTIVE,Project Management,Lead,66,6,German
+418,2,Genossenschaft Neubühl,https://www.linkedin.com/company/genossenschaft-neubühl,Vorstandsmitglied,2023-10,,ACTIVE,Other,Management,17,1,Other
+420,0,Datenschutz,https://www.linkedin.com/company/datenschutz,Juristin,2022-08,,ACTIVE,Other,Professional,8,1,Other
+421,0,Rudolf Klaschka GmbH,,Projektleiter,2015-07,,ACTIVE,Project Management,Lead,13,1,German
+422,0,Det Danske Madhus,https://www.linkedin.com/company/det-danske-madhus,Head of Procurement,2023-06,,ACTIVE,Purchasing,Lead,19,3,Other
+423,0,BLOX IT AB,https://www.linkedin.com/company/blox-it-ab,Ägare & affärsområdeschef IT (CTO),2021-04,,ACTIVE,Information Technology,Management,34,5,French
+423,1,Scandinavian Solutions,https://www.linkedin.com/company/scandinavian-solutions,Founder and owner,2023-03,,ACTIVE,Other,Management,17,3,German
+423,2,Scandinavian Solutions,https://www.linkedin.com/company/scandinavian-solutions,Grundare & ägare,2019-05,,ACTIVE,Other,Management,16,3,German
+425,1,Hotel An der Philharmonie GmbH,https://www.linkedin.com/company/hotel-an-der-philharmonie-gmbh,HGF,1995-01,,ACTIVE,Other,Professional,3,1,Other
+426,0,Validatis,https://www.linkedin.com/company/validatis,Managing Director (CTO),2025-04,,ACTIVE,Information Technology,Management,23,3,English
+426,1,Kerentia GmbH,https://www.linkedin.com/company/kerentia,Managing Director & Co-Founder,2022-09,,ACTIVE,Other,Management,30,4,German
+428,0,Robert Bosch GmbH,,Senior Manager,2020-03,,ACTIVE,Other,Senior,14,2,English
+428,1,Robert Bosch GmbH,,Quality Engineer,2013-10,,ACTIVE,Information Technology,Professional,16,2,English
+431,0,"Tyto Athene, LLC",https://www.linkedin.com/company/gotyto,Cyber Security Analyst - Senior,2022-07,,ACTIVE,Information Technology,Senior,31,5,English
+433,0,TRW,https://www.linkedin.com/company/zf-group,Purchasing Senior Manager,1985-08,,ACTIVE,Purchasing,Senior,25,3,English
+434,0,Arcadia,,Partner,2000-03,,ACTIVE,Business Development,Management,7,1,Other
+435,0,InfoCom GmbH,https://www.linkedin.com/company/infocom-gmbh,Managing Director,1988,,ACTIVE,Other,Management,17,2,English
+436,0,CONSTANT AG,,"Vorstandsassistent, CMO",2017-01,,ACTIVE,Marketing,Management,23,2,German
+436,1,CONSTANT AG,,Assistent der Geschäftsleitung,2013-02,,ACTIVE,Administrative,Lead,30,3,German
+437,0,Elevate Advertising,https://www.linkedin.com/company/elevate-advertising,Co-Founder and CEO,2016-08,,ACTIVE,Other,Management,18,3,German
+438,0,Airbus Helicopters,https://www.linkedin.com/company/airbusgroup,Sub-Manager Coordination & Planning,2012-01,,ACTIVE,Project Management,Lead,35,4,English
+438,1,Airbus Helicopters,https://www.linkedin.com/company/airbusgroup,Sub-Manager Coordination & Planning,2012-01,,ACTIVE,Project Management,Lead,35,4,English
+439,0,Blaser Group,https://www.linkedin.com/company/blaser-group,Geschäftsführer (CEO),2020-05,,ACTIVE,Other,Management,21,2,German
+440,0,Van Dijk Tuinen,,Vakbekwaam Hovenier,2020-07,,ACTIVE,Other,Professional,19,2,Turkish
+441,0,RMS Radio Marketing Service GmbH & Co. KG,https://www.linkedin.com/company/rms-radio-marketing-service-gmbh-&-co-kg,Verkaufsmanager,2003-11,,ACTIVE,Sales,Professional,15,1,English
+443,0,Kennesaw State University Norman J. Radow College of Humanities and Social Sciences,,Professor of French and Francophone Studies,2023-07,,ACTIVE,Other,Professional,43,6,German
+443,1,Conseil International d'Études Francophones (CIEF),https://www.linkedin.com/company/conseil-international-d'-tudes-francophones-cief-,Co-Executive Director,2016-06,,ACTIVE,Other,Management,21,2,English
+444,0,DB - DEUTSCHE BAHN AG,,HR Specialist Personnel Development,2012-05,,ACTIVE,Human Resources,Professional,35,4,English
+445,0,Inno and Co,,Directeur,2025-03,,ACTIVE,Other,Director,9,1,French
+446,0,Wow! Momo,https://www.linkedin.com/company/wow-momo,Senior Executive in L&D Department,2022-07,,ACTIVE,Human Resources,Senior,34,5,English
+447,0,Vacon srl,,Finance and HR,1990-12,,ACTIVE,Other,Professional,14,3,Other
+448,0,"FZEY GmbH – Frohe Zukunft, ey!",https://www.linkedin.com/company/frohe-zukunft-ey,Geschäftsführer + Berater + Designer,2009-01,,ACTIVE,Other,Management,36,5,German
+448,1,"FZEY GmbH – Frohe Zukunft, ey!",https://www.linkedin.com/company/frohe-zukunft-ey,Geschäftsführer,2005-01,,ACTIVE,Other,Management,15,1,German
+449,0,Johann Wolfgang Goethe-Universität Frankfurt am Main,,PHD Student,2021-10,,ACTIVE,Other,Junior,11,2,French
+450,0,Zürcher Hochschule der Künste,,Dozent,2013,,ACTIVE,Other,Professional,6,1,Other
+451,0,MetLife,https://www.linkedin.com/company/metlife,"AVP, Dental Quality & Clinical Oversight",2023-12,,ACTIVE,Other,Professional,40,6,French
+452,0,Kick-Media AG,https://www.linkedin.com/company/kick-media-ag,Vorstandsvorsitzender der Kick-Media AG,2001-10,,ACTIVE,Other,Management,39,4,German
+453,0,Carsat Sud-Est,https://www.linkedin.com/company/carsat-sud-est,Administrateur suppléant/ Membre des Commissions Marchés / Relations avec le Public / CTR2,2018-03,,ACTIVE,Other,Junior,90,13,French
+453,1,ANCIENS COMBATTANTS ET VICTIMES DE GUERRE,https://www.linkedin.com/company/anciens-combattants-et-victimes-de-guerre,Assistant,2023-01,,ACTIVE,Administrative,Junior,9,1,English
+454,0,Neue Pressegesellschaft,https://www.linkedin.com/company/neue-pressegesellschaft,"Gesamtleiterin Personal, Mitglied der Geschäftsleitung",2018-04,,ACTIVE,Human Resources,Lead,54,5,German
+456,0,The Strategy Group,,Partner,2015-12,,ACTIVE,Business Development,Management,7,1,Other
+457,0,HOTEL - RESTAURANT L OURS DE MUTZIG,https://www.linkedin.com/company/hotel---restaurant-l-ours-de-mutzig,Responsable de salle,2025-01,,ACTIVE,Administrative,Lead,20,3,French
+459,0,"Svendsen and Associates, LLC",,Special Education Advocate/Education Consultant,2025-01,,ACTIVE,Consulting,Professional,47,4,English
+461,0,GEMELLii Drinks GmbH,https://www.linkedin.com/company/gemellii-drinks-gmbh,CEO & Co-Founder,2017-03,,ACTIVE,Other,Management,16,3,German
+461,1,Havas Media,https://www.linkedin.com/company/havas-media-network,Project Coordinator Finance,2013-02,,ACTIVE,Project Management,Lead,27,3,English
+462,0,Johannes-Diakonie Mosbach,,Bauprojektleiter,2023-01,,ACTIVE,Project Management,Lead,16,1,German
+462,1,Johannes-Diakonie Mosbach,,"Projektleiter, Bau-+ Neubauprojekte",2023-01,,ACTIVE,Project Management,Lead,35,3,German
+465,0,Stefan Wulff AB,,Owner,2010-12,,ACTIVE,Other,Management,5,1,Other
+465,1,Wordplay trycksaksproduktion,,Owner,2005-08,,ACTIVE,Other,Management,5,1,Other
+466,0,Ingo Wolters,,Systemischer Berater für Organisationsentwicklung und Coach,2017-05,,ACTIVE,Consulting,Professional,59,6,German
+467,0,Cosmetix West,https://www.linkedin.com/company/cosmetix-west,General Manager/Vice President of Planning,2010-05,,ACTIVE,Other,Management,42,5,French
+468,0,"Novartis, P&O Switzerland",,Senior Diversity & Inclusion Partner,2016-04,,ACTIVE,Human Resources,Senior,36,5,English
+469,0,Weber Management Solutions,https://www.linkedin.com/company/weber-management-solutions,Managing Director,2020-05,,ACTIVE,Other,Management,17,2,English
+470,0,Werimo Group,,Key Account / Project Manager,2021-12,,ACTIVE,Other,Lead,29,5,English
+472,0,Grubers Beckett,,Owner,2001-05,,ACTIVE,Other,Management,5,1,Other
+473,0,Klarna,https://www.linkedin.com/company/klarna,Senior Commercial Manager,2021-11,,ACTIVE,Sales,Senior,25,3,English
+475,0,IAV,https://www.linkedin.com/company/iav-gmbh,Executive Vice President Connected Software Systems & Services,2021-04,,ACTIVE,Information Technology,Management,62,8,English
+476,0,Hausbank München eG,https://www.linkedin.com/company/hausbank-muenchen,"Abteilungsleiter Vertrieb, Dipl. Bankbetriebswirt Management (ADG)",2003-01,,ACTIVE,Sales,Lead,66,6,German
+477,0,Continental,https://www.linkedin.com/company/continental,HR IT Consultant,2022-06,,ACTIVE,Consulting,Professional,16,3,English
+478,0,Sinosteel-Tech,,CEO,2013,,ACTIVE,Other,Management,3,1,Other
+479,0,Gemeente Arnhem,https://www.linkedin.com/company/gemeentearnhem,Bestuursassistent,2022-10,,ACTIVE,Administrative,Professional,17,1,German
+481,0,instagrid,https://www.linkedin.com/company/instagrid,Senior Data Analyst,2023-11,,ACTIVE,Information Technology,Senior,19,3,English
+483,0,Jönköping University ILO,,Tekniklektor,2018-01,,ACTIVE,Information Technology,Lead,12,1,French
+483,1,Winkler Organisationsutveckling AB,,"Utbildare och konsult inom organisation, ledarskap och projektledning",1997,,ACTIVE,Consulting,Professional,69,8,French
+484,0,Irwin Mitchell,https://www.linkedin.com/company/irwin-mitchell,Trainee Solicitor,2025-03,,ACTIVE,Other,Junior,17,2,Other
+486,0,Reinvigorate Group,,Managing Director,2003-09,,ACTIVE,Other,Management,17,2,English
+489,0,Verna,https://www.linkedin.com/company/verna_iceland,Chief Operating Officer,2020-05,,ACTIVE,Other,Management,23,3,English
+490,0,Selbständig,,Geschäftsführer Bergauer-Logistic,2001-04,,ACTIVE,Other,Management,33,2,German
+490,1,Bergauer-Pharmalogistik e.K.,,Geschäftsführer,2012-01,,ACTIVE,Other,Management,15,1,German
+491,0,Infosys,https://www.linkedin.com/company/infosys,Senior Technology Architect,2023-11,,ACTIVE,Information Technology,Senior,27,3,English
+493,0,InterContinental Hotels Group (IHG®),https://www.linkedin.com/company/ihghotels&resorts,Director Of Food And Beverage,2017-04,,ACTIVE,Other,Director,29,5,English
+494,0,John Hancock,https://www.linkedin.com/company/john-hancock,Managing Sr. Underwriting Director,2025-03,,ACTIVE,Other,Senior,34,4,German
+495,0,msg global solutions,https://www.linkedin.com/company/msg-global,Head of Business Unit Finance | Executive Vice President,2023-06,,ACTIVE,Other,Lead,56,9,English
+496,0,CBRE GWS GmbH,,Facility Coordinator CBRE GWS GmbH,2017-12,,ACTIVE,Administrative,Lead,34,5,English
+496,1,ISS Facility Services,,Facility Coordinator,2017-12,,ACTIVE,Administrative,Lead,20,2,English
+497,0,CCA Corporate Counsel Advisors,,Director,2025-02,,ACTIVE,Other,Director,8,1,English
+497,1,Institute of Corporate Directors Malaysia (ICDM),https://www.linkedin.com/company/icdm-malaysia,Member,2020-01,,ACTIVE,Other,Professional,6,1,Other
+498,0,Brunswick Group,https://www.linkedin.com/company/brunswick-group,Associate,2021-10,,ACTIVE,Other,Junior,9,1,Other
+499,0,Action Sales Food Service Equipment & Supplies,https://www.linkedin.com/company/action-sales-inc,Buyer,2021-11,,ACTIVE,Purchasing,Professional,5,1,Other
+501,0,Leatherman Tool Group,https://www.linkedin.com/company/leatherman-tool-group,Warranty Service Specialist,2020-10,,ACTIVE,Customer Support,Professional,27,3,English
+502,0,Cognizant,https://www.linkedin.com/company/cognizant,HR - Talent Manager,2015-03,,ACTIVE,Human Resources,Professional,19,4,English
+502,3,Freelance,,Freelance Photographer,2011-12,,ACTIVE,Other,Professional,22,2,French
+503,0,vialytics,https://www.linkedin.com/company/vialytics,Senior Director of Sales & SDR Germany,2025-01,,ACTIVE,Sales,Director,38,7,English
+503,1,vialytics,https://www.linkedin.com/company/vialytics,Director of Sales & SDR Germany,2023-07,,ACTIVE,Sales,Director,31,6,English
+505,0,GLS,https://www.linkedin.com/company/gls,Addetto alla logistica,2022-08,,ACTIVE,Other,Professional,22,3,French
+506,1,Xsenses GmbH,,CEO,2020-10,,ACTIVE,Other,Management,3,1,Other
+508,0,PPD,https://www.linkedin.com/company/ppd,Assistant Clinical Research Associate,2023-06,,ACTIVE,Other,Junior,37,4,English
+508,1,Greeneeng,https://www.linkedin.com/company/greeneeng,Chief Operating Officer,2019-01,,ACTIVE,Other,Management,23,3,English
+509,0,eccoform production GmbH,,Office Administrator,2011-08,,ACTIVE,Administrative,Professional,20,2,English
+510,0,DEWESoft Deutschland GmbH,,Regionaler Vertriebsleiter,2013-03,,ACTIVE,Sales,Lead,26,2,German
+511,0,Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) GmbH,https://www.linkedin.com/company/gizgmbh,Portfolio Manager,2022-01,,ACTIVE,Other,Professional,17,2,English
+512,0,Innocard Loyalty AG,,Inhaber,2024-05,,ACTIVE,Other,Management,7,1,Other
+513,0,"TTI, Inc. - Europe",https://www.linkedin.com/company/tti-europe,Technical Development Manager - Interconnect,2024-10,,ACTIVE,Information Technology,Professional,44,5,English
+514,0,Wälchli und Partner AG,,Partner und VRP,2001-06,,ACTIVE,Business Development,Management,15,3,German
+514,1,Wälchli & Partner AG,,dipl. Bauingenieur FH/STV,2001-06,,ACTIVE,Other,Professional,25,3,German
+515,0,Winning BLW Group,https://www.linkedin.com/company/winning-blw-group,Vice President,2020-11,,ACTIVE,Other,Management,14,2,French
+517,0,Quest Equity,https://www.linkedin.com/company/questequity,Chief Executive Officer,2024-05,,ACTIVE,Other,Management,23,3,English
+518,0,Einzelunternehmen,https://www.linkedin.com/company/einzelunternehmen,Programmierer,2003-04,,ACTIVE,Information Technology,Professional,13,1,Other
+519,0,Krones,https://www.linkedin.com/company/krones,Global Mobility Consultant,2023-09,,ACTIVE,Consulting,Professional,26,3,English
+520,0,Privatpraxis für Orthopädie und Naturheilverfahren,,"Facharzt für Orthopädie und Unfallchirurgie,Chirurgie Chirotherapie, , Naturheilverfahren",2012-02,,ACTIVE,Other,Professional,89,8,German
+521,0,Smurfit Westrock,https://www.linkedin.com/company/smurfit-westrock,Qualitätsmanager,2024-07,,ACTIVE,Project Management,Lead,16,1,English
+521,1,Smurfit Kappa,https://www.linkedin.com/company/smurfit-kappa-group,Qualitätsmanager,2020-01,,ACTIVE,Project Management,Lead,16,1,English
+522,0,"Mimetics, LLC",,CEO,2015-01,,ACTIVE,Other,Management,3,1,Other
+522,1,"Criterion Capital, LLC",,Principal,2010-06,,ACTIVE,Other,Senior,9,1,Other
+523,0,ALDI Nord,https://www.linkedin.com/company/aldinord,Senior Manager,2023-01,,ACTIVE,Other,Senior,14,2,English
+524,0,Selbstständig,,DayTrader,2017-08,,ACTIVE,Other,Professional,9,1,German
+525,0,Webasto Group,https://www.linkedin.com/company/webasto,VP Purchasing & Supplier Quality Webasto China,2025-02,,ACTIVE,Purchasing,Management,46,7,Other
+528,0,Clark National Accounts,https://www.linkedin.com/company/clark-national-accounts,Equipment Project Manager,2025-02,,ACTIVE,Project Management,Professional,25,3,English
+529,1,"Kunshan lian da information technology co., LTD",,"lian da information technology co., LTD",2013-08,,ACTIVE,Other,Professional,39,6,Other
+530,0,Washington's Best Guides LLC,,Business Owner,2017-02,,ACTIVE,Other,Management,14,2,English
+530,1,Karen Pohlmann Miller,,Owner,2010-04,,ACTIVE,Other,Management,5,1,Other
+531,0,CROWDFOX GmbH,https://www.linkedin.com/company/crowdfox,Geschäftsführer - CEO,2020-08,,ACTIVE,Other,Management,21,3,German
+531,1,SchaeferJuede Consulting,,Co-Founder,2019-07,,ACTIVE,Other,Management,10,1,German
+532,0,10X Health System,https://www.linkedin.com/company/10x-health-system,EVP Strategic Partnerships,2025-02,,ACTIVE,Business Development,Professional,26,3,Other
+533,0,Service Experts Heating & Air Conditioning,https://www.linkedin.com/company/service-experts,Senior HVAC Technician,2022-10,,ACTIVE,Other,Senior,22,3,English
+534,0,AkzoNobel,https://www.linkedin.com/company/akzonobel,Non Executive Director - Member of the Supervisory Board,2025-04,,ACTIVE,Other,Management,56,9,English
+534,1,LANXESS,https://www.linkedin.com/company/lanxess,Non Executive Director - Member of the Supervisory Board,2024-05,,ACTIVE,Other,Management,56,9,English
+535,0,Gemeinde Langgöns,https://www.linkedin.com/company/gemeinde-langgöns,Bauverwaltung,2020-09,,ACTIVE,Administrative,Professional,13,1,German
+535,1,Gemeinde Langgöns,https://www.linkedin.com/company/gemeinde-langgöns,Baubeamter,2020-09,,ACTIVE,Other,Professional,10,1,Other
+536,0,Freiberuflich,,Rechtsanwalt mit Schwerpunkt Gen-/Biotechnik und Arzneimittelrecht,2023-01,,ACTIVE,Other,Professional,66,6,German
+537,0,The Seattle Times,https://www.linkedin.com/company/the-seattle-times,Sports Columnist,2015-08,,ACTIVE,Other,Professional,16,2,Other
+538,0,IBM Switzerland Ltd.,,Managing Consultant - Business Transformation,2024-11,,ACTIVE,Consulting,Professional,45,5,English
+541,0,BACHMANN Group,https://www.linkedin.com/company/bachmann-group,CEO,1989-07,,ACTIVE,Other,Management,3,1,Other
+542,0,Mecklenburgische Versicherungsgruppe,https://www.linkedin.com/company/mecklenburgische-versicherungen,Vorsitzender der Aufsichtsräte Mecklenburgische Versicherungen,2021-06,,ACTIVE,Other,Management,62,5,French
+543,0,KfW,https://www.linkedin.com/company/kfw,Junior Referent Landesförderinstitute,2023-09,,ACTIVE,Other,Junior,37,3,German
+546,0,TheKingmaker,,Kingmaker,2011-02,,ACTIVE,Other,Professional,9,1,Other
+546,1,Carlo Chincarini Coaching,,Founder,2020-05,,ACTIVE,Other,Management,7,1,German
+547,0,BookLogic,https://www.linkedin.com/company/booklogic,Head of Sales & Partnerships,2020-01,,ACTIVE,Sales,Lead,28,5,English
+547,1,Partnership Leaders,https://www.linkedin.com/company/partnershipleaders,Member,2020,,ACTIVE,Other,Professional,6,1,Other
+547,2,RevGenius,https://www.linkedin.com/company/revgenius,Member,2020,,ACTIVE,Other,Professional,6,1,Other
+547,3,Cloud Software Association,https://www.linkedin.com/company/cloud-software-association,Member,2020,,ACTIVE,Other,Professional,6,1,Other
+548,0,GFA Consulting Group GmbH,https://www.linkedin.com/company/gfa-consulting-group-gmbh,Public Health Consultant,2024-06,,ACTIVE,Consulting,Professional,24,3,English
+549,0,Yve!decoration GmbH,,Vertriebsleiter,2013-05,,ACTIVE,Sales,Lead,15,1,German
+550,0,Nokia,https://www.linkedin.com/company/nokia,DevSecOps CoE Lead,2021-09,,ACTIVE,Information Technology,Lead,18,3,French
+551,0,RATIONAL AG,https://www.linkedin.com/company/rational-ag,Executive Vice President Digital Customer Solutions,2025-01,,ACTIVE,Marketing,Management,51,6,English
+552,0,NASA Federal Credit Union,https://www.linkedin.com/company/nasa-federal-credit-union,Senior Financial Crimes Investigator,2015-10,,ACTIVE,Other,Senior,36,4,English
+553,0,Georg Thieme Verlag KG,https://www.linkedin.com/company/thieme,Projektmanager Therapieberufe,2016-09,,ACTIVE,Project Management,Professional,29,2,English
+554,0,Kernkraftwerk Gösgen-Däniken AG,https://www.linkedin.com/company/kernkraftwerk-gösgen-däniken-ag,Leiter Zerstörungsfreie Prüfungen MQP,2020-01,,ACTIVE,Other,Lead,37,4,German
+554,1,Kernkraftwerk Gösgen-Däniken AG,https://www.linkedin.com/company/kernkraftwerk-gösgen-däniken-ag,Qualitätsicherung,1992-03,,ACTIVE,Information Technology,Professional,17,1,Other
+555,0,DB Engineering & Consulting,https://www.linkedin.com/company/db-engineering-consulting,Referent Digitale Schiene,2020-01,,ACTIVE,Marketing,Professional,25,3,German
+556,0,Orange Lion Hospitality Consulting Sagl.,https://www.linkedin.com/company/orange-lion-hospitality-experts,Director Projects,2019-03,,ACTIVE,Project Management,Director,17,2,English
+557,0,LASER COMPONENTS,https://www.linkedin.com/company/laser-components,Geschäftsführer / General Manager,2023-11,,ACTIVE,Other,Management,33,4,English
+558,0,Engel & Völkers Hotel Consulting GmbH,https://www.linkedin.com/company/engel-voelkers-hotel-consulting-gmbh,Managing Partner,2016-11,,ACTIVE,Business Development,Management,16,2,Other
+561,0,Greenwood Health and Living,,Diatary Aide,2011,,ACTIVE,Other,Professional,12,2,French
+563,0,Freelance,,Consultant,2015-08,,ACTIVE,Consulting,Professional,10,1,English
+564,0,zeb consulting,https://www.linkedin.com/company/zebconsulting,Research Analyst,2020-09,,ACTIVE,Other,Professional,16,2,English
+565,0,Siemens AG,https://www.linkedin.com/company/siemens,Senior Consultant Data Center,2016-04,,ACTIVE,Consulting,Senior,29,4,English
+566,0,RIV Technologies,https://www.linkedin.com/company/riv-academy,Head Of RIV Academy - Blockchain,2024-04,,ACTIVE,Information Technology,Lead,32,6,French
+567,0,PROXORA Compliance Management. Next Level.,https://www.linkedin.com/company/proxora,Software Architect,2023-11,,ACTIVE,Information Technology,Senior,18,2,English
+568,0,Bosch,https://www.linkedin.com/company/bosch,Product and Service Manager Qualitymanagement; Solution architect,2021-05,,ACTIVE,Other,Professional,65,7,English
+569,0,Baumanu GmbH & Co. KG,,Geschäftsführender Inhaber,2003-05,,ACTIVE,Other,Management,26,2,German
+570,0,B+S GmbH Logistik und Dienstleistungen,https://www.linkedin.com/company/b-s-gmbh-logistik-und-dienstleistungen,Team/Bereichsleiter,2024-10,,ACTIVE,Other,Lead,19,1,German
+571,0,B&S Sicherheits- und Elektrotechnik GmbH,,Elektrotechniker mit erweitertem Aufgabenbereich,2010-10,,ACTIVE,Other,Professional,48,4,French
+572,0,Belastingdienst,https://www.linkedin.com/company/belastingdienst,(gedelegeerd) Business owner,2022-03,,ACTIVE,Other,Management,28,3,French
+573,0,MSA - The Safety Company,https://www.linkedin.com/company/msa-the-safety-company,"Regional Sales Manager, Central European Region",2018-01,,ACTIVE,Sales,Professional,47,6,English
+574,0,ASH Adolf Schlünder Handelsagentur GmbH & Co. KG,,Mitglied der Geschäftsleitung,2018-07,,ACTIVE,Other,Management,29,3,French
+574,1,ASH Adolf Schlünder Handelsagentur GmbH & Co. KG,,Key-Account-Manager,2013-07,,ACTIVE,Sales,Professional,19,1,English
+575,0,CONTACT Software,https://www.linkedin.com/company/contact-software,Chief Transformation Officer,2023-05,,ACTIVE,Other,Management,28,3,English
+575,1,Freelance,,In non compete phase,2023-01,,ACTIVE,Other,Professional,20,4,Other
+576,0,C.H. Robinson Worldwide GmbH,https://www.linkedin.com/company/c.h.-robinson-worldwide-gmbh,General Manager:in,2018-01,,ACTIVE,Other,Management,18,2,English
+576,1,C.H. Robinson,https://www.linkedin.com/company/c-h-robinson,Branch Manager,2011,,ACTIVE,Other,Professional,14,2,English
+577,0,Stealth Startup,https://www.linkedin.com/company/stealth-startup-careers,Summoner,2023-11,,ACTIVE,Other,Professional,8,1,Other
+577,1,dOrg,https://www.linkedin.com/company/dorg-tech,Business Development Agent,2024-08,,ACTIVE,Business Development,Professional,26,3,English
+577,2,Hive3,https://www.linkedin.com/company/hive3tech,Advisor,2024-05,,ACTIVE,Consulting,Professional,7,1,Other
+577,3,Redcurry,https://www.linkedin.com/company/redcurry,Advisor,2023-04,,ACTIVE,Consulting,Professional,7,1,Other
+577,4,OpenExO,https://www.linkedin.com/company/openexo,ExO Sprint Coach,2020-05,,ACTIVE,Consulting,Lead,16,3,Other
+577,5,OpenExO,https://www.linkedin.com/company/openexo,ExO Trainer,2020-07,,ACTIVE,Other,Professional,11,2,Other
+577,6,OpenExO,https://www.linkedin.com/company/openexo,Ambassador,2020-03,,ACTIVE,Sales,Professional,10,1,Other
+577,7,OpenExO,https://www.linkedin.com/company/openexo,ExO Consultant,2020-02,,ACTIVE,Consulting,Professional,14,2,English
+577,8,OpenExO,https://www.linkedin.com/company/openexo,Member,2019-02,,ACTIVE,Other,Professional,6,1,Other
+577,9,Sistema B,https://www.linkedin.com/company/sistema-b,Multiplicador B,2018-12,,ACTIVE,Other,Professional,15,2,Other
+578,0,Indépendant,,Professeur de Mathématique particulier,2024-09,,ACTIVE,Other,Professional,38,4,French
+579,0,Teledyne DALSA,https://www.linkedin.com/company/teledyne-dalsa,Business Development Leader,2022-01,,ACTIVE,Business Development,Lead,27,3,English
+581,0,Kulturliebekoeln,https://www.linkedin.com/company/kulturliebekoeln,Mitgründerin,2020-01,,ACTIVE,Other,Management,12,1,German
+581,1,TOR COLOGNE LIMITED,https://www.linkedin.com/company/tor-cologne-limited,Digitalbeauftragte,2018-01,,ACTIVE,Marketing,Lead,18,1,Other
+582,0,Robert Fink Media,,Eigenaar,2020-05,,ACTIVE,Other,Management,8,1,Other
+582,1,Hrodberaht Film,,Eigenaar,2022-01,,ACTIVE,Other,Management,8,1,Other
+584,0,ThyssenKrupp Steel Europe AG,https://www.linkedin.com/company/thyssenkrupp-steel,Automotive Sales Manager,2012-10,,ACTIVE,Sales,Professional,24,3,English
+585,0,MOVATI Athletic,https://www.linkedin.com/company/movatiathletic,Personal Trainer,2023-01,,ACTIVE,Other,Professional,16,2,Other
+586,0,ederIT.com,https://www.linkedin.com/company/ederit.com,Geschäftsführer,2010-06,,ACTIVE,Other,Management,15,1,German
+589,0,Holistic Industries,https://www.linkedin.com/company/holistic-industries,cultivation,2022,,ACTIVE,Other,Professional,11,1,Other
+590,0,kein,,Pensionär,2011-01,,ACTIVE,Other,Professional,9,1,Other
+591,0,Flevorubber Extrusion B.V.,https://www.linkedin.com/company/flevorubber-extrusion-b.v.,Supply Chain Manager,2025-02,,ACTIVE,Other,Professional,20,3,English
+592,0,Vereinigte Füllkörper-Fabriken GmbH & Co. KG,https://www.linkedin.com/company/vff-germany,Member Board Of Directors,2003-07,,ACTIVE,Other,Management,25,4,English
+594,0,International SOS,https://www.linkedin.com/company/international-sos,"Vice President, Human Resources, Health & Security Subscription Services (H3S), North Americas",2021-11,,ACTIVE,Human Resources,Management,94,12,French
+595,0,Pembrokeshire County Council,https://www.linkedin.com/company/pembrokeshire-county-council,Transport Manager,1996-04,,ACTIVE,Other,Professional,17,2,English
+596,1,habitA+,https://www.linkedin.com/company/habitaplus,Président CCRG Hauts de France,2018-06,,ACTIVE,Other,Management,30,5,French
+597,0,Vertiv Co,https://www.linkedin.com/company/vertiv,"Key Account Director Europe, Middle East & Africa",2016-12,,ACTIVE,Sales,Director,49,8,English
+597,1,Emerson Network Power,https://www.linkedin.com/company/vertiv-emerson-network-power,Key Account Director Europe Middle East & Africa,2012-01,,ACTIVE,Sales,Director,48,8,English
+598,0,cooee GmbH,,Softwareentwickler,2017-02,,ACTIVE,Information Technology,Professional,18,1,German
+600,0,Deutsche Telekom,https://www.linkedin.com/company/telekom,Radio Engineering @ TDI | Huawei SRAN & Mobile Network Testing,2024-10,,ACTIVE,Information Technology,Professional,62,11,English
+602,0,Continental,https://www.linkedin.com/company/continental,Advanced Purchasing - Commercial Vehicles and Services,2020-04,,ACTIVE,Purchasing,Senior,54,7,French
+603,0,Lumiére Group A/S,https://www.linkedin.com/company/lumieregroup,Owner - CSO,2004-03,,ACTIVE,Sales,Management,11,3,Other
+604,0,Voi Technology,https://www.linkedin.com/company/voi-technology,Site Manager,2024-02,,ACTIVE,Project Management,Professional,12,2,English
+605,0,STELACON GmbH,,"SAP Consultant, Geschäftsführer, Gesellschafter",2014-01,,ACTIVE,Consulting,Management,47,4,English
+606,0,bonprix,https://www.linkedin.com/company/bonprix,"Buying, Porecurement & Allocation",2018-05,,ACTIVE,Purchasing,Professional,33,4,Other
+607,0,Malteserorden,,Kanzler der deutschen Assoziation,2015-01,,ACTIVE,Other,Management,33,4,French
+607,1,Bistum,,Justitiar,2014-03,,ACTIVE,Other,Professional,9,1,Other
+607,2,FORESTA Management,,Geschäftsführer,2010-01,,ACTIVE,Other,Management,15,1,German
+607,3,Malteser Hilfsdienst,https://www.linkedin.com/company/malteser-hilfsdienst,Präsidium,1999,,ACTIVE,Other,Management,9,1,Other
+607,4,Spies & Brunner RAe,,Rechtsanwalt,1995-01,,ACTIVE,Other,Professional,12,1,Other
