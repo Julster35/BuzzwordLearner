@@ -15,11 +15,16 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from src.data.loader import load_label_lists
 from src.models.rule_based import RuleConfig, create_department_classifier, create_seniority_classifier
 
+# Define logo path globally
+LOGO_PATH = r"C:\Users\steen\Desktop\PDS_repo\Baseline_CV_Classifier\snapAddy_Logo.png"
+
 # Load logo for page icon
 try:
-    logo_path = Path(__file__).parent / "snapAddy_Logo.png"
-    page_icon_img = Image.open(logo_path)
-except:
+    if Path(LOGO_PATH).exists():
+        page_icon_img = Image.open(LOGO_PATH)
+    else:
+        page_icon_img = "📄"
+except Exception:
     page_icon_img = "📄"
 
 # Page config
@@ -88,10 +93,10 @@ def main():
     # Title with logo
     col1, col2 = st.columns([1, 5])
     with col1:
-        try:
-            st.image("app/snapAddy_Logo.png", width=200)
-        except:
-            pass  # Ignore if logo not found
+        if Path(LOGO_PATH).exists():
+            st.image(LOGO_PATH, width=200)
+        else:
+            st.error(f"Logo nicht gefunden unter: {LOGO_PATH}")
     with col2:
         st.markdown("<h1 style='margin-bottom: 0;'>LinkedIn CV Classifier</h1>", unsafe_allow_html=True)
         st.markdown("<h3 style='margin-top: 0; color: #666;'>Rule-Based Classification für Department & Seniority</h3>", unsafe_allow_html=True)
