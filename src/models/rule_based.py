@@ -20,109 +20,6 @@ class RuleConfig:
     use_text_normalization: bool = True  # Lowercase + whitespace normalization
 
 
-class RuleBasedClassifier:
-    """
-    Rule-based classifier using exact and fuzzy string matching.
-    
-    This is the baseline approach that matches job titles against
-    the provided label lists (department-v2.csv, seniority-v2.csv).
-    """
-    
-    def __init__(self, label_df: pd.DataFrame, fuzzy_threshold: float = 0.8):
-        """
-        Initialize the classifier with a label mapping.
-        
-        Args:
-            label_df: DataFrame with 'text' and 'label' columns
-            fuzzy_threshold: Minimum similarity score for fuzzy matching (0-1)
-        """
-        self.label_df = label_df
-        self.fuzzy_threshold = fuzzy_threshold
-        
-        # Build lookup dictionary (lowercase text -> label)
-        self.text_to_label = dict(zip(
-            label_df['text'].str.lower().str.strip(),
-            label_df['label']
-        ))
-        
-        # Build fast lookup set for exact matching
-        self.text_set = set(self.text_to_label.keys())
-        
-        # Get unique labels
-        self.labels = label_df['label'].unique().tolist()
-        
-    def predict_single(self, text: str) -> Tuple[Optional[str], float]:
-        """
-        Predict label for a single text.
-        
-        Args:
-            text: Job title or position text
-        
-        Returns:
-            Tuple of (predicted_label, confidence_score)
-        """
-        if not text:
-            return None, 0.0
-            
-        text_lower = text.lower().strip()
-        
-        # Try exact match first (O(1) lookup)
-        if text_lower in self.text_to_label:
-            return self.text_to_label[text_lower], 1.0
-        
-        # Try substring containment (check if any pattern is in text)
-        best_match = None
-        best_score = 0.0
-        
-        for pattern, label in self.text_to_label.items():
-            if len(pattern) >= 3 and pattern in text_lower:
-                score = len(pattern) / len(text_lower)
-                if score > best_score:
-                    best_score = score
-                    best_match = label
-        
-        if best_score >= 0.5:  # At least 50% of text is matched
-            return best_match, best_score
-        
-        # Try fuzzy matching (slower, only if no substring match)
-        for pattern, label in self.text_to_label.items():
-            similarity = SequenceMatcher(None, text_lower, pattern).ratio()
-            if similarity > best_score:
-                best_score = similarity
-                best_match = label
-        
-        if best_score >= self.fuzzy_threshold:
-            return best_match, best_score
-        
-        return None, best_score
-    
-    def predict(self, texts: List[str]) -> List[Tuple[Optional[str], float]]:
-        """
-        Predict labels for multiple texts.
-        
-        Args:
-            texts: List of job titles or position texts
-        
-        Returns:
-            List of (predicted_label, confidence_score) tuples
-        """
-        return [self.predict_single(text) for text in texts]
-    
-    def predict_labels(self, texts: List[str], default_label: str = "Unknown") -> List[str]:
-        """
-        Predict labels only (without confidence scores).
-        
-        Args:
-            texts: List of job titles
-            default_label: Label to use when no match found
-        
-        Returns:
-            List of predicted labels
-        """
-        predictions = self.predict(texts)
-        return [label if label else default_label for label, _ in predictions]
-
-
 class KeywordMatcher:
     """
     Keyword-based matching using predefined keyword lists per label.
@@ -132,10 +29,10 @@ class KeywordMatcher:
     # Default keyword patterns for departments (multilingual)
     DEPARTMENT_KEYWORDS = {
         'Marketing': ['marketing', 'brand', 'communication', 'kommunikation', 'pr ', 
-                      'public relations', 'advertising', 'werbung', 'content', 
-                      'social media', 'digital marketing', 'marcom', 'seo', 'sem'],
+                        'public relations', 'advertising', 'werbung', 'content', 
+                        'social media', 'digital marketing', 'marcom', 'seo', 'sem'],
         'Sales': ['sales', 'account manager', 'account executive', 'business development',
-                  'vertrieb', 'vente', 'verkauf', 'commercial', 'ventas', 'customer success'],
+                    'vertrieb', 'vente', 'verkauf', 'commercial', 'ventas', 'customer success'],
         'Information Technology': ['it ', 'i.t.', 'developer', 'entwickler', 'engineer', 
                                    'software', 'data', 'devops', 'cloud', 'tech', 
                                    'programmer', 'informatik', 'système', 'system admin',

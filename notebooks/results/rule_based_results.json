@@ -6,38 +6,38 @@
     "Whitespace normalization"
   ],
   "department": {
-    "accuracy": 0.602510460251046,
-    "precision": 0.5928057899233065,
-    "recall": 0.2556878789809616,
-    "f1_macro": 0.3116937302575194,
-    "f1_weighted": 0.52596390342426,
+    "accuracy": 0.7133891213389121,
+    "precision": 0.6685786639830757,
+    "recall": 0.5151013579259224,
+    "f1_macro": 0.564528503785355,
+    "f1_weighted": 0.7051339652869408,
     "per_class_f1": {
-      "Administrative": 0.0,
-      "Business Development": 0.36363636363636365,
-      "Consulting": 0.4,
-      "Customer Support": 0.0,
-      "Human Resources": 0.23529411764705882,
-      "Information Technology": 0.15151515151515152,
-      "Marketing": 0.09523809523809523,
-      "Other": 0.7272727272727273,
-      "Project Management": 0.5769230769230769,
-      "Purchasing": 0.47058823529411764,
-      "Sales": 0.40816326530612246
+      "Administrative": 0.18181818181818182,
+      "Business Development": 0.4166666666666667,
+      "Consulting": 0.6666666666666666,
+      "Customer Support": 0.25,
+      "Human Resources": 0.6153846153846154,
+      "Information Technology": 0.6554621848739496,
+      "Marketing": 0.5517241379310345,
+      "Other": 0.7910447761194029,
+      "Project Management": 0.6037735849056604,
+      "Purchasing": 0.7272727272727273,
+      "Sales": 0.75
     }
   },
   "seniority": {
-    "accuracy": 0.4497907949790795,
-    "precision": 0.492902171204058,
-    "recall": 0.33002691746184076,
-    "f1_macro": 0.32666061885484093,
-    "f1_weighted": 0.43332051282216755,
+    "accuracy": 0.6255230125523012,
+    "precision": 0.5230735089940176,
+    "recall": 0.5846788513666239,
+    "f1_macro": 0.5342781658829221,
+    "f1_weighted": 0.6340327690478458,
     "per_class_f1": {
-      "Director": 0.20408163265306123,
-      "Junior": 0.2608695652173913,
-      "Lead": 0.23931623931623933,
-      "Management": 0.6130653266331658,
-      "Professional": 0.5302713987473904,
-      "Senior": 0.11235955056179775
+      "Director": 0.21333333333333335,
+      "Junior": 0.5384615384615384,
+      "Lead": 0.47058823529411764,
+      "Management": 0.8194444444444444,
+      "Professional": 0.696551724137931,
+      "Senior": 0.4672897196261682
     }
   },
   "metadata": {
@@ -51,16 +51,16 @@
       "department": {
         "exact": 11,
         "substring": 12,
-        "keyword": 0,
-        "default": 257
+        "keyword": 89,
+        "default": 183
       },
       "seniority": {
         "exact": 31,
         "substring": 53,
-        "keyword": 0,
-        "default": 193
+        "keyword": 159,
+        "default": 69
       }
     }
   },
-  "timestamp": "2026-01-25T02:59:54.210321"
+  "timestamp": "2026-01-25T03:26:21.244317"
 }
