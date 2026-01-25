@@ -1,0 +1,24 @@
+{
+  "approach": "embedding_zero_shot",
+  "model": "paraphrase-multilingual-MiniLM-L12-v2",
+  "timestamp": "2026-01-25T20:11:54.768201",
+  "department": {
+    "accuracy": 0.32426778242677823,
+    "precision_macro": 0.3643022084761682,
+    "recall_macro": 0.44489241374699373,
+    "f1_macro": 0.34420203938623567,
+    "f1_weighted": 0.33407763742090546,
+    "avg_confidence": 0.5756980191339509,
+    "low_confidence_count": 6
+  },
+  "seniority": {
+    "accuracy": 0.4205020920502092,
+    "precision_macro": 0.4213094696756836,
+    "recall_macro": 0.4298404257177298,
+    "f1_macro": 0.36131323740826665,
+    "f1_weighted": 0.4313733618700551,
+    "avg_confidence": 0.5581616030140901,
+    "low_confidence_count": 12
+  },
+  "notes": "Pure zero-shot with prototype aggregation. Added missing Professional seniority level."
+}
