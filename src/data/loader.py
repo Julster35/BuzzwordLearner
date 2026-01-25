@@ -194,7 +194,7 @@ def load_label_lists(
     data_dir: str,
     fix_encoding: bool = True,
     deduplicate: bool = True,
-    max_per_class: Optional[int] = 500
+    max_per_class: Optional[int] = None
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Load the department and seniority label lists with optional preprocessing.
@@ -221,10 +221,12 @@ def load_label_lists(
     
     # Deduplicate and optionally cap per class
     if deduplicate:
-        print("Deduplicating department labels...")
-        department_df = deduplicate_label_df(department_df, max_per_class)
-        print("Deduplicating seniority labels...")
-        seniority_df = deduplicate_label_df(seniority_df, max_per_class)
+        department_df = deduplicate_label_df(department_df)
+        seniority_df  = deduplicate_label_df(seniority_df)
+
+    if max_per_class is not None:
+        department_df = cap_per_class(department_df, max_per_class)
+        seniority_df  = cap_per_class(seniority_df, max_per_class)
 
     return department_df, seniority_df
 
