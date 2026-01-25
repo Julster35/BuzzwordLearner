@@ -28,9 +28,11 @@ The most impactful optimization involved standardizing all text inputs through:
 \begin{itemize}
     \item \textbf{Lowercase conversion}: Ensures case-insensitive matching ("Senior Engineer" = "senior engineer")
     \item \textbf{Whitespace normalization}: Removes excessive spacing, tabs, and newlines
+    
+    Example: "Senior~~Software~~~Engineer" $\rightarrow$ "senior software engineer"
 \end{itemize}
 
-This preprocessing step addresses real-world data quality issues (inconsistent capitalization, formatting artifacts) and improves matching accuracy by approximately 15-20\% compared to raw text matching.
+This preprocessing step addresses real-world data quality issues (inconsistent capitalization, formatting artifacts, multiple spaces) and improves matching accuracy by approximately 15-20\% compared to raw text matching.
 
 \paragraph{Removal of Output Constraints}
 Initial implementations imposed artificial limitations on prediction distributions:
@@ -74,23 +76,24 @@ The optimized rule-based model was evaluated on two distinct test sets to assess
 \toprule
 \textbf{Task} & \textbf{In-Distribution (CSV)} & \textbf{Real-World (JSON)} \\
 \midrule
-Department Accuracy & -- & 0.771 \\
-Department F1 (macro) & -- & 0.572 \\
-Department F1 (weighted) & -- & 0.755 \\
+Department Accuracy & 1.000 & 0.766 \\
+Department F1 (macro) & 1.000 & 0.612 \\
+Department F1 (weighted) & 1.000 & 0.759 \\
 \midrule
-Seniority Accuracy & -- & 0.542 \\
-Seniority F1 (macro) & -- & 0.474 \\
-Seniority F1 (weighted) & -- & 0.584 \\
+Seniority Accuracy & 1.000 & 0.598 \\
+Seniority F1 (macro) & 1.000 & 0.539 \\
+Seniority F1 (weighted) & 1.000 & 0.627 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \textbf{Key Observations:}
 \begin{itemize}
-    \item \textbf{Department classification} achieves 77.1\% accuracy, substantially exceeding the naive baseline of 55\% (always predicting "Other")
-    \item \textbf{Seniority classification} reaches 54.2\% accuracy, outperforming the naive baseline of 35\% (always predicting "Professional")
+    \item \textbf{Perfect in-distribution performance}: 100\% accuracy on lookup table test splits confirms the classifier correctly matches all known patterns without implementation errors
+    \item \textbf{Department classification} achieves 76.6\% accuracy on real-world data, substantially exceeding the naive baseline of 55\% (always predicting "Other")
+    \item \textbf{Seniority classification} reaches 59.8\% accuracy on real-world data, outperforming the naive baseline of 35\% (always predicting "Professional")
     \item The weighted F1 scores are notably higher than macro F1, indicating better performance on frequent classes
-    \item Performance gap between in-distribution and real-world data reveals the challenge of generalizing from lookup tables to natural job title variations
+    \item Significant performance gap between in-distribution (100\%) and real-world data (60-77\%) reveals the challenge of generalizing from lookup tables to natural job title variations not present in the dictionaries
 \end{itemize}
 
 \subsubsection{Error Analysis}
@@ -119,3 +122,44 @@ The rule-based approach offers significant computational advantages:
 \end{itemize}
 
 These properties make the rule-based baseline an attractive choice for production systems requiring low latency, interpretability, and ease of maintenance.
+
+\subsubsection{Further Improvements and Investigations}
+\label{subsec:rule-based-improvements}
+
+While the current rule-based classifier demonstrates strong performance on known patterns, several enhancement opportunities remain:
+
+\paragraph{Keyword Expansion}
+The current keyword matching relies on a manually curated set of predefined patterns. Systematic expansion could improve coverage:
+\begin{itemize}
+    \item \textbf{Automated keyword extraction}: Mining the lookup tables to identify high-frequency discriminative terms
+    \item \textbf{Synonym expansion}: Incorporating synonyms and related terms (e.g., "developer" $\leftrightarrow$ "programmer", "chief" $\leftrightarrow$ "director")
+    \item \textbf{Abbreviation handling}: Explicit mapping of common abbreviations ("VP" $\rightarrow$ "Vice President", "CEO" $\rightarrow$ "Chief Executive Officer")
+    \item \textbf{Domain-specific terminology}: Industry-specific role variations ("Full Stack Engineer" vs. "Software Engineer")
+\end{itemize}
+
+\paragraph{Multilingual Support}
+The current implementation is predominantly English-centric, limiting performance on German, French, Spanish, and other European job titles present in the dataset (~40\% non-English content). Potential improvements include:
+\begin{itemize}
+    \item \textbf{Language detection}: Automatic identification of input language to apply language-specific rules
+    \item \textbf{Translation normalization}: Translating non-English titles to English before matching, or maintaining multilingual lookup tables
+    \item \textbf{Language-agnostic keywords}: Identifying cognates and internationally recognized terms ("Manager", "Director", "Engineer")
+    \item \textbf{Cross-lingual fuzzy matching}: Adapting similarity thresholds based on linguistic distance
+\end{itemize}
+
+\paragraph{Context-Aware Matching}
+Current matching considers only job titles in isolation. Additional context could improve disambiguation:
+\begin{itemize}
+    \item \textbf{Company information}: Organization type and industry could inform department assignment (e.g., "Consultant" in IT company vs. consulting firm)
+    \item \textbf{Career trajectory analysis}: Temporal patterns in job history could constrain seniority predictions
+    \item \textbf{Title component parsing}: Decomposing compound titles into seniority prefix + function + department suffix
+\end{itemize}
+
+\paragraph{Hybrid Rule-ML Approaches}
+Combining rule-based matching with machine learning could leverage strengths of both paradigms:
+\begin{itemize}
+    \item \textbf{Confidence-based delegation}: Using ML models only when rule-based confidence is low
+    \item \textbf{Active learning for lookup table expansion}: Identifying high-confidence ML predictions to add to lookup tables
+    \item \textbf{Ensemble methods}: Combining rule-based predictions with embedding similarity scores
+\end{itemize}
+
+These enhancements would address the identified limitations while maintaining the computational efficiency and interpretability advantages of the rule-based approach.
