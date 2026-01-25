@@ -314,6 +314,7 @@ class HybridRuleClassifier:
             'exact': methods.count('exact'),
             'substring': methods.count('substring'),
             'keyword': methods.count('keyword'),
+            'fuzzy': methods.count('fuzzy'),
             'default': methods.count('default'),
         }
 
