@@ -273,9 +273,6 @@ class HybridRuleClassifier:
         
         # Strategy 5: Default fallback
         return self.config.default_label, 0.0, "default"
-        
-        # Strategy 4: Default fallback
-        return self.config.default_label, 0.0, "default"
     
     def predict(self, texts: List[str]) -> List[str]:
         """

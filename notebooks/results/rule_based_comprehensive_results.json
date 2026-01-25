@@ -1,0 +1,86 @@
+{
+  "approach": "Rule-Based (Exact + Fuzzy Matching) WITH Text Normalization",
+  "text_normalization": true,
+  "improvements": [
+    "Lowercase conversion",
+    "Whitespace normalization"
+  ],
+  "department": {
+    "in_distribution": {
+      "accuracy": 1.0,
+      "test_samples": 520
+    },
+    "real_world": {
+      "accuracy": 0.7708333333333334,
+      "precision": 0.6857309357309357,
+      "recall": 0.5205234159779614,
+      "f1_macro": 0.5717827626918536,
+      "f1_weighted": 0.7548069985569987,
+      "per_class_f1": {
+        "Administrative": 0.0,
+        "Business Development": 0.8,
+        "Consulting": 0.8,
+        "Customer Support": 0.0,
+        "Human Resources": 0.5,
+        "Information Technology": 0.8333333333333334,
+        "Marketing": 0.5714285714285714,
+        "Other": 0.8181818181818182,
+        "Project Management": 0.6666666666666666,
+        "Purchasing": 0.5,
+        "Sales": 0.8
+      },
+      "test_samples": 96
+    }
+  },
+  "seniority": {
+    "in_distribution": {
+      "accuracy": 1.0,
+      "test_samples": 482
+    },
+    "real_world": {
+      "accuracy": 0.5416666666666666,
+      "precision": 0.5009838584263137,
+      "recall": 0.5487654320987655,
+      "f1_macro": 0.47369610278467783,
+      "f1_weighted": 0.5843160353766901,
+      "per_class_f1": {
+        "Director": 0.2,
+        "Junior": 0.5714285714285714,
+        "Lead": 0.5365853658536586,
+        "Management": 0.7636363636363637,
+        "Professional": 0.56,
+        "Senior": 0.21052631578947367
+      },
+      "test_samples": 96
+    }
+  },
+  "metadata": {
+    "evaluation_split": {
+      "csv_dev_size": 4004,
+      "csv_test_size": 1002,
+      "json_dev_size": 382,
+      "json_test_size": 96
+    },
+    "training_samples": 5006,
+    "dept_training_samples": 2597,
+    "sen_training_samples": 2409,
+    "fuzzy_threshold": 0.8,
+    "dept_default": "Other",
+    "sen_default": "Professional",
+    "match_methods": {
+      "department": {
+        "exact": 13,
+        "substring": 16,
+        "keyword": 85,
+        "default": 180
+      },
+      "seniority": {
+        "exact": 32,
+        "substring": 66,
+        "keyword": 145,
+        "default": 68
+      }
+    }
+  },
+  "timestamp": "2026-01-25T15:20:43.684208"
+}
