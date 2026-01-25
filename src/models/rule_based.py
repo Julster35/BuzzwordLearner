@@ -17,6 +17,7 @@ class RuleConfig:
     use_keyword_match: bool = True
     fuzzy_threshold: float = 0.85
     default_label: str = "Other"
+    use_text_normalization: bool = True  # Lowercase + whitespace normalization
 
 
 class RuleBasedClassifier:
@@ -241,13 +242,15 @@ class HybridRuleClassifier:
     """
     Hybrid classifier combining multiple matching strategies.
     
-    Matching order:
-    1. Exact dictionary match
-    2. Substring containment
-    3. Keyword pattern matching
-    4. Default label fallback
+    Matching order (from fastest to slowest):
+    1. Exact dictionary match (O(1) - instant)
+    2. Substring containment (O(n) - fast)
+    3. Keyword pattern matching (O(n) - fast)
+    4. Fuzzy matching (O(n*m) - slow, last resort!)
+    5. Default label fallback
     
-    Use this for best baseline performance.
+    Fuzzy matching is only used when other strategies fail,
+    to maintain reasonable performance.
     """
     
     def __init__(
@@ -268,9 +271,16 @@ class HybridRuleClassifier:
         self.label_df = label_df
         self.labels = label_df['label'].unique().tolist()
         
-        # Build lookup structures
+        # Build lookup structures with optional text normalization
+        if self.config.use_text_normalization:
+            # Apply text normalization: lowercase + whitespace normalization
+            normalized_texts = label_df['text'].apply(self._clean_text)
+        else:
+            # No normalization: use original text (just strip whitespace)
+            normalized_texts = label_df['text'].str.strip()
+        
         self.text_to_label = dict(zip(
-            label_df['text'].str.lower().str.strip(),
+            normalized_texts,
             label_df['label']
         ))
         self.text_set = set(self.text_to_label.keys())
@@ -282,11 +292,19 @@ class HybridRuleClassifier:
             self.keyword_matcher = None
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text."""
+        """
+        Clean and normalize text.
+        
+        Normalization steps:
+        1. Convert to lowercase
+        2. Remove extra whitespace (multiple spaces, tabs, newlines)
+        3. Strip leading/trailing whitespace
+        """
         if not text:
             return ""
-        # Remove extra whitespace, lowercase
-        text = re.sub(r'\s+', ' ', text.lower().strip())
+        # Lowercase + whitespace normalization: ' '.join(text.split())
+        # This removes tabs, newlines, multiple spaces and converts to single space
+        text = ' '.join(text.lower().split())
         return text
     
     def predict_single(self, text: str) -> Tuple[str, float, str]:
@@ -302,7 +320,11 @@ class HybridRuleClassifier:
         if not text:
             return self.config.default_label, 0.0, "default"
         
-        text_clean = self._clean_text(text)
+        # Apply text normalization based on config
+        if self.config.use_text_normalization:
+            text_clean = self._clean_text(text)
+        else:
+            text_clean = text.strip()
         
         # Strategy 1: Exact match
         if self.config.use_exact_match:
@@ -324,12 +346,36 @@ class HybridRuleClassifier:
                 confidence = min(1.0, best_len / len(text_clean))
                 return best_match, confidence, "substring"
         
-        # Strategy 3: Keyword matching
+        # Strategy 3: Keyword matching (before fuzzy - it's faster!)
         if self.config.use_keyword_match and self.keyword_matcher:
             match, count = self.keyword_matcher.match_with_score(text_clean)
             if match and count > 0:
                 confidence = min(1.0, count * 0.3)  # More matches = higher confidence
                 return match, confidence, "keyword"
+        
+        # Strategy 4: Fuzzy matching (LAST RESORT - slow but thorough!)
+        # Only if no other match found and threshold is reasonable
+        if self.config.fuzzy_threshold < 0.95:  # Skip if threshold too high
+            best_fuzzy_match = None
+            best_fuzzy_score = 0.0
+            
+            # Optimization: Only check if threshold is achievable
+            for pattern, label in self.text_to_label.items():
+                # Quick length check: if lengths too different, skip
+                len_diff = abs(len(text_clean) - len(pattern)) / max(len(text_clean), len(pattern))
+                if len_diff > (1.0 - self.config.fuzzy_threshold):
+                    continue  # Too different, can't reach threshold
+                
+                similarity = SequenceMatcher(None, text_clean, pattern).ratio()
+                if similarity > best_fuzzy_score:
+                    best_fuzzy_score = similarity
+                    best_fuzzy_match = label
+            
+            if best_fuzzy_score >= self.config.fuzzy_threshold:
+                return best_fuzzy_match, best_fuzzy_score, "fuzzy"
+        
+        # Strategy 5: Default fallback
+        return self.config.default_label, 0.0, "default"
         
         # Strategy 4: Default fallback
         return self.config.default_label, 0.0, "default"

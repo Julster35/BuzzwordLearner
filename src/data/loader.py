@@ -67,9 +67,11 @@ def deduplicate_label_df(
     
     # Optionally cap per-class (stratified sampling)
     if max_per_class is not None:
-        label_df = label_df.groupby('label', group_keys=False).apply(
-            lambda x: x.sample(min(len(x), max_per_class), random_state=42)
-        ).reset_index(drop=True)
+        # Group by label and sample, keeping the label column
+        sampled_groups = []
+        for label, group in label_df.groupby('label'):
+            sampled_groups.append(group.sample(min(len(group), max_per_class), random_state=42))
+        label_df = pd.concat(sampled_groups, ignore_index=True)
     
     final_count = len(label_df)
     
