@@ -41,8 +41,8 @@
     "dept_training_samples": 1797,
     "sen_training_samples": 1500,
     "embedding_method": "averaged_examples",
-    "mean_dept_confidence": 0.6562882088077296,
-    "mean_sen_confidence": 0.6330435983599372
+    "mean_dept_confidence": 0.6562881983674256,
+    "mean_sen_confidence": 0.6330436070443718
   },
-  "timestamp": "2026-01-13T09:45:27.574867"
+  "timestamp": "2026-01-25T17:48:47.007188"
 }

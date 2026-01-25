@@ -221,12 +221,12 @@ def load_label_lists(
     
     # Deduplicate and optionally cap per class
     if deduplicate:
-        department_df = deduplicate_label_df(department_df)
-        seniority_df  = deduplicate_label_df(seniority_df)
-
-    if max_per_class is not None:
-        department_df = cap_per_class(department_df, max_per_class)
-        seniority_df  = cap_per_class(seniority_df, max_per_class)
+        department_df = deduplicate_label_df(department_df, max_per_class=max_per_class)
+        seniority_df  = deduplicate_label_df(seniority_df, max_per_class=max_per_class)
+    elif max_per_class is not None:
+        # If not deduplicating but still want to cap
+        department_df = deduplicate_label_df(department_df, max_per_class=max_per_class)
+        seniority_df  = deduplicate_label_df(seniority_df, max_per_class=max_per_class)
 
     return department_df, seniority_df
 
