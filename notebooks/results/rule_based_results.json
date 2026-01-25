@@ -1,10 +1,5 @@
 {
-  "approach": "Rule-Based (Exact + Fuzzy Matching) WITH Text Normalization",
-  "text_normalization": true,
-  "improvements": [
-    "Lowercase conversion",
-    "Whitespace normalization"
-  ],
+  "approach": "Rule-Based (Exact + Fuzzy Matching)",
   "department": {
     "accuracy": 0.7133891213389121,
     "precision": 0.6685786639830757,
@@ -45,8 +40,6 @@
     "dept_training_samples": 2597,
     "sen_training_samples": 2409,
     "fuzzy_threshold": 0.8,
-    "dept_default": "Other",
-    "sen_default": "Professional",
     "match_methods": {
       "department": {
         "exact": 11,
@@ -62,5 +55,5 @@
       }
     }
   },
-  "timestamp": "2026-01-25T03:26:21.244317"
+  "timestamp": "2026-01-25T03:30:54.298115"
 }
