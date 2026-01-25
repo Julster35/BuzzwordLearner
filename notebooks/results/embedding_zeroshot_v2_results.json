@@ -1,0 +1,36 @@
+{
+  "approach": "embedding_zero_shot_v2",
+  "model": "paraphrase-multilingual-MiniLM-L12-v2",
+  "timestamp": "2026-01-25T22:52:05.483202",
+  "config": {
+    "n_prototypes": 3,
+    "multi_prototype_clustering": "KMeans",
+    "input_text_enrichment": "title + company + description (200 chars)",
+    "text_normalization": false
+  },
+  "threshold_tuning": {
+    "dev_samples": 334,
+    "test_samples": 144,
+    "dept_threshold": 0.5199999999999998,
+    "dept_fallback": "Other",
+    "sen_threshold": 0.5399999999999998,
+    "sen_fallback": "Professional",
+    "tuning_metric": "f1_macro",
+    "threshold_range": "0.20-0.60 (step=0.02)"
+  },
+  "department": {
+    "accuracy": 0.4513888888888889,
+    "precision_macro": 0.30981911170590415,
+    "recall_macro": 0.36377329444174367,
+    "f1_macro": 0.3008585466465901,
+    "f1_weighted": 0.47579067040966955
+  },
+  "seniority": {
+    "accuracy": 0.4583333333333333,
+    "precision_macro": 0.3947706882489492,
+    "recall_macro": 0.3796986933047625,
+    "f1_macro": 0.3604811238898346,
+    "f1_weighted": 0.4994618363705713
+  },
+  "notes": "Zero-shot with multi-prototypes (K-Means), richer input context, and optimized similarity thresholds via grid search on dev set."
+}

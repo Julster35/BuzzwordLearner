@@ -1,24 +1,24 @@
 {
   "approach": "embedding_zero_shot",
   "model": "paraphrase-multilingual-MiniLM-L12-v2",
-  "timestamp": "2026-01-25T20:11:54.768201",
+  "timestamp": "2026-01-25T20:41:57.692840",
   "department": {
-    "accuracy": 0.32426778242677823,
-    "precision_macro": 0.3643022084761682,
-    "recall_macro": 0.44489241374699373,
-    "f1_macro": 0.34420203938623567,
-    "f1_weighted": 0.33407763742090546,
-    "avg_confidence": 0.5756980191339509,
-    "low_confidence_count": 6
+    "accuracy": 0.3200836820083682,
+    "precision_macro": 0.3327843402795679,
+    "recall_macro": 0.49320354553613127,
+    "f1_macro": 0.3399514457175842,
+    "f1_weighted": 0.31343194362575283,
+    "avg_confidence": 0.5976134416448521,
+    "low_confidence_count": 3
   },
   "seniority": {
-    "accuracy": 0.4205020920502092,
-    "precision_macro": 0.4213094696756836,
-    "recall_macro": 0.4298404257177298,
-    "f1_macro": 0.36131323740826665,
-    "f1_weighted": 0.4313733618700551,
-    "avg_confidence": 0.5581616030140901,
-    "low_confidence_count": 12
+    "accuracy": 0.4100418410041841,
+    "precision_macro": 0.43495944940771497,
+    "recall_macro": 0.44819290273068235,
+    "f1_macro": 0.35066481640642994,
+    "f1_weighted": 0.4212321988496455,
+    "avg_confidence": 0.5987070631469643,
+    "low_confidence_count": 6
   },
-  "notes": "Pure zero-shot with prototype aggregation. Added missing Professional seniority level."
+  "notes": "Zero-shot with multi-prototypes (K-Means) and richer input context. Added missing Professional seniority level."
 }
