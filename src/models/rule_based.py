@@ -17,109 +17,7 @@ class RuleConfig:
     use_keyword_match: bool = True
     fuzzy_threshold: float = 0.85
     default_label: str = "Other"
-
-
-class RuleBasedClassifier:
-    """
-    Rule-based classifier using exact and fuzzy string matching.
-    
-    This is the baseline approach that matches job titles against
-    the provided label lists (department-v2.csv, seniority-v2.csv).
-    """
-    
-    def __init__(self, label_df: pd.DataFrame, fuzzy_threshold: float = 0.8):
-        """
-        Initialize the classifier with a label mapping.
-        
-        Args:
-            label_df: DataFrame with 'text' and 'label' columns
-            fuzzy_threshold: Minimum similarity score for fuzzy matching (0-1)
-        """
-        self.label_df = label_df
-        self.fuzzy_threshold = fuzzy_threshold
-        
-        # Build lookup dictionary (lowercase text -> label)
-        self.text_to_label = dict(zip(
-            label_df['text'].str.lower().str.strip(),
-            label_df['label']
-        ))
-        
-        # Build fast lookup set for exact matching
-        self.text_set = set(self.text_to_label.keys())
-        
-        # Get unique labels
-        self.labels = label_df['label'].unique().tolist()
-        
-    def predict_single(self, text: str) -> Tuple[Optional[str], float]:
-        """
-        Predict label for a single text.
-        
-        Args:
-            text: Job title or position text
-        
-        Returns:
-            Tuple of (predicted_label, confidence_score)
-        """
-        if not text:
-            return None, 0.0
-            
-        text_lower = text.lower().strip()
-        
-        # Try exact match first (O(1) lookup)
-        if text_lower in self.text_to_label:
-            return self.text_to_label[text_lower], 1.0
-        
-        # Try substring containment (check if any pattern is in text)
-        best_match = None
-        best_score = 0.0
-        
-        for pattern, label in self.text_to_label.items():
-            if len(pattern) >= 3 and pattern in text_lower:
-                score = len(pattern) / len(text_lower)
-                if score > best_score:
-                    best_score = score
-                    best_match = label
-        
-        if best_score >= 0.5:  # At least 50% of text is matched
-            return best_match, best_score
-        
-        # Try fuzzy matching (slower, only if no substring match)
-        for pattern, label in self.text_to_label.items():
-            similarity = SequenceMatcher(None, text_lower, pattern).ratio()
-            if similarity > best_score:
-                best_score = similarity
-                best_match = label
-        
-        if best_score >= self.fuzzy_threshold:
-            return best_match, best_score
-        
-        return None, best_score
-    
-    def predict(self, texts: List[str]) -> List[Tuple[Optional[str], float]]:
-        """
-        Predict labels for multiple texts.
-        
-        Args:
-            texts: List of job titles or position texts
-        
-        Returns:
-            List of (predicted_label, confidence_score) tuples
-        """
-        return [self.predict_single(text) for text in texts]
-    
-    def predict_labels(self, texts: List[str], default_label: str = "Unknown") -> List[str]:
-        """
-        Predict labels only (without confidence scores).
-        
-        Args:
-            texts: List of job titles
-            default_label: Label to use when no match found
-        
-        Returns:
-            List of predicted labels
-        """
-        predictions = self.predict(texts)
-        return [label if label else default_label for label, _ in predictions]
+    use_text_normalization: bool = True  # Lowercase + whitespace normalization
 
 
 class KeywordMatcher:
@@ -131,53 +29,53 @@ class KeywordMatcher:
     # Default keyword patterns for departments (multilingual)
     DEPARTMENT_KEYWORDS = {
         'Marketing': ['marketing', 'brand', 'communication', 'kommunikation', 'pr ', 
-                      'public relations', 'advertising', 'werbung', 'content', 
-                      'social media', 'digital marketing', 'marcom', 'seo', 'sem'],
+                        'public relations', 'advertising', 'werbung', 'content', 
+                        'social media', 'digital marketing', 'marcom', 'seo', 'sem'],
         'Sales': ['sales', 'account manager', 'account executive', 'business development',
-                  'vertrieb', 'vente', 'verkauf', 'commercial', 'ventas', 'customer success'],
+                    'vertrieb', 'vente', 'verkauf', 'commercial', 'ventas', 'customer success'],
         'Information Technology': ['it ', 'i.t.', 'developer', 'entwickler', 'engineer', 
-                                   'software', 'data', 'devops', 'cloud', 'tech', 
-                                   'programmer', 'informatik', 'système', 'system admin',
-                                   'database', 'dba', 'network', 'security', 'cyber'],
+                                    'software', 'data', 'devops', 'cloud', 'tech', 
+                                    'programmer', 'informatik', 'système', 'system admin',
+                                    'database', 'dba', 'network', 'security', 'cyber'],
         'Human Resources': ['hr ', 'h.r.', 'human resources', 'recruiting', 'recruiter',
-                           'talent', 'personnel', 'personal', 'ressources humaines',
-                           'people operations', 'payroll'],
+                            'talent', 'personnel', 'personal', 'ressources humaines',
+                            'people operations', 'payroll'],
         'Consulting': ['consultant', 'berater', 'beratung', 'advisory', 'conseil',
-                      'consulting', 'advisor', 'strategist'],
+                        'consulting', 'advisor', 'strategist'],
         'Project Management': ['project manager', 'projektmanager', 'program manager',
-                              'pmo', 'projektleiter', 'chef de projet', 'scrum master',
-                              'agile', 'product owner'],
+                                'pmo', 'projektleiter', 'chef de projet', 'scrum master',
+                                'agile', 'product owner'],
         'Administrative': ['assistant', 'assistenz', 'sekretär', 'secretary', 
-                          'office manager', 'admin', 'verwaltung', 'sachbearbeiter'],
+                            'office manager', 'admin', 'verwaltung', 'sachbearbeiter'],
         'Business Development': ['business development', 'geschäftsentwicklung', 
                                 'développement', 'partnership', 'expansion'],
         'Customer Support': ['support', 'customer service', 'kundenservice', 
                             'helpdesk', 'service client', 'kundenbetreuer'],
         'Purchasing': ['purchasing', 'einkauf', 'procurement', 'buyer', 'achat',
-                      'supply chain', 'lieferkette'],
+                        'supply chain', 'lieferkette'],
     }
     
     # Default keyword patterns for seniority (multilingual)
     SENIORITY_KEYWORDS = {
         'Management': ['ceo', 'cfo', 'cto', 'coo', 'cmo', 'cio', 'chief', 
-                       'geschäftsführer', 'vorstand', 'directeur général',
-                       'director general', 'managing director', 'president',
-                       'vice president', 'vp ', 'founder', 'gründer', 'owner',
-                       'inhaber', 'partner', 'gesellschafter'],
+                        'geschäftsführer', 'vorstand', 'directeur général',
+                        'director general', 'managing director', 'president',
+                        'vice president', 'vp ', 'founder', 'gründer', 'owner',
+                        'inhaber', 'partner', 'gesellschafter'],
         'Director': ['director', 'direktor', 'directeur', 'directrice',
                     'head of', 'leiter', 'leiterin', 'bereichsleiter'],
         'Lead': ['lead', 'team lead', 'teamlead', 'teamleiter', 'teamleader',
                 'chef de', 'supervisor', 'coordinator', 'koordinator',
                 'manager', 'responsable', 'verantwortlich', 'group lead'],
         'Senior': ['senior', 'sr.', 'sr ', 'principal', 'expert', 'specialist',
-                  'spezialist', 'experienced', 'erfahren', 'staff'],
+                    'spezialist', 'experienced', 'erfahren', 'staff'],
         'Professional': ['professional', 'specialist', 'fachkraft', 'analyst',
                         'engineer', 'developer', 'consultant', 'berater',
                         'architect', 'designer'],
         'Junior': ['junior', 'jr.', 'jr ', 'associate', 'assistant', 'assistenz',
-                  'trainee', 'intern', 'praktikant', 'werkstudent', 'graduate',
-                  'entry level', 'apprentice', 'azubi', 'auszubildende',
-                  'student', 'working student'],
+                    'trainee', 'intern', 'praktikant', 'werkstudent', 'graduate',
+                    'entry level', 'apprentice', 'azubi', 'auszubildende',
+                    'student', 'working student'],
     }
     
     def __init__(self, keyword_dict: Optional[Dict[str, List[str]]] = None):
@@ -241,13 +139,15 @@ class HybridRuleClassifier:
     """
     Hybrid classifier combining multiple matching strategies.
     
-    Matching order:
-    1. Exact dictionary match
-    2. Substring containment
-    3. Keyword pattern matching
-    4. Default label fallback
+    Matching order (from fastest to slowest):
+    1. Exact dictionary match (O(1) - instant)
+    2. Substring containment (O(n) - fast)
+    3. Keyword pattern matching (O(n) - fast)
+    4. Fuzzy matching (O(n*m) - slow, last resort!)
+    5. Default label fallback
     
-    Use this for best baseline performance.
+    Fuzzy matching is only used when other strategies fail,
+    to maintain reasonable performance.
     """
     
     def __init__(
@@ -268,9 +168,16 @@ class HybridRuleClassifier:
         self.label_df = label_df
         self.labels = label_df['label'].unique().tolist()
         
-        # Build lookup structures
+        # Build lookup structures with optional text normalization
+        if self.config.use_text_normalization:
+            # Apply text normalization: lowercase + whitespace normalization
+            normalized_texts = label_df['text'].apply(self._clean_text)
+        else:
+            # No normalization: use original text (just strip whitespace)
+            normalized_texts = label_df['text'].str.strip()
+        
         self.text_to_label = dict(zip(
-            label_df['text'].str.lower().str.strip(),
+            normalized_texts,
             label_df['label']
         ))
         self.text_set = set(self.text_to_label.keys())
@@ -282,11 +189,19 @@ class HybridRuleClassifier:
             self.keyword_matcher = None
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text."""
+        """
+        Clean and normalize text.
+        
+        Normalization steps:
+        1. Convert to lowercase
+        2. Remove extra whitespace (multiple spaces, tabs, newlines)
+        3. Strip leading/trailing whitespace
+        """
         if not text:
             return ""
-        # Remove extra whitespace, lowercase
-        text = re.sub(r'\s+', ' ', text.lower().strip())
+        # Lowercase + whitespace normalization: ' '.join(text.split())
+        # This removes tabs, newlines, multiple spaces and converts to single space
+        text = ' '.join(text.lower().split())
         return text
     
     def predict_single(self, text: str) -> Tuple[str, float, str]:
@@ -302,7 +217,11 @@ class HybridRuleClassifier:
         if not text:
             return self.config.default_label, 0.0, "default"
         
-        text_clean = self._clean_text(text)
+        # Apply text normalization based on config
+        if self.config.use_text_normalization:
+            text_clean = self._clean_text(text)
+        else:
+            text_clean = text.strip()
         
         # Strategy 1: Exact match
         if self.config.use_exact_match:
@@ -324,14 +243,35 @@ class HybridRuleClassifier:
                 confidence = min(1.0, best_len / len(text_clean))
                 return best_match, confidence, "substring"
         
-        # Strategy 3: Keyword matching
+        # Strategy 3: Keyword matching (before fuzzy - it's faster!)
         if self.config.use_keyword_match and self.keyword_matcher:
             match, count = self.keyword_matcher.match_with_score(text_clean)
             if match and count > 0:
                 confidence = min(1.0, count * 0.3)  # More matches = higher confidence
                 return match, confidence, "keyword"
         
-        # Strategy 4: Default fallback
+        # Strategy 4: Fuzzy matching (LAST RESORT - slow but thorough!)
+        # Only if no other match found and threshold is reasonable
+        if self.config.fuzzy_threshold < 0.95:  # Skip if threshold too high
+            best_fuzzy_match = None
+            best_fuzzy_score = 0.0
+            
+            # Optimization: Only check if threshold is achievable
+            for pattern, label in self.text_to_label.items():
+                # Quick length check: if lengths too different, skip
+                len_diff = abs(len(text_clean) - len(pattern)) / max(len(text_clean), len(pattern))
+                if len_diff > (1.0 - self.config.fuzzy_threshold):
+                    continue  # Too different, can't reach threshold
+                
+                similarity = SequenceMatcher(None, text_clean, pattern).ratio()
+                if similarity > best_fuzzy_score:
+                    best_fuzzy_score = similarity
+                    best_fuzzy_match = label
+            
+            if best_fuzzy_score >= self.config.fuzzy_threshold:
+                return best_fuzzy_match, best_fuzzy_score, "fuzzy"
+        
+        # Strategy 5: Default fallback
         return self.config.default_label, 0.0, "default"
     
     def predict(self, texts: List[str]) -> List[str]:
@@ -374,6 +314,7 @@ class HybridRuleClassifier:
             'exact': methods.count('exact'),
             'substring': methods.count('substring'),
             'keyword': methods.count('keyword'),
+            'fuzzy': methods.count('fuzzy'),
             'default': methods.count('default'),
         }
 

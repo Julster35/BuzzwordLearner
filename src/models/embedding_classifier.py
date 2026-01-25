@@ -72,6 +72,12 @@ class EmbeddingClassifier:
         self.label_embeddings = None
         self._is_fitted = False
         
+        # KNN mode: Store all example embeddings instead of centroids
+        self.use_knn = False
+        self.example_embeddings = None
+        self.example_labels = None
+        self.k_neighbors = 5
+        
     def _load_model(self):
         """Lazy load the sentence transformer model."""
         if self.model is None:
@@ -144,7 +150,7 @@ class EmbeddingClassifier:
         self._is_fitted = True
         return self
     
-    def fit_from_examples(self, label_df: pd.DataFrame, n_examples: int = 50):
+    def fit_from_examples(self, label_df: pd.DataFrame, n_examples: int = 500):
         """
         Fit using averaged embeddings of label examples.
         
@@ -153,7 +159,7 @@ class EmbeddingClassifier:
         
         Args:
             label_df: DataFrame with 'text' and 'label' columns
-            n_examples: Max examples per label to average
+            n_examples: Max examples per label to average (default: 500)
         """
         self._load_model()
         
@@ -191,6 +197,74 @@ class EmbeddingClassifier:
         print(f"Fitted from examples: {len(self.labels)} labels, shape {self.label_embeddings.shape}")
         return self
     
+    def fit_knn(self, label_df: pd.DataFrame, k: int = 5, max_examples_per_label: int = 1000):
+        """
+        Fit using K-Nearest Neighbors approach.
+        
+        Instead of averaging, stores all example embeddings and uses 
+        KNN with majority voting for prediction.
+        
+        Args:
+            label_df: DataFrame with 'text' and 'label' columns
+            k: Number of nearest neighbors to consider
+            max_examples_per_label: Max examples to store per label (memory limit)
+        """
+        self._load_model()
+        self.use_knn = True
+        self.k_neighbors = k
+        
+        all_embeddings = []
+        all_labels = []
+        
+        print(f"Fitting KNN classifier (k={k})...")
+        for label in self.labels:
+            # Get examples for this label
+            examples = label_df[label_df['label'] == label]['text'].head(max_examples_per_label).tolist()
+            
+            if examples:
+                print(f"  Embedding {len(examples)} examples for '{label}'...")
+                # Compute embeddings for all examples
+                example_embeddings = self.model.encode(
+                    examples,
+                    convert_to_numpy=True,
+                    normalize_embeddings=self.config.normalize,
+                    batch_size=self.config.batch_size,
+                    show_progress_bar=False
+                )
+                all_embeddings.append(example_embeddings)
+                all_labels.extend([label] * len(examples))
+        
+        # Concatenate all embeddings
+        self.example_embeddings = np.vstack(all_embeddings)
+        self.example_labels = np.array(all_labels)
+        self._is_fitted = True
+        
+        print(f"KNN fitted: {len(self.example_labels)} total examples, {len(self.labels)} labels")
+        print(f"Embedding matrix shape: {self.example_embeddings.shape}")
+        return self
+    
+    def _predict_knn_single(self, text_embedding: np.ndarray) -> Tuple[str, float]:
+        """Predict using KNN for a single embedding."""
+        # Compute similarities with all examples
+        similarities = np.dot(self.example_embeddings, text_embedding)
+        
+        # Get top-k indices
+        top_k_indices = np.argsort(similarities)[-self.k_neighbors:][::-1]
+        top_k_labels = self.example_labels[top_k_indices]
+        top_k_scores = similarities[top_k_indices]
+        
+        # Majority vote (weighted by similarity)
+        from collections import Counter
+        vote_weights = {}
+        for label, score in zip(top_k_labels, top_k_scores):
+            vote_weights[label] = vote_weights.get(label, 0) + score
+        
+        # Get winner
+        predicted_label = max(vote_weights, key=vote_weights.get)
+        confidence = vote_weights[predicted_label] / sum(vote_weights.values())
+        
+        return predicted_label, float(confidence)
+    
     def predict_single(self, text: str) -> Tuple[str, float, Dict[str, float]]:
         """
         Predict label for a single text.
@@ -201,9 +275,6 @@ class EmbeddingClassifier:
         Returns:
             Tuple of (predicted_label, confidence, all_scores_dict)
         """
-        if self.label_embeddings is None:
-            self._compute_label_embeddings()
-        
         self._load_model()
         
         # Encode input text
@@ -212,6 +283,24 @@ class EmbeddingClassifier:
             convert_to_numpy=True,
             normalize_embeddings=self.config.normalize
         )[0]
+        
+        # Use KNN if enabled
+        if self.use_knn:
+            predicted_label, confidence = self._predict_knn_single(text_embedding)
+            # For all_scores, compute average similarity per label
+            all_scores = {}
+            for label in self.labels:
+                label_mask = self.example_labels == label
+                if np.any(label_mask):
+                    label_sims = np.dot(self.example_embeddings[label_mask], text_embedding)
+                    all_scores[label] = float(np.mean(label_sims))
+                else:
+                    all_scores[label] = 0.0
+            return predicted_label, confidence, all_scores
+        
+        # Standard centroid approach
+        if self.label_embeddings is None:
+            self._compute_label_embeddings()
         
         # Compute cosine similarity with all labels
         similarities = np.dot(self.label_embeddings, text_embedding)
@@ -239,10 +328,29 @@ class EmbeddingClassifier:
         Returns:
             List of predicted labels
         """
+        self._load_model()
+        
+        # Use KNN if enabled
+        if self.use_knn:
+            # Encode all texts
+            text_embeddings = self.model.encode(
+                texts,
+                convert_to_numpy=True,
+                normalize_embeddings=self.config.normalize,
+                batch_size=self.config.batch_size,
+                show_progress_bar=self.config.show_progress and len(texts) > 100
+            )
+            
+            predictions = []
+            for text_emb in text_embeddings:
+                pred_label, _ = self._predict_knn_single(text_emb)
+                predictions.append(pred_label)
+            
+            return predictions
+        
+        # Standard centroid approach
         if self.label_embeddings is None:
             self._compute_label_embeddings()
-        
-        self._load_model()
         
         # Encode all texts
         text_embeddings = self.model.encode(
@@ -274,9 +382,6 @@ class EmbeddingClassifier:
         Returns:
             List of (label, confidence) tuples
         """
-        if self.label_embeddings is None:
-            self._compute_label_embeddings()
-        
         self._load_model()
         
         text_embeddings = self.model.encode(
@@ -286,6 +391,18 @@ class EmbeddingClassifier:
             batch_size=self.config.batch_size,
             show_progress_bar=self.config.show_progress and len(texts) > 100
         )
+        
+        # Use KNN if enabled
+        if self.use_knn:
+            results = []
+            for text_emb in text_embeddings:
+                pred_label, confidence = self._predict_knn_single(text_emb)
+                results.append((pred_label, confidence))
+            return results
+        
+        # Standard centroid approach
+        if self.label_embeddings is None:
+            self._compute_label_embeddings()
         
         similarities = np.dot(text_embeddings, self.label_embeddings.T)
         best_indices = np.argmax(similarities, axis=1)

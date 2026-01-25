@@ -1,60 +1,71 @@
 {
-  "approach": "Rule-Based (Exact + Fuzzy Matching)",
+  "approach": "Rule-Based (Exact + Fuzzy Matching) WITH Text Normalization",
+  "text_normalization": true,
+  "improvements": [
+    "Lowercase conversion",
+    "Whitespace normalization"
+  ],
   "department": {
-    "accuracy": 0.5878661087866108,
-    "precision": 0.6456147616919706,
-    "recall": 0.21331250349121664,
-    "f1_macro": 0.2500547704558922,
-    "f1_weighted": 0.48011727033214757,
+    "accuracy": 0.7708333333333334,
+    "precision": 0.6857309357309357,
+    "recall": 0.5205234159779614,
+    "f1_macro": 0.5717827626918536,
+    "f1_weighted": 0.7548069985569987,
     "per_class_f1": {
       "Administrative": 0.0,
-      "Business Development": 0.36363636363636365,
-      "Consulting": 0.1935483870967742,
+      "Business Development": 0.8,
+      "Consulting": 0.8,
       "Customer Support": 0.0,
-      "Human Resources": 0.0,
-      "Information Technology": 0.07017543859649122,
-      "Marketing": 0.10526315789473684,
-      "Other": 0.7198838896952104,
-      "Project Management": 0.56,
+      "Human Resources": 0.5,
+      "Information Technology": 0.8333333333333334,
+      "Marketing": 0.5714285714285714,
+      "Other": 0.8181818181818182,
+      "Project Management": 0.6666666666666666,
       "Purchasing": 0.5,
-      "Sales": 0.23809523809523808
+      "Sales": 0.8
     }
   },
   "seniority": {
-    "accuracy": 0.12761506276150628,
-    "precision": 0.41742160278745644,
-    "recall": 0.12047921592033031,
-    "f1_macro": 0.167810483167626,
-    "f1_weighted": 0.19862208862731875,
+    "accuracy": 0.5416666666666666,
+    "precision": 0.5009838584263137,
+    "recall": 0.5487654320987655,
+    "f1_macro": 0.47369610278467783,
+    "f1_weighted": 0.5843160353766901,
     "per_class_f1": {
-      "Director": 0.1875,
-      "Junior": 0.2,
-      "Lead": 0.23931623931623933,
-      "Management": 0.4228571428571429,
-      "Other": 0.0,
-      "Professional": 0.0,
-      "Senior": 0.125
+      "Director": 0.2,
+      "Junior": 0.5714285714285714,
+      "Lead": 0.5365853658536586,
+      "Management": 0.7636363636363637,
+      "Professional": 0.56,
+      "Senior": 0.21052631578947367
     }
   },
   "metadata": {
+    "evaluation_split": {
+      "dev_size": 382,
+      "test_size": 96
+    },
+    "evaluation_on": "test",
     "training_samples": 5006,
     "dept_training_samples": 2597,
     "sen_training_samples": 2409,
     "fuzzy_threshold": 0.8,
+    "dept_default": "Other",
+    "sen_default": "Professional",
     "match_methods": {
       "department": {
-        "exact": 11,
-        "substring": 12,
-        "keyword": 0,
-        "default": 291
+        "exact": 13,
+        "substring": 16,
+        "keyword": 85,
+        "default": 180
       },
       "seniority": {
-        "exact": 30,
-        "substring": 54,
-        "keyword": 0,
-        "default": 230
+        "exact": 32,
+        "substring": 66,
+        "keyword": 145,
+        "default": 68
       }
     }
   },
-  "timestamp": "2026-01-13T09:48:05.977042"
+  "timestamp": "2026-01-25T15:20:43.664239"
 }

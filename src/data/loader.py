@@ -67,9 +67,11 @@ def deduplicate_label_df(
     
     # Optionally cap per-class (stratified sampling)
     if max_per_class is not None:
-        label_df = label_df.groupby('label', group_keys=False).apply(
-            lambda x: x.sample(min(len(x), max_per_class), random_state=42)
-        ).reset_index(drop=True)
+        # Group by label and sample, keeping the label column
+        sampled_groups = []
+        for label, group in label_df.groupby('label'):
+            sampled_groups.append(group.sample(min(len(group), max_per_class), random_state=42))
+        label_df = pd.concat(sampled_groups, ignore_index=True)
     
     final_count = len(label_df)
     
@@ -192,7 +194,7 @@ def load_label_lists(
     data_dir: str,
     fix_encoding: bool = True,
     deduplicate: bool = True,
-    max_per_class: Optional[int] = 500
+    max_per_class: Optional[int] = None
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Load the department and seniority label lists with optional preprocessing.
@@ -219,10 +221,12 @@ def load_label_lists(
     
     # Deduplicate and optionally cap per class
     if deduplicate:
-        print("Deduplicating department labels...")
-        department_df = deduplicate_label_df(department_df, max_per_class)
-        print("Deduplicating seniority labels...")
-        seniority_df = deduplicate_label_df(seniority_df, max_per_class)
+        department_df = deduplicate_label_df(department_df, max_per_class=max_per_class)
+        seniority_df  = deduplicate_label_df(seniority_df, max_per_class=max_per_class)
+    elif max_per_class is not None:
+        # If not deduplicating but still want to cap
+        department_df = deduplicate_label_df(department_df, max_per_class=max_per_class)
+        seniority_df  = deduplicate_label_df(seniority_df, max_per_class=max_per_class)
 
     return department_df, seniority_df
 

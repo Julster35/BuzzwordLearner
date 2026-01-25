@@ -1,0 +1,88 @@
+{
+  "approach": "Rule-Based (Exact + Fuzzy Matching) WITH Text Normalization",
+  "text_normalization": true,
+  "improvements": [
+    "Lowercase conversion",
+    "Whitespace normalization"
+  ],
+  "department": {
+    "in_distribution": {
+      "accuracy": 1.0,
+      "test_samples": 2029
+    },
+    "real_world": {
+      "accuracy": 0.7280334728033473,
+      "precision": 0.6528490028490027,
+      "recall": 0.5477626262626263,
+      "f1_macro": 0.589842325450311,
+      "f1_weighted": 0.7283941644395441,
+      "per_class_f1": {
+        "Administrative": 0.0,
+        "Business Development": 0.6153846153846154,
+        "Consulting": 0.88,
+        "Customer Support": 0.4,
+        "Human Resources": 0.7142857142857143,
+        "Information Technology": 0.6896551724137931,
+        "Marketing": 0.3157894736842105,
+        "Other": 0.7923076923076923,
+        "Project Management": 0.7586206896551724,
+        "Purchasing": 0.6,
+        "Sales": 0.7222222222222222
+      },
+      "test_samples": 239
+    }
+  },
+  "seniority": {
+    "in_distribution": {
+      "accuracy": 1.0,
+      "test_samples": 1886
+    },
+    "real_world": {
+      "accuracy": 0.6108786610878661,
+      "precision": 0.5830626231163866,
+      "recall": 0.6966111618922199,
+      "f1_macro": 0.5728168325553069,
+      "f1_weighted": 0.6490299680118723,
+      "per_class_f1": {
+        "Director": 0.42857142857142855,
+        "Junior": 0.625,
+        "Lead": 0.6736842105263158,
+        "Management": 0.765625,
+        "Professional": 0.6106870229007634,
+        "Senior": 0.3333333333333333
+      },
+      "test_samples": 239
+    }
+  },
+  "metadata": {
+    "evaluation_split": {
+      "csv_dev_size": 15658,
+      "csv_test_size": 3915,
+      "json_dev_size": 239,
+      "json_test_size": 239
+    },
+    "training_samples": 19573,
+    "dept_training_samples": 10145,
+    "sen_training_samples": 9428,
+    "fuzzy_threshold": 0.8,
+    "dept_default": "Other",
+    "sen_default": "Professional",
+    "match_methods": {
+      "department": {
+        "exact": 24,
+        "substring": 26,
+        "keyword": 67,
+        "fuzzy": 32,
+        "default": 165
+      },
+      "seniority": {
+        "exact": 91,
+        "substring": 77,
+        "keyword": 81,
+        "fuzzy": 0,
+        "default": 65
+      }
+    }
+  },
+  "timestamp": "2026-01-25T23:50:54.537975"
+}
