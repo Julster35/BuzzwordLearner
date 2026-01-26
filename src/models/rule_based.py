@@ -56,6 +56,8 @@ class KeywordMatcher:
     }
     
     # Default keyword patterns for seniority (multilingual)
+    # NOTE: Only includes labels that exist in seniority-v2.csv lookup table
+    # Available labels: Director, Junior, Lead, Management, Senior
     SENIORITY_KEYWORDS = {
         'Management': ['ceo', 'cfo', 'cto', 'coo', 'cmo', 'cio', 'chief', 
                         'geschäftsführer', 'vorstand', 'directeur général',
@@ -68,10 +70,9 @@ class KeywordMatcher:
                 'chef de', 'supervisor', 'coordinator', 'koordinator',
                 'manager', 'responsable', 'verantwortlich', 'group lead'],
         'Senior': ['senior', 'sr.', 'sr ', 'principal', 'expert', 'specialist',
-                    'spezialist', 'experienced', 'erfahren', 'staff'],
-        'Professional': ['professional', 'specialist', 'fachkraft', 'analyst',
-                        'engineer', 'developer', 'consultant', 'berater',
-                        'architect', 'designer'],
+                    'spezialist', 'experienced', 'erfahren', 'staff',
+                    'professional', 'fachkraft', 'analyst', 'engineer', 
+                    'developer', 'consultant', 'berater', 'architect', 'designer'],
         'Junior': ['junior', 'jr.', 'jr ', 'associate', 'assistant', 'assistenz',
                     'trainee', 'intern', 'praktikant', 'werkstudent', 'graduate',
                     'entry level', 'apprentice', 'azubi', 'auszubildende',
@@ -355,7 +356,7 @@ def create_seniority_classifier(
     Returns:
         Configured HybridRuleClassifier for seniority
     """
-    cfg = config or RuleConfig(default_label="Professional")
+    cfg = config or RuleConfig(default_label="Other")
     return HybridRuleClassifier(
         label_df=seniority_df,
         keyword_dict=KeywordMatcher.SENIORITY_KEYWORDS,
