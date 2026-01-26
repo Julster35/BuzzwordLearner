@@ -1,0 +1,47 @@
+{
+  "approach": "Lexicon-Supervised TF-IDF + LogReg (No CV Training Data)",
+  "timestamp": "2026-01-26T13:34:26.519386",
+  "constraint": "Annotated CVs NOT used for training, only for evaluation",
+  "training_data": {
+    "department_samples": 10145,
+    "seniority_samples": 9428,
+    "source": "Lookup tables only (department-v2.csv, seniority-v2.csv)"
+  },
+  "features": {
+    "text": "TF-IDF (word 1-2 + char 3-5)",
+    "structural": "Experience years (for seniority heuristics only)",
+    "dept_features": 8000,
+    "sen_features": 5000
+  },
+  "department": {
+    "accuracy": 0.2680577849117175,
+    "precision_macro": 0.565835073343416,
+    "recall_macro": 0.42772330834778755,
+    "f1_macro": 0.3928531234185301,
+    "f1_weighted": 0.20838718880445217,
+    "test_samples": 623
+  },
+  "seniority_text_only": {
+    "accuracy": 0.47351524879614765,
+    "precision_macro": 0.3668335666462546,
+    "recall_macro": 0.5907945632798574,
+    "f1_macro": 0.4301289799253856,
+    "f1_weighted": 0.4010461940477498,
+    "test_samples": 623
+  },
+  "seniority_with_heuristics": {
+    "accuracy": 0.34991974317817015,
+    "precision_macro": 0.39838432005137564,
+    "recall_macro": 0.47375761289364227,
+    "f1_macro": 0.3368611040037442,
+    "f1_weighted": 0.3657041453905048,
+    "test_samples": 623
+  },
+  "config": {
+    "random_seed": 42,
+    "classifier": "LogisticRegression",
+    "C": 1.0,
+    "class_weight": "balanced",
+    "confidence_threshold": 0.6
+  }
+}
