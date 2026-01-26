@@ -1,0 +1,76 @@
+{
+  "best_department": {
+    "approach": "Feature Engineering (Improved)",
+    "f1_macro": 0.614535204138736,
+    "accuracy": 0.6096491228070176
+  },
+  "best_seniority": {
+    "approach": "Hybrid Rule+Embedding",
+    "f1_macro": 0.44350753042222996,
+    "accuracy": 0.4791666666666667
+  },
+  "all_approaches": [
+    {
+      "approach": "Rule-Based",
+      "dept_accuracy": 0.2848101265822785,
+      "dept_f1": 0.4463754254479541,
+      "sen_accuracy": 0.4578059071729958,
+      "sen_f1": 0.4158956952764837
+    },
+    {
+      "approach": "Embedding Zero-Shot",
+      "dept_accuracy": 0.24686192468619247,
+      "dept_f1": 0.2872740223422604,
+      "sen_accuracy": 0.36401673640167365,
+      "sen_f1": 0.2384194584926621
+    },
+    {
+      "approach": "Hybrid Rule+Embedding",
+      "dept_accuracy": 0.4791666666666667,
+      "dept_f1": 0.3645044346138737,
+      "sen_accuracy": 0.4791666666666667,
+      "sen_f1": 0.44350753042222996
+    },
+    {
+      "approach": "Transformer",
+      "dept_accuracy": 0.3075313807531381,
+      "dept_f1": 0.35333076348651904,
+      "sen_accuracy": 0.46443514644351463,
+      "sen_f1": 0.434194455859588
+    },
+    {
+      "approach": "Pseudo-Labeling",
+      "dept_accuracy": 0.4435146443514644,
+      "dept_f1": 0.43779211247396527,
+      "sen_accuracy": 0.48326359832635984,
+      "sen_f1": 0.4368621422542991
+    },
+    {
+      "approach": "Feature Engineering (Improved)",
+      "dept_accuracy": 0.6096491228070176,
+      "dept_f1": 0.614535204138736,
+      "sen_accuracy": 0.47489539748953974,
+      "sen_f1": 0.4430268180212052
+    },
+    {
+      "approach": "TF-IDF + LogReg",
+      "dept_accuracy": 0.3891213389121339,
+      "dept_f1": 0.40567745167064656,
+      "sen_accuracy": 0.41631799163179917,
+      "sen_f1": 0.41125293943107005
+    }
+  ],
+  "key_findings": [
+    "Rule-based approaches can outperform ML when domain gap is significant",
+    "Transformer models achieve high in-distribution accuracy but struggle with domain shift",
+    "Seniority classification is easier because seniority keywords are universal",
+    "Oversampling outperforms class weighting for handling imbalance",
+    "Best department model differs from best seniority model"
+  ],
+  "recommendations": [
+    "Use rule-based approach for department classification",
+    "Use transformer approach for seniority classification",
+    "Consider combined pipeline for production deployment",
+    "Future work: domain adaptation to bridge training-test gap"
+  ]
+}

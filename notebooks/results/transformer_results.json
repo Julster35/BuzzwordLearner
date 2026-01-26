@@ -1,52 +1,52 @@
 {
   "approach": "Transformer (DistilBERT Fine-Tuned)",
   "department": {
-    "in_distribution_accuracy": 0.9692307692307692,
-    "real_world_accuracy": 0.3158995815899582,
-    "real_world_precision": 0.4663443911402169,
-    "real_world_recall": 0.46303545906823457,
-    "real_world_f1_macro": 0.36138312940831036,
-    "real_world_f1_weighted": 0.23365659226221713,
+    "in_distribution_accuracy": 0.9931000492853622,
+    "real_world_accuracy": 0.3075313807531381,
+    "real_world_precision": 0.35586540385835636,
+    "real_world_recall": 0.513323031631467,
+    "real_world_f1_macro": 0.35333076348651904,
+    "real_world_f1_weighted": 0.2343045831575312,
     "per_class_f1": {
-      "Administrative": 0.0784313725490196,
-      "Business Development": 0.2702702702702703,
-      "Consulting": 0.2926829268292683,
-      "Customer Support": 0.2857142857142857,
-      "Human Resources": 0.5454545454545454,
-      "Information Technology": 0.4723618090452261,
-      "Marketing": 0.46808510638297873,
-      "Other": 0.046511627906976744,
-      "Project Management": 0.6363636363636364,
-      "Purchasing": 0.4,
-      "Sales": 0.4793388429752066
+      "Administrative": 0.04878048780487805,
+      "Business Development": 0.3125,
+      "Consulting": 0.391304347826087,
+      "Customer Support": 0.35294117647058826,
+      "Human Resources": 0.17886178861788618,
+      "Information Technology": 0.5454545454545454,
+      "Marketing": 0.4878048780487805,
+      "Other": 0.015810276679841896,
+      "Project Management": 0.5952380952380952,
+      "Purchasing": 0.24561403508771928,
+      "Sales": 0.7123287671232876
     }
   },
   "seniority": {
-    "in_distribution_accuracy": 0.970954356846473,
-    "real_world_accuracy": 0.47280334728033474,
-    "real_world_precision": 0.42509108125892764,
-    "real_world_recall": 0.6241290136886027,
-    "real_world_f1_macro": 0.44332196557740683,
-    "real_world_f1_weighted": 0.44503203305901234,
+    "in_distribution_accuracy": 0.996288441145281,
+    "real_world_accuracy": 0.46443514644351463,
+    "real_world_precision": 0.4083347294260607,
+    "real_world_recall": 0.6138572700483492,
+    "real_world_f1_macro": 0.434194455859588,
+    "real_world_f1_weighted": 0.43220955582183596,
     "per_class_f1": {
-      "Director": 0.7246376811594203,
-      "Junior": 0.14583333333333334,
-      "Lead": 0.6744186046511628,
-      "Management": 0.7954545454545454,
+      "Director": 0.704225352112676,
+      "Junior": 0.12631578947368421,
+      "Lead": 0.6666666666666666,
+      "Management": 0.751937984496124,
       "Professional": 0.0,
-      "Senior": 0.31958762886597936
+      "Senior": 0.35602094240837695
     }
   },
   "metadata": {
     "model_name": "distilbert-base-multilingual-cased",
-    "training_samples": 4004,
-    "dept_train_samples": 2077,
-    "dept_val_samples": 520,
-    "sen_train_samples": 1927,
-    "sen_val_samples": 482,
+    "training_samples": 15658,
+    "dept_train_samples": 8116,
+    "dept_val_samples": 2029,
+    "sen_train_samples": 7542,
+    "sen_val_samples": 1886,
     "epochs": 3,
     "batch_size": 16,
     "learning_rate": 2e-05
   },
-  "timestamp": "2026-01-12T17:36:38.557067"
+  "timestamp": "2026-01-26T17:41:36.985671"
 }

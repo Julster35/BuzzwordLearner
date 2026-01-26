@@ -773,3 +773,86 @@ Successfully executed notebook end-to-end:
 - **Department (no "Other")**: 61.0% accuracy
 - **Seniority**: 47.5% accuracy (baseline), 35.1% with career adjustment (needs tuning)
 
+---
+
+## Session 15: DistilBERT Consolidation & Repository Cleanup (2026-01-26)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Consolidate all 5 DistilBERT experimental notebooks (11-15) into a single executable comparison notebook and clean up the repository structure.
+
+### Prompts Used
+
+```
+[Initial planning for notebook comparison]
+
+the distilbert final notebook should also include the code from the other notebooks, so i can run the final results there and delete the others
+
+can we get move the old ones to the archive now? also check the repo structure with connections, are all the base models in the right folders and so on, also the results and training runs?
+
+do we need the checkpoints or can we delete them, the notebooks folder is still cluttered
+```
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `notebooks/08_distilbert_comparison.ipynb` | **Complete runnable notebook** consolidating all 5 DistilBERT approaches: Baseline, Class Balancing, Oversampling, Combined, and Two-Stage. Includes custom oversampling function (no imblearn dependency), training code for both department and seniority, and final comparison tables. |
+
+### Files Moved to Archive
+
+| File | Moved To |
+|------|----------|
+| `notebooks/11_distilbert_v3.ipynb` | `notebooks/_archive/` |
+| `notebooks/12_distilbert_classbalancing.ipynb` | `notebooks/_archive/` |
+| `notebooks/13_distilbert_oversampling.ipynb` | `notebooks/_archive/` |
+| `notebooks/14_distilbert_classbalancing&oversampling.ipynb` | `notebooks/_archive/` |
+| `notebooks/15_distilbert_two-stage.ipynb` | `notebooks/_archive/` |
+| `notebooks/models/` contents | `models/` (root folder) |
+
+### Files Deleted
+
+| Item | Reason |
+|------|--------|
+| 9 `out_*` training checkpoint folders | Intermediate training saves no longer needed |
+| `notebooks/models/` folder | Empty after contents moved to root `models/` |
+
+### Key Design Decisions
+
+1. **Self-Contained Notebook**: The new `08_distilbert_comparison.ipynb` can be run independently to reproduce all 5 DistilBERT experiments without relying on the archived notebooks.
+
+2. **Custom Oversampling**: Implemented `oversample_to_median()` function to avoid external dependency on `imblearn` library.
+
+3. **Dual Task Training**: Each approach trains both department AND seniority models, with separate evaluation for each.
+
+4. **Centralized Models**: Moved all model files to root `models/` folder for consistent organization.
+
+5. **Results Collection**: Notebook saves results to CSV for comparison with other approaches in final comparison notebook (99).
+
+### Repository Structure After Cleanup
+
+```
+BuzzwordLearner/
+├── data/                          Training data (CSVs) + inference data (JSONs)
+├── models/                        All trained models centralized
+│   ├── tfidf_logreg_*.pkl
+│   ├── transformer_*/
+│   └── *_transformer_pseudo/
+├── notebooks/
+│   ├── 01-08_*.ipynb             Main experiment notebooks
+│   ├── _archive/                  12 archived notebooks
+│   └── results/                   JSON results + wandb logs
+├── reports/                       LaTeX templates, figures
+└── src/                           Reusable Python modules
+```
+
+### Verified
+
+- ✅ No broken imports in `src/*.py` files
+- ✅ All models consolidated in root `models/` folder
+- ✅ Old notebooks preserved in `_archive/`
+- ✅ Training checkpoints cleaned up
+
+

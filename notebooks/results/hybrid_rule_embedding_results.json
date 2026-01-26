@@ -1,6 +1,6 @@
 {
   "approach": "hybrid_rule_based_embedding",
-  "timestamp": "2026-01-25T23:47:34.546522",
+  "timestamp": "2026-01-26T17:44:53.596028",
   "config": {
     "embedding_low_threshold": 0.5,
     "embedding_model": "paraphrase-multilingual-MiniLM-L12-v2",
