@@ -11,25 +11,25 @@
       "test_samples": 2029
     },
     "real_world": {
-      "accuracy": 0.7280334728033473,
-      "precision": 0.6528490028490027,
-      "recall": 0.5477626262626263,
-      "f1_macro": 0.589842325450311,
-      "f1_weighted": 0.7283941644395441,
+      "accuracy": 0.6835443037974683,
+      "precision": 0.6226925665463214,
+      "recall": 0.5313778788959918,
+      "f1_macro": 0.5551778191630482,
+      "f1_weighted": 0.6847109789172039,
       "per_class_f1": {
-        "Administrative": 0.0,
-        "Business Development": 0.6153846153846154,
-        "Consulting": 0.88,
-        "Customer Support": 0.4,
-        "Human Resources": 0.7142857142857143,
-        "Information Technology": 0.6896551724137931,
-        "Marketing": 0.3157894736842105,
-        "Other": 0.7923076923076923,
-        "Project Management": 0.7586206896551724,
-        "Purchasing": 0.6,
-        "Sales": 0.7222222222222222
+        "Administrative": 0.17391304347826086,
+        "Business Development": 0.37037037037037035,
+        "Consulting": 0.7755102040816326,
+        "Customer Support": 0.25,
+        "Human Resources": 0.6666666666666666,
+        "Information Technology": 0.6290322580645161,
+        "Marketing": 0.43902439024390244,
+        "Other": 0.7584830339321357,
+        "Project Management": 0.6153846153846154,
+        "Purchasing": 0.7272727272727273,
+        "Sales": 0.7012987012987013
       },
-      "test_samples": 239
+      "test_samples": 474
     }
   },
   "seniority": {
@@ -38,28 +38,28 @@
       "test_samples": 1886
     },
     "real_world": {
-      "accuracy": 0.6108786610878661,
-      "precision": 0.5830626231163866,
-      "recall": 0.6966111618922199,
-      "f1_macro": 0.5728168325553069,
-      "f1_weighted": 0.6490299680118723,
+      "accuracy": 0.6118143459915611,
+      "precision": 0.5734552124712308,
+      "recall": 0.6492793860982811,
+      "f1_macro": 0.5667310090092186,
+      "f1_weighted": 0.6396359375235054,
       "per_class_f1": {
-        "Director": 0.42857142857142855,
-        "Junior": 0.625,
-        "Lead": 0.6736842105263158,
-        "Management": 0.765625,
-        "Professional": 0.6106870229007634,
-        "Senior": 0.3333333333333333
+        "Director": 0.3950617283950617,
+        "Junior": 0.56,
+        "Lead": 0.627906976744186,
+        "Management": 0.7619047619047619,
+        "Professional": 0.6394052044609665,
+        "Senior": 0.4161073825503356
       },
-      "test_samples": 239
+      "test_samples": 474
     }
   },
   "metadata": {
     "evaluation_split": {
       "csv_dev_size": 15658,
       "csv_test_size": 3915,
-      "json_dev_size": 239,
-      "json_test_size": 239
+      "json_dev_size": 4,
+      "json_test_size": 474
     },
     "training_samples": 19573,
     "dept_training_samples": 10145,
@@ -84,5 +84,5 @@
       }
     }
   },
-  "timestamp": "2026-01-25T23:50:54.537975"
+  "timestamp": "2026-01-26T03:15:49.173768"
 }

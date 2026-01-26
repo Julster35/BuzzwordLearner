@@ -1,0 +1,43 @@
+{
+  "approach": "TF-IDF (word+char ngrams) + Logistic Regression",
+  "timestamp": "2026-01-26T03:10:21.992738",
+  "data_split": {
+    "cv_level_split": true,
+    "train_cvs": 487,
+    "val_cvs": 61,
+    "test_cvs": 61,
+    "train_entries_total": 2108,
+    "val_entries_active": 73,
+    "test_entries_active": 63
+  },
+  "features": {
+    "word_ngrams": "(1, 2)",
+    "char_ngrams": "(3, 5)",
+    "dept_features": 5536,
+    "sen_features": 4536
+  },
+  "department": {
+    "validation_accuracy": 0.7397260273972602,
+    "accuracy": 0.7777777777777778,
+    "precision_macro": 0.6130769230769231,
+    "recall_macro": 0.6603658536585366,
+    "f1_macro": 0.6169444444444444,
+    "f1_weighted": 0.7897266313932981,
+    "test_samples": 63
+  },
+  "seniority": {
+    "validation_accuracy": 0.8493150684931506,
+    "accuracy": 0.8095238095238095,
+    "precision_macro": 0.7211640211640211,
+    "recall_macro": 0.6995726495726496,
+    "f1_macro": 0.7053702384049529,
+    "f1_weighted": 0.8355992783017792,
+    "test_samples": 63
+  },
+  "config": {
+    "random_seed": 42,
+    "classifier": "LogisticRegression",
+    "C": 1.0,
+    "class_weight": "balanced"
+  }
+}
