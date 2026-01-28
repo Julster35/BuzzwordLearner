@@ -1,7 +1,7 @@
 {
   "approach": "embedding_zero_shot_v2",
   "model": "paraphrase-multilingual-MiniLM-L12-v2",
-  "timestamp": "2026-01-26T17:52:11.087189",
+  "timestamp": "2026-01-28T19:38:13.191872",
   "config": {
     "n_prototypes": 3,
     "multi_prototype_clustering": "KMeans",
