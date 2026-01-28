@@ -1,49 +1,53 @@
-# LinkedIn CV Classifier - Streamlit App
+# LinkedIn CV Classifier - Streamlit Dashboard
 
-## Schnellstart
+## Quick Start
 
-1. **Installation (falls noch nicht geschehen):**
+1. **Install dependencies:**
 ```bash
 pip install streamlit
 ```
 
-2. **App starten:**
+2. **Start the app:**
 ```bash
-cd app
-streamlit run cv_classifier_app.py
+cd Baseline_CV_Classifier
+python -m streamlit run cv_classifier_app.py
 ```
 
-Oder aus dem Root-Verzeichnis:
+Or from the project root:
 ```bash
-streamlit run app/cv_classifier_app.py
+python -m streamlit run Baseline_CV_Classifier/cv_classifier_app.py
 ```
 
-3. **Browser öffnet sich automatisch** (normalerweise auf http://localhost:8501)
+3. **Browser opens automatically** (usually at http://localhost:8501)
 
-## Funktionen
+## Features
 
-- 📄 **JSON Upload**: LinkedIn CV Dateien hochladen
-- 🎯 **Automatische Extraktion**: Findet alle aktiven Positionen (status='ACTIVE')
-- 🔍 **Rule-Based Classification**: 
-  - Department (11 Kategorien + 'Other')
-  - Seniority (6 Levels)
-- 📊 **Visualisierungen**: 
-  - Verteilungen
-  - Matching-Methoden Statistik
-- 💾 **CSV Export**: Ergebnisse herunterladen
+### 🤖 Best ML Models (Default)
+- **Department**: Feature Engineering + Random Forest (F1 = 0.615)
+- **Seniority**: DistilBERT Transformer (F1 = 0.616)
 
-## Verwendung
+### 📏 Rule-Based Fallback
+- Exact Match
+- Substring Match
+- Keyword Match
+- Fuzzy Match (>80% similarity)
+- Default Fallback
 
-1. Klicken Sie auf "Browse files" und wählen Sie eine JSON-Datei aus
-   - Verwenden Sie z.B. `data/linkedin-cvs-annotated.json` zum Testen
-2. Klicken Sie auf "Klassifizierung starten"
-3. Sehen Sie die Ergebnisse in Tabellen und Charts
-4. Optional: Filtern Sie nach Department/Seniority
-5. Laden Sie die Ergebnisse als CSV herunter
+### Core Functionality
+- 📄 **JSON Upload**: LinkedIn CV files
+- 🎯 **Auto-extraction**: Finds all active positions (status='ACTIVE')
+- 📊 **Visualizations**: Distribution charts, method statistics
+- 💾 **CSV Export**: Download results
 
-## JSON-Format
+## Model Selection
 
-Die App erwartet eine Liste von CVs, wobei jedes CV eine Liste von Positionen ist:
+Toggle between classification methods in the sidebar:
+- **Best ML Models**: Uses trained Feature Engineering + DistilBERT models
+- **Rule-Based**: Uses string matching (faster, no GPU required)
+
+## JSON Format
+
+The app expects a list of CVs, where each CV is a list of positions:
 
 ```json
 [
@@ -53,44 +57,38 @@ Die App erwartet eine Liste von CVs, wobei jedes CV eine Liste von Positionen is
       "position": "Senior Software Engineer",
       "status": "ACTIVE",
       "startDate": "2020-01",
-      "endDate": "",
-      ...
+      "endDate": ""
     }
   ]
 ]
 ```
 
-Nur Positionen mit `"status": "ACTIVE"` werden klassifiziert.
+Only positions with `"status": "ACTIVE"` are classified.
 
-## Features
-
-- ✅ **Caching**: Klassifizierer werden nur einmal geladen (schnell bei wiederholter Nutzung)
-- ✅ **Interaktive Filters**: Ergebnisse nach Department/Seniority filtern
-- ✅ **Statistiken**: Match-Methoden und Verteilungen
-- ✅ **Export**: CSV-Download der Ergebnisse
-- ✅ **Responsive UI**: Funktioniert auf Desktop und Tablet
-
-## Technische Details
+## Technical Details
 
 - **Framework**: Streamlit
-- **Klassifikation**: Rule-based matching (aus `src/models/rule_based.py`)
-- **Matching-Strategien**: 
-  1. Exact Match
-  2. Substring Match
-  3. Keyword Match
-  4. Fuzzy Match (>80% Similarität)
-  5. Default Fallback
-- **Text-Normalisierung**: Lowercase + Whitespace Cleaning
+- **Department Model**: `models/_archive/combined_rf_department.pkl`
+- **Seniority Model**: `models/transformer_seniority/`
+- **GPU Support**: DistilBERT uses CUDA when available
+
+## Best Model Performance
+
+| Task | Model | Accuracy | F1 Macro |
+|------|-------|----------|----------|
+| Department | Feature Eng + RF | 61.0% | **0.615** |
+| Seniority | DistilBERT | **70.5%** | **0.616** |
 
 ## Troubleshooting
 
-**Problem**: Streamlit nicht gefunden
+**Streamlit not found:**
 ```bash
 pip install streamlit
 ```
 
-**Problem**: Keine aktiven Positionen gefunden
-- Prüfen Sie, ob Ihre JSON-Datei Positionen mit `"status": "ACTIVE"` enthält
+**No active positions found:**
+- Check that your JSON contains positions with `"status": "ACTIVE"`
 
-**Problem**: Import-Fehler
-- Stellen Sie sicher, dass Sie im richtigen Verzeichnis sind und `src/` verfügbar ist
+**Model loading errors:**
+- Ensure you're running from the project root directory
+- Check that model files exist in `models/` directory

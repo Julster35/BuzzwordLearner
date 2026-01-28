@@ -1026,6 +1026,84 @@ and dont forget to update the genai usage with everything we did
 - Changed notebook `01_data_exploration.ipynb` → `01_eda.ipynb` 
 - Updated notebook 06 training data: `Lookups + pseudo-labeled` (not annotated CVs)
 
+
+*This document is continuously updated throughout the project development.*
+
+---
+
+## Session 19: Project Evaluation & Dashboard Enhancement (2026-01-28)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Critical evaluation of project completion against task requirements and enhancement of the Streamlit dashboard to incorporate the best-performing models.
+
+### Prompts Used
+
+```
+look at the task md, check the whole repo and tell me if we fulfilled the task to get 
+a great grade. Be critical and point to potential improvements. use sequential thinking
+
+do number 1, then i will want to tackle nr. 2 by incorporating our best seniority and 
+our best department model in the dashboard
+```
+
+### Analysis Performed
+
+Systematic evaluation of the project against all 8 grading criteria:
+1. Quality of Presentation
+2. Documentation Quality
+3. Variety of Models/Approaches
+4. Originality
+5. Predictive Performance
+6. Limitations Documentation
+7. Frontend/Dashboard (Optional)
+8. GenAI Usage Documentation
+
+### Critical Findings
+
+| Criterion | Assessment | Notes |
+|-----------|------------|-------|
+| Presentation | A- | 1201-line LaTeX doc, needs declaration.tex for Overleaf |
+| Documentation | A | Excellent README, DEVELOPER_GUIDE, genai_usage.md |
+| Approaches | A+ | 12 approaches (requirement: 2 minimum) |
+| Originality | A- | Two-Stage, Feature Engineering innovations |
+| Performance | A- | Dept F1=0.615, Sen F1=0.616 |
+| Limitations | A | Thorough Section 8.4 |
+| GenAI Docs | A+ | 1033 lines, 18+ sessions |
+| Dashboard | B→A | Enhanced with best models |
+
+### Files Deleted (Cleanup)
+
+| File | Reason |
+|------|--------|
+| `src/models/rule_based_c9bc84f.py` | Stray backup file |
+| `app/` folder | Empty, replaced by Baseline_CV_Classifier |
+| `scripts/` folder | Empty |
+| `update_notebook.py` | Temporary utility script |
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `Baseline_CV_Classifier/cv_classifier_app.py` | **Complete rewrite**: Added model selection (ML vs Rule-Based), integrated Feature Engineering + RF for Department (F1=0.615), DistilBERT for Seniority (F1=0.616), improved UI with emojis and metrics, proper error handling and fallbacks |
+| `Baseline_CV_Classifier/README.md` | Updated with new features, model performance table, and usage instructions |
+
+### Key Design Decisions
+
+1. **Model Selection Toggle**: Users can switch between ML models and Rule-Based in the sidebar
+2. **Graceful Fallback**: If ML models fail to load, automatically falls back to rule-based
+3. **GPU Support**: DistilBERT uses CUDA when available
+4. **Method Tracking**: Shows which classification method was used for each prediction
+
+### Dashboard Model Integration
+
+| Task | Model | Source |
+|------|-------|--------|
+| Department | Feature Eng + RF | `models/_archive/combined_rf_department.pkl` |
+| Seniority | DistilBERT | `models/transformer_seniority/` |
+
 ---
 
 *This document is continuously updated throughout the project development.*
