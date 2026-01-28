@@ -1,6 +1,6 @@
 {
   "approach": "hybrid_rule_based_embedding",
-  "timestamp": "2026-01-26T17:44:53.596028",
+  "timestamp": "2026-01-28T09:55:33.923464",
   "config": {
     "embedding_low_threshold": 0.5,
     "embedding_model": "paraphrase-multilingual-MiniLM-L12-v2",
@@ -26,11 +26,11 @@
     "f1_weighted": 0.5026734218665934
   },
   "seniority": {
-    "accuracy": 0.4791666666666667,
-    "precision_macro": 0.47904476320174,
-    "recall_macro": 0.5392822629776686,
-    "f1_macro": 0.44350753042222996,
-    "f1_weighted": 0.5107382087400337
+    "accuracy": 0.4652777777777778,
+    "precision_macro": 0.47326013241710924,
+    "recall_macro": 0.5315303249931724,
+    "f1_macro": 0.433671040587522,
+    "f1_weighted": 0.4952531853868261
   },
   "notes": "Hybrid approach combining rule-based precision with embedding flexibility. Uses rule-based for high-confidence exact matches and low-confidence safety net, embeddings for mid-range cases."
 }

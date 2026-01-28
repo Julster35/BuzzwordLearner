@@ -93,18 +93,27 @@ plot_confusion_matrix(df['domain'].tolist(), predictions, title="Domain Predicti
 
 ## Notebooks
 
-| Notebook | Purpose |
-|----------|---------|
-| `01_eda.ipynb` | Exploratory Data Analysis |
-| `02_baseline_rule_matching.ipynb` | Rule-based baseline |
-| `03_embedding_zero_shot.ipynb` | Embedding classifier experiments |
-| `04_supervised_classification.ipynb` | TF-IDF + supervised learning |
-| `05_model_comparison.ipynb` | Compare all approaches |
+| Notebook | Approach | Description |
+|----------|----------|-------------|
+| `01_eda.ipynb` | EDA | Exploratory Data Analysis on lookup tables |
+| `02_rule_based_baseline.ipynb` | Rule-Based | Hybrid string matching (exact + fuzzy) |
+| `03_embedding_baseline.ipynb` | Embedding | Multilingual sentence-transformer zero-shot |
+| `03.5_rule_based+embedding.ipynb` | Hybrid | Rule-based with embedding fallback |
+| `04_transformer_on_lookups.ipynb` | Transformer | DistilBERT fine-tuned on lookup tables |
+| `05_pseudo_labeling.ipynb` | Pseudo-Label | High-confidence pseudo-labels + transformer |
+| `06_feature_engineering.ipynb` | Feature Eng | Career features + Random Forest (**Best Dept F1**) |
+| `07_lexicon_supervised_baseline.ipynb` | TF-IDF LogReg | Lexicon-supervised interpretable baseline |
+| `08_distilbert_comparison.ipynb` | DistilBERT | 5 approaches: Baseline, Balancing, Oversampling, Combined, Two-Stage |
+| `99_final_comparison.ipynb` | Comparison | Load all results, visualize, rank approaches |
 
 ## Documentation
 
 - **GenAI Usage**: See `docs/genai_usage.md`
-- **Final Report**: See `reports/final_report.pdf`
+- **Final Report**: See `submission.tex`
+
+## Repository
+
+GitHub: https://github.com/Julster35/BuzzwordLearner
 
 ## Team
 

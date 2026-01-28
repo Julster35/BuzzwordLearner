@@ -5,17 +5,17 @@
     "accuracy": 0.6096491228070176
   },
   "best_seniority": {
-    "approach": "Hybrid Rule+Embedding",
-    "f1_macro": 0.44350753042222996,
-    "accuracy": 0.4791666666666667
+    "approach": "DistilBERT-Baseline",
+    "f1_macro": 0.6157845487845488,
+    "accuracy": 0.7051597051597052
   },
   "all_approaches": [
     {
       "approach": "Rule-Based",
-      "dept_accuracy": 0.2848101265822785,
-      "dept_f1": 0.4463754254479541,
-      "sen_accuracy": 0.4578059071729958,
-      "sen_f1": 0.4158956952764837
+      "dept_accuracy": 0.3020833333333333,
+      "dept_f1": 0.4291666666666667,
+      "sen_accuracy": 0.4270833333333333,
+      "sen_f1": 0.36459968602825743
     },
     {
       "approach": "Embedding Zero-Shot",
@@ -28,8 +28,8 @@
       "approach": "Hybrid Rule+Embedding",
       "dept_accuracy": 0.4791666666666667,
       "dept_f1": 0.3645044346138737,
-      "sen_accuracy": 0.4791666666666667,
-      "sen_f1": 0.44350753042222996
+      "sen_accuracy": 0.4652777777777778,
+      "sen_f1": 0.433671040587522
     },
     {
       "approach": "Transformer",
@@ -53,11 +53,46 @@
       "sen_f1": 0.4430268180212052
     },
     {
-      "approach": "TF-IDF + LogReg",
-      "dept_accuracy": 0.3891213389121339,
-      "dept_f1": 0.40567745167064656,
-      "sen_accuracy": 0.41631799163179917,
-      "sen_f1": 0.41125293943107005
+      "approach": "Lexicon-Supervised",
+      "dept_accuracy": 0.2680577849117175,
+      "dept_f1": 0.3928531234185301,
+      "sen_accuracy": 0.47351524879614765,
+      "sen_f1": 0.4301289799253856
+    },
+    {
+      "approach": "DistilBERT-Baseline",
+      "dept_accuracy": 0.2825040128410915,
+      "dept_f1": 0.3432117066880744,
+      "sen_accuracy": 0.7051597051597052,
+      "sen_f1": 0.6157845487845488
+    },
+    {
+      "approach": "DistilBERT-Class Balancing",
+      "dept_accuracy": 0.2744783306581059,
+      "dept_f1": 0.3425960530073483,
+      "sen_accuracy": 0.0,
+      "sen_f1": 0.0
+    },
+    {
+      "approach": "DistilBERT-Oversampling",
+      "dept_accuracy": 0.2696629213483146,
+      "dept_f1": 0.3488626537697258,
+      "sen_accuracy": 0.7051597051597052,
+      "sen_f1": 0.6066242277193336
+    },
+    {
+      "approach": "DistilBERT-Combined",
+      "dept_accuracy": 0.2680577849117175,
+      "dept_f1": 0.346463638969651,
+      "sen_accuracy": 0.0,
+      "sen_f1": 0.0
+    },
+    {
+      "approach": "DistilBERT-Two-Stage",
+      "dept_accuracy": 0.6853932584269663,
+      "dept_f1": 0.5353367494842654,
+      "sen_accuracy": 0.0,
+      "sen_f1": 0.0
     }
   ],
   "key_findings": [

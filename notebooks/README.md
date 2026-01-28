@@ -29,6 +29,13 @@ These approaches train on **lookup tables** and evaluate on **annotated LinkedIn
 - **Training**: Lookup tables (embedded as reference)
 - **Evaluation**: Annotated CVs
 
+### 03.5_rule_based+embedding.ipynb
+**Hybrid Approach**: Rule-based with embedding fallback
+- Combines rule-based exact/fuzzy matching with embedding similarity
+- Uses embedding when rules have low confidence
+- **Training**: Lookup tables
+- **Evaluation**: Annotated CVs
+
 ### 04_transformer_on_lookups.ipynb
 **Approach 3**: Fine-tuned transformer
 - DistilBERT multilingual fine-tuned on lookup tables
@@ -53,16 +60,27 @@ These approaches train on **annotated CV data** (different setup than zero-shot)
 ### 06_feature_engineering.ipynb
 **Approach 5**: Feature engineering + Random Forest
 - Hand-crafted career features + TF-IDF
-- Trains on annotated data (70/30 split)
-- **⚠️ NOT zero-shot** - uses annotated CVs for training
+- **⭐ Best Department F1 (0.615)**
+- **Training**: Lookup tables + pseudo-labeled CVs
 - Feature importance analysis
 
-### 07_tfidf_logreg.ipynb
+### 07_lexicon_supervised_baseline.ipynb
 **Approach 6**: TF-IDF + Logistic Regression
 - Interpretable baseline with TF-IDF features
 - Fast training and inference
 - **Training**: Lookup tables
 - **Evaluation**: Annotated CVs
+
+### 08_distilbert_comparison.ipynb
+**Approach 7**: DistilBERT comparison (5 strategies)
+- Consolidates all DistilBERT experiments into one notebook
+- **Baseline**: Standard fine-tuning
+- **Class Balancing**: Weighted loss
+- **Oversampling**: Minority class duplication
+- **Combined**: Weights + oversampling
+- **Two-Stage v2**: Hierarchical (Other vs NotOther → specific) with FocalLoss
+- **⭐ Best Seniority F1 (0.616)**: Baseline
+- **⭐ Best Department Accuracy (68.5%)**: Two-Stage
 
 ---
 
@@ -105,9 +123,11 @@ These approaches train on **annotated CV data** (different setup than zero-shot)
 Each notebook saves evaluation results to `results/`:
 - `rule_based_results.json`
 - `embedding_results.json`
+- `hybrid_results.json`
 - `transformer_results.json`
 - `pseudo_labeling_results.json`
 - `feature_engineering_results.json`
 - `tfidf_logreg_results.json`
+- `distilbert_comparison_results.csv`
 
 These are loaded by notebook 99 for comparison.

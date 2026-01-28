@@ -369,15 +369,19 @@ print(comparison_df)
 
 | Notebook | Approach | Training Data | Description |
 |----------|----------|---------------|-------------|
-| `01_data_exploration.ipynb` | EDA | N/A | Distribution analysis, language detection |
-| `02_rule_based_baseline.ipynb` | 1 | Lookup tables | String matching baseline |
-| `03_embedding_baseline.ipynb` | 2 | Lookup tables | Zero-shot semantic similarity |
-| `04_transformer_on_lookups.ipynb` | 3 | Lookup tables | Fine-tuned DistilBERT |
-| `05_pseudo_labeling.ipynb` | 4 | Lookups + pseudo-labeled | Semi-supervised learning |
-| `06_feature_engineering.ipynb` | 5 | **Annotated CVs** | Career features + Random Forest |
-| `07_tfidf_logreg.ipynb` | 6 | Lookup tables | TF-IDF + Logistic Regression |
+| `01_eda.ipynb` | EDA | N/A | Distribution analysis, language detection |
+| `02_rule_based_baseline.ipynb` | Rule-Based | Lookup tables | Hybrid string matching (exact + fuzzy) |
+| `03_embedding_baseline.ipynb` | Embedding | Lookup tables | Zero-shot semantic similarity |
+| `03.5_rule_based+embedding.ipynb` | Hybrid | Lookup tables | Rule-based + embedding fallback |
+| `04_transformer_on_lookups.ipynb` | Transformer | Lookup tables | Fine-tuned DistilBERT |
+| `05_pseudo_labeling.ipynb` | Pseudo-Labeling | Lookups + pseudo-labeled | Semi-supervised learning |
+| `06_feature_engineering.ipynb` | Feature Engineering | Lookups + pseudo-labeled | Career features + Random Forest ⭐ |
+| `07_lexicon_supervised_baseline.ipynb` | TF-IDF | Lookup tables | TF-IDF + Logistic Regression |
+| `08_distilbert_comparison.ipynb` | DistilBERT | Lookup tables | 5 strategies for class imbalance |
+| `99_final_comparison.ipynb` | Comparison | N/A | Final results and analysis |
 
 Each notebook saves results to `notebooks/results/*.json` for final comparison.
+
 
 ---
 
