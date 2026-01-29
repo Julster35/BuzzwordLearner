@@ -1,18 +1,18 @@
 {
   "approach": "Rule-Based (No Fallback)",
   "department": {
-    "accuracy": 0.3020833333333333,
-    "f1_macro": 0.4291666666666667,
-    "precision": 0.5178571428571429,
-    "recall": 0.4021464646464647
+    "accuracy": 0.2824267782426778,
+    "f1_macro": 0.44391919635660937,
+    "precision": 0.5901805562569082,
+    "recall": 0.418377302966487
   },
   "seniority": {
-    "accuracy": 0.4270833333333333,
-    "f1_macro": 0.36459968602825743
+    "accuracy": 0.4309623430962343,
+    "f1_macro": 0.3886096575770092
   },
   "metadata": {
     "note": "This version excludes fallbacks to show raw matching capability.",
-    "enhanced_accuracy_dept": 0.6979166666666666,
-    "enhanced_accuracy_sen": 0.53125
+    "enhanced_accuracy_dept": 0.6820083682008368,
+    "enhanced_accuracy_sen": 0.5836820083682008
   }
 }
