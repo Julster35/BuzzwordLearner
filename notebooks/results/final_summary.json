@@ -6,8 +6,8 @@
   },
   "best_seniority": {
     "approach": "Feature Engineering (Improved)",
-    "f1_macro": 0.4430268180212052,
-    "accuracy": 0.47489539748953974
+    "f1_macro": 0.43740717847197014,
+    "accuracy": 0.47280334728033474
   },
   "all_approaches": [
     {
@@ -60,10 +60,10 @@
     },
     {
       "approach": "Feature Engineering (Improved)",
-      "dept_accuracy": 0.2824267782426778,
-      "dept_f1": 0.24800072106169915,
-      "sen_accuracy": 0.47489539748953974,
-      "sen_f1": 0.4430268180212052,
+      "dept_accuracy": 0.0,
+      "dept_f1": 0.0,
+      "sen_accuracy": 0.47280334728033474,
+      "sen_f1": 0.43740717847197014,
       "is_reference": false
     },
     {
