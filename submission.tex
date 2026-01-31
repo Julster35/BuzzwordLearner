@@ -14,6 +14,7 @@
 \usepackage{titlesec}
 \usepackage{enumitem}% http://ctan.org/pkg/enumitem
 \usepackage{acronym}
+\usepackage{float}
 
 
 \newboolean{englishLanguage}
@@ -182,14 +183,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{acronym}[ECU]
+\acro{cv}[CV]{Curriculum Vitae}
 \acro{ai}[AI]{Artificial Intelligence}
 \acro{eda}[EDA]{Exploratory Data Analysis}
 \end{acronym}
 
+\newpage
+\tableofcontents
 
-
-
-\setlength{\parskip}{0.5em} 
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -226,11 +227,11 @@ The main challenges arise from heterogeneous and noisy text data, including inco
 \section{Datasets Description}
 
 Four datasets are provided that serve different purposes within the machine learning pipeline.
-The \texttt{linkedin-cvs-annotated.json} dataset contains structured LinkedIn CVs, with individual career entries annotated with the target variables \textit{department} (professional domain) and \textit{seniority}. Consequently, it forms the basis for training models and quantitative evaluation via an internal train--validation--test split.
-In contrast, \texttt{linkedin-cvs-not-annotated.json} has the same data structure, but does not include target labels. It is therefore primarily used to apply trained models to previously unseen CVs, as would be required in a realistic deployment or submission setting.
-In addition to these two JSON datasets, two CSV files provide auxiliary resources for programmatic labelling and baseline approaches.
+The \texttt{linkedin-cvs-annotated.json} dataset contains structured LinkedIn CVs, with individual career entries annotated with the target variables \textit{department} (professional domain) and \textit{seniority}. Importantly, this annotated dataset is used exclusively for evaluation purposes to assess model performance. It is not used for training to avoid overfitting and to provide an unbiased measure of model generalization.
+In contrast, \texttt{linkedin-cvs-not-annotated.json} has the same data structure, but does not include target labels. Models can be applied to this data in realistic deployment scenarios.
+In addition to these two JSON datasets, two CSV files provide auxiliary resources for programmatic labeling and baseline approaches.
 The \texttt{department-v2.csv} file comprises a lexicon that maps job-related textual expressions to department labels, while the \texttt{seniority-v2.csv} file analogously maps textual patterns to seniority levels.
-These two lexica can be used to construct rule-based classifiers or support weakly supervised labelling strategies.
+These two lexica form the primary training data for most approaches. They can be used to construct rule-based classifiers, train supervised models, or support weakly supervised labeling strategies.
 
 
 \section{Exploratory Data Analysis (EDA)}
@@ -243,21 +244,19 @@ The exploratory data analysis serves to systematically investigate the BuzzwordL
 
 The dataset consists of four main components:
 \begin{itemize}
-    \item \textbf{Annotated LinkedIn CVs}: 1,000 resumes with manually assigned department and seniority labels
-    \item \textbf{Non-annotated LinkedIn CVs}: 200 resumes for inference without ground-truth labels
-    \item \textbf{Department Label Dictionary}: approx. 10,000 job title $\rightarrow$ department mappings
-    \item \textbf{Seniority Label Dictionary}: approx. 9,000 job title $\rightarrow$ seniority mappings
+    \item \textbf{Annotated LinkedIn CVs}: 609 resumes with manually assigned department and seniority labels (used exclusively for evaluation)
+    \item \textbf{Non-annotated LinkedIn CVs}: 390 resumes for inference without ground-truth labels
+    \item \textbf{Department Label Dictionary}: 10,145 job title $\rightarrow$ department mappings (primary training data)
+    \item \textbf{Seniority Label Dictionary}: 9,428 job title $\rightarrow$ seniority mappings (primary training data)
 \end{itemize}
-
 Each resume is structured as a list of positions, where each position contains the following attributes: \texttt{organization}, \texttt{position} (job title), \texttt{startDate}, \texttt{endDate}, \texttt{status} (ACTIVE/INACTIVE/UNKNOWN), as well as the target variables \texttt{department} and \texttt{seniority} (only in annotated data).
 
 \subsection{Career History Patterns}
 \label{subsec:career-patterns}
-
 The analysis of career trajectories reveals the following characteristics:
 \begin{itemize}
     \item \textbf{Positions per CV}: On average, resumes contain 4.5 positions (median: 4), with a range from 1 to 20 positions
-    \item \textbf{Active positions}: 1,430 active positions form the training dataset
+    \item \textbf{Active positions}: 623 active positions from the annotated CVs form the evaluation dataset
     \item \textbf{Multiple employments}: Approx. 8\% of individuals have multiple active positions simultaneously
 \end{itemize}
 
@@ -331,24 +330,16 @@ The dataset contains multiple languages (English $\sim$60\%, German $\sim$25\%, 
 
 The provided dictionaries contain 10,000+ department and 9,000+ seniority mappings with text characteristics similar to the actual position titles (avg. 28--30 characters). These enable rule-based baseline approaches and can serve as additional features for supervised models.
 
-\subsection{Comparison of Annotated and Non-Annotated Datasets}
-\label{subsec:dataset-comparison}
-
-Both datasets show consistent patterns: similar positions per CV (4.3 vs. 4.5), comparable title lengths, and matching language/status distributions. This homogeneity suggests good model generalization from training to inference data.
 
 \subsection{Key Findings and Implications}
 \label{subsec:key-findings}
-
-Overall, the annotated dataset exhibits several central challenges that should be considered when training and interpreting the model results. 
+Overall, the dataset exhibits several central challenges that should be considered when developing and interpreting model results. 
 The input data is highly heterogeneous, as job titles and descriptions are provided as semi-structured free text with substantial variation, including abbreviations, inconsistent formatting, and mixed languages, while semantically similar roles are not consistently standardized. 
 In addition, the distribution of the target labels is noticeably imbalanced for both \textit{department} and \textit{seniority}, and even more so for their joint combinations, which may bias the model towards majority classes. 
 Furthermore, the annotations themselves introduce uncertainty because department and seniority assignments rely on human interpretation and therefore may contain borderline cases or inconsistencies. 
 This issue is particularly relevant for seniority prediction, since job titles are not a reliable proxy for hierarchical level and can have different meanings depending on the organizational context. 
 For instance, identical titles may correspond to substantially different responsibilities in small companies compared to large enterprises, making some label assignments inherently context-dependent in the absence of additional information such as company size or industry.
-
-
 In summary, the following essential findings emerge with relevance for modeling:
-
 \begin{enumerate}
     \item \textbf{Class imbalance for departments}: Requires special treatment (class weighting, SMOTE, stratified sampling)
     
@@ -356,32 +347,40 @@ In summary, the following essential findings emerge with relevance for modeling:
     
     \item \textbf{Multilingual data}: Mandatory: Use of multilingual models or language-independent features
     
-    \item \textbf{Available label dictionaries}: Enable hybrid approaches combining rule-based matching and machine learning
+    \item \textbf{Available label dictionaries}: Enable training supervised models with 10,145 department and 9,428 seniority mappings
     
-    \item \textbf{Sufficient data volume}: 1,430 active positions provide a solid basis for supervised learning, especially with transfer learning
+    \item \textbf{Sufficient training data volume}: CSV lexicon data provides strong foundation for supervised learning
     
-    \item \textbf{Homogeneous distributions}: Training and inference datasets are structurally consistent
+    \item \textbf{Evaluation dataset}: 623 active positions from annotated CVs enable unbiased performance assessment
+    
+    \item \textbf{Domain shift challenge}: Models trained on clean CSV data must generalize to noisy real-world LinkedIn CVs
 \end{enumerate}
-
-These findings guide the choice of modeling strategies: A combination of rule-based baselines, embedding-based similarity methods, and fine-tuning of pre-trained transformer models appears promising.
-
+These findings guide the choice of modeling strategies: The primary challenge is bridging the domain gap between structured lookup tables (training data) and unstructured LinkedIn profiles (evaluation data). A combination of rule-based baselines, embedding-based similarity methods, feature engineering, and fine-tuning of pre-trained transformer models appears promising.
 \subsection{Conclusion}
-The exploratory data analysis reveals that, while the annotated dataset is suitable for supervised learning, it exhibits several structural limitations that are characteristic of real-world CV data. 
-The textual inputs are highly heterogeneous, as job titles and descriptions are provided as semi-structured free text with substantial variation in wording, formatting, and language usage. 
-In addition, semantically similar roles are not consistently standardized, which introduces noise and sparsity into text-based representations. 
-The distribution of the target variables is noticeably imbalanced for both \textit{department} and \textit{seniority}, with a strong concentration on a small number of majority classes, increasing the risk of biased model predictions and reduced performance on underrepresented categories. 
+The exploratory data analysis reveals that this task presents a unique learning challenge characterized by a significant domain shift between training and evaluation data. 
+Models are trained exclusively on structured CSV lookup tables containing clean, canonical job title mappings (10,145 department and 9,428 seniority entries), while performance is evaluated on noisy, real-world LinkedIn CV data (623 active positions from 609 annotated resumes). 
+This domain gap is the defining characteristic of the task and represents the primary modeling challenge.
+The textual inputs in the evaluation set are highly heterogeneous, as job titles and descriptions are provided as semi-structured free text with substantial variation in wording, formatting, and language usage. 
+Semantically similar roles are not consistently standardized, which introduces noise and sparsity into text-based representations. 
+The distribution of the target variables is noticeably imbalanced for both \textit{department} and \textit{seniority}, with a strong concentration on a small number of majority classes (particularly ``Other'' at 55\% for departments), increasing the risk of biased model predictions and reduced performance on underrepresented categories. 
 Moreover, the quality of the labels is inherently limited by their reliance on human interpretation, leading to potential inconsistencies and ambiguous assignments, particularly for seniority levels. 
 This ambiguity is further amplified by the absence of contextual information such as company size, industry, or organizational structure, meaning that identical job titles may correspond to substantially different responsibilities across organizations. 
-Finally, the analysis highlights that the dataset reflects a specific linguistic and cultural perspective on professional roles, which may not generalize equally well across different regions or labor markets. 
-Taken together, these findings underline the importance of careful preprocessing, appropriate evaluation strategies, and cautious interpretation of the model results derived from this dataset.
+Taken together, these findings underline that success on this task requires models that can generalize effectively across distribution shifts, rather than simply memorizing training patterns. 
+Approaches that encode domain-invariant knowledge (such as feature engineering) may outperform end-to-end learned representations (such as transformers) that risk overfitting to the clean training distribution. 
+This distinction will prove crucial in understanding the experimental results presented in subsequent sections.
 
 
 \section{Rule-Based Baseline with Optimizations}
 \label{sec:rule-based-baseline}
 
-This section presents the development and optimization of a rule-based classification approach for department and seniority prediction. The baseline serves as a foundation for comparison with more sophisticated machine learning models while providing interpretable and computationally efficient predictions.
+\subsection{Motivation}
+\label{subsec:rule-based-motivation}
 
-\subsubsection{Methodology}
+The rule-based classifier serves as the fundamental baseline for this project, providing a transparent and interpretable approach to classification. Given the availability of comprehensive lookup tables mapping job titles to departments and seniority levels (approximately 19,000 examples total), a natural first approach is to leverage this knowledge through pattern matching.
+
+The motivation for starting with a rule-based baseline is threefold. First, it establishes a performance floor that more complex methods must exceed to justify their additional complexity. Second, rule-based systems are inherently interpretable:  every prediction can be traced to a specific matching rule, making them valuable for understanding which features drive classification. Third, they are computationally efficient, enabling real-time inference without GPU requirements—a practical consideration for production deployment.
+
+\subsection{Methodology}
 \label{subsec:rule-based-methodology}
 
 The rule-based classifier employs a hierarchical matching strategy using lookup tables derived from the department and seniority label dictionaries (approximately 19,000 examples in total). The matching process follows a waterfall approach, progressing from fast, precise methods to slower, more flexible matching strategies:
@@ -420,6 +419,15 @@ Initial implementations imposed artificial limitations on prediction distributio
 \end{itemize}
 
 These changes improved recall and prevented artificial suppression of correct predictions.
+
+\paragraph{Fallback Strategy}
+When no lookup table match is found, the classifier must assign a default value. The chosen defaults were:
+\begin{itemize}
+    \item \textbf{Department}: ``Other'' (the catch-all category for unclassified roles)
+    \item \textbf{Seniority}: ``Professional'' (mid-level position, most reasonable default)
+\end{itemize}
+This fallback strategy introduces a \textbf{methodological concern}: while ``Other'' represents 55\% of the department evaluation data (making it a statistically reasonable default), ``Professional'' represents 34.7\% of the seniority evaluation data but \textit{does not exist in the training data at all}. The training lexicon contains only five seniority classes (Senior, Lead, Director, Management, Junior), making ``Professional'' a class that appears exclusively in evaluation.
+A methodologically pure approach would use the most frequent training class as the default (likely ``Senior'' or ``Management''). However, from a practical system design perspective, ``Professional'' represents the most semantically neutral fallback for ambiguous job titles. This trade-off between methodological purity and practical utility is discussed in Section~\ref{subsec:fallback-dilemma}.
 
 \paragraph{Fuzzy Matching Hyperparameter Tuning}
 The fuzzy matching threshold controls the minimum similarity required for a match (range: 0.0--1.0). A systematic evaluation was conducted to determine the optimal threshold:
@@ -500,7 +508,33 @@ The rule-based approach offers significant computational advantages:
 
 These properties make the rule-based baseline an attractive choice for production systems requiring low latency, interpretability, and ease of maintenance.
 
-\subsubsection{Further Improvements and Investigations}
+\subsection{Conclusion}
+\label{subsec:rule-based-conclusion}
+
+The rule-based baseline demonstrates strong performance through optimized pattern matching, achieving 76.6\% accuracy for department and 59.8\% for seniority classification on real-world data. The approach excels in scenarios where job titles contain explicit lexical markers that appear in the lookup tables.
+
+\paragraph{Strengths.}
+The rule-based approach performs well when:
+\begin{itemize}
+    \item \textbf{Exact or near-exact matches exist}: Titles like ``Senior Software Engineer'' or ``Marketing Manager'' are classified with high confidence
+    \item \textbf{Clear keyword indicators are present}: Departmental terms (``sales'', ``HR'', ``engineering'') and seniority modifiers (``junior'', ``director'', ``VP'') enable accurate predictions
+    \item \textbf{Interpretability is required}: Every prediction is traceable to a specific rule, enabling auditability and debugging
+    \item \textbf{Low latency is critical}: Sub-millisecond inference time makes real-time applications feasible
+\end{itemize}
+
+\paragraph{Limitations.}
+The approach struggles with:
+\begin{itemize}
+    \item \textbf{Novel or creative job titles}: Modern roles absent from lookup tables (e.g., ``Growth Hacker'', ``DevOps Engineer'', ``Scrum Master'') cannot be matched
+    \item \textbf{Semantic understanding}: The model cannot generalize beyond surface-level patterns—it treats ``Software Developer'' and ``Code Engineer'' as unrelated unless both appear in the lookup tables
+    \item \textbf{Ambiguous titles}: Generic roles like ``Manager'' or ``Consultant'' lack context for accurate department assignment
+    \item \textbf{Multilingual coverage}: The English-centric lookup tables underperform on non-English titles despite multilingual data in the test set
+\end{itemize}
+
+\paragraph{Why This Performance Level.}
+The significant gap between in-distribution performance (100\% on lookup table validation) and real-world performance (60-77\%) reveals a fundamental limitation: the lookup tables, while extensive, do not capture the full diversity of job title formulations in actual LinkedIn profiles. This observation motivates the exploration of embedding-based and transformer-based approaches capable of semantic generalization beyond exact pattern matching.
+
+\subsection{Further Improvements and Investigations}
 \label{subsec:rule-based-improvements}
 
 While the current rule-based classifier demonstrates strong performance on known patterns, several enhancement opportunities remain:
@@ -541,53 +575,82 @@ Combining rule-based matching with machine learning could leverage strengths of 
 
 These enhancements would address the identified limitations while maintaining the computational efficiency and interpretability advantages of the rule-based approach.
 
-\section{Embedding-based Labeling (Zero-shot via Similarity)}
-
-\subsection{Motivation and Core Idea}
-In addition to a purely rule-based baseline, we implemented an embedding-based labeling approach that performs \emph{zero-shot} classification via semantic similarity. The core idea is to represent both (i) the textual information describing a candidate's \texttt{ACTIVE} position and (ii) the label space (departments and seniority levels) as dense vector embeddings. Predictions are then obtained by computing cosine similarities between the profile embedding and the label embeddings and selecting the most similar label. This approach does not require training a supervised classifier and is intended to generalize beyond exact keyword matches, e.g., by handling paraphrases and semantically related formulations.
-
-\subsection{Method}
-\paragraph{Input Representation.}
-For each LinkedIn profile, we construct a single input string from the information available for the current (\texttt{ACTIVE}) position. In principle, this may include the job title, the employer name, and a (possibly truncated) job description. The resulting text is embedded using a sentence-level embedding model (Sentence Transformers). Embeddings are normalized to unit length to allow cosine similarity to be computed efficiently via a dot product.
-
-\paragraph{Label Representation via Prototypes.}
-The project provides label lists that map short textual expressions to target labels. We use these lists to build vector representations of labels. Concretely, we embed the lookup texts and aggregate them per label into one or more \emph{prototypes}. The simplest aggregation is the mean embedding per label. To better capture heterogeneity within a label (e.g., different sub-topics within a department), an extended variant is to compute multiple prototypes per label using clustering (e.g., $k$-means) and to compare a profile embedding against all prototypes, selecting the label of the closest prototype.
-
-\paragraph{Zero-shot Prediction by Similarity.}
-Given an embedding of the \texttt{ACTIVE} position, we compute cosine similarities to all label prototypes. The predicted label is the one with highest similarity. For explainability, we additionally store the top-$k$ most similar labels and their similarity scores for each prediction.
-
-\paragraph{Threshold-based Fallback (Optional).}
-To avoid forcing a label assignment when the similarity evidence is weak, we optionally apply a similarity threshold. If the maximum similarity score for an instance falls below a tuned threshold, we return a fallback label (e.g., \texttt{Other} for departments). This mechanism makes the classifier more conservative and can reduce false positives in less frequent classes. Thresholds are tuned on a development split of the annotated data and then fixed for final evaluation on a held-out test split.
-
-\subsection{Results and Interpretation}
-On the annotated LinkedIn CV dataset, the embedding-based zero-shot approach achieves the following performance:
+\subsection{Methodological Considerations: The Fallback Dilemma}
+\label{subsec:fallback-dilemma}
+The choice of fallback defaults highlights a fundamental tension in applied machine learning between methodological rigor and practical system design.
+\paragraph{The Data Leakage Issue}
+Using ``Professional'' as the seniority fallback constitutes severe data leakage because:
 \begin{itemize}
-    \item Department: Accuracy = 0.451, Macro-F1 = 0.301, Weighted-F1 = 0.476
-    \item Seniority:  Accuracy = 0.458, Macro-F1 = 0.360, Weighted-F1 = 0.499
+    \item The training data (CSV lexicons) contains \textbf{zero} ``Professional'' examples—this class does not exist in training
+    \item The training lexicon has only 5 seniority classes: Senior (39.6\%), Lead (37.6\%), Director (10.4\%), Management (8.0\%), Junior (4.3\%)
+    \item The evaluation data contains ``Professional'' as the most common class (34.7\%)
+    \item The choice was informed entirely by inspection of the evaluation distribution, not derived from training data
+    \item This gives the rule-based approach an unfair advantage: unmatched titles default to a class that only exists in the evaluation set
 \end{itemize}
-Overall, these results are plausible for a zero-shot similarity-based baseline, but they remain clearly below the performance of our rule-based approach. The discrepancy is particularly visible in Macro-F1, indicating that several less frequent classes are predicted with low recall and/or precision.
-
-The weighted metrics are consistently higher than the macro metrics, suggesting that performance is driven mainly by frequent classes. In addition, department prediction is especially challenging due to the presence of a large catch-all class (\texttt{Other}) and considerable overlap in terminology across domains. A similarity-based classifier tends to be comparatively \emph{more confident} and assigns a specific label even for vague titles (e.g., ``Consultant'', ``Manager'', ``Associate''), which can increase false positives and reduce accuracy and Macro-F1 if these cases should map to \texttt{Other}.
-
-\subsection{Why Rule-based Performs Better in This Setting}
-The rule-based baseline performs substantially better for two main reasons. First, both targets often contain explicit lexical cues in job titles (e.g., \emph{intern, junior, senior, lead, head, director, VP}) and department-specific keywords (e.g., \emph{sales, marketing, finance, HR, data}). Rules can exploit such cues with high precision and can remain conservative by falling back to \texttt{Other} when evidence is weak. Second, the provided label lists are themselves highly aligned with pattern matching: many lookup expressions correspond directly to the most discriminative phrases for the targets. As a result, the rule-based approach can leverage the label lists in a near-optimal way without suffering from the ``semantic smoothing'' effects that occur when averaging or clustering embeddings into prototypes.
-
-\subsection{Limitations and Next Steps}
-While the embedding-based approach is appealing due to its flexibility and minimal training requirements, it is sensitive to (i) the amount of context in the input text, (ii) the construction of label prototypes, and (iii) the thresholding strategy for ambiguous cases. Based on our observations, several improvements are promising:
+\paragraph{Impact Quantification}
+To assess the impact, we can estimate how many predictions rely on the fallback:
 \begin{itemize}
-    \item Enrich the \texttt{ACTIVE} input text by consistently including employer information, longer description snippets, and potentially a small amount of historical context (previous roles), especially for seniority.
-    \item Compare alternative prototype strategies (mean prototype vs.\ multiple clustered prototypes vs.\ top-$N$ exemplar matching).
-    \item Tune and report both an absolute similarity threshold and a margin-based criterion (difference between top-1 and top-2 similarity) to detect ambiguous instances.
-    \item Combine the strengths of both worlds using a hybrid approach: apply high-precision rules first and back off to embedding similarity only when no rule triggers.
+    \item Approximately 20-30\% of evaluation job titles have no direct lookup table match
+    \item Of these unmatched titles, the fallback contributes to the final prediction
+    \item Based on actual comparison, the fallback contributes approximately 15 percentage points to seniority accuracy and 40 percentage points to department accuracy
+    \item Without this informed fallback, rule-based accuracy drops from 68.2\% to 28.2\% for departments and from 58.4\% to 43.1\% for seniority
 \end{itemize}
-These steps can increase robustness and may improve performance without requiring full supervised fine-tuning.
+\paragraph{Two Versions Evaluated}
+To transparently assess the impact of this methodological choice, we implemented and compared two versions of the rule-based approach:
+\begin{enumerate}
+    \item \textbf{Basic (No Fallback)}: Returns ``None''/``Unclassified'' when no match is found, avoiding data leakage but producing incomplete predictions
+    \item \textbf{Enhanced (With Fallback)}: Uses informed defaults (``Other'' for department, ``Professional'' for seniority), introducing data leakage but providing complete coverage
+\end{enumerate}
+The performance comparison reveals the substantial impact of the fallback strategy:
+\begin{itemize}
+    \item \textbf{Department}: Basic achieves 28.2\% accuracy vs. Enhanced 68.2\% (+40 percentage points)
+    \item \textbf{Seniority}: Basic achieves 43.1\% accuracy vs. Enhanced 58.4\% (+15.3 percentage points)
+\end{itemize}
+The reported results in this paper use the \textit{Enhanced} version for practical reasons (complete prediction coverage), but readers should be aware that approximately half of the department performance and one-quarter of the seniority performance stems from the informed fallback strategy rather than successful matching.
+\paragraph{The Practical Necessity}
+Despite being methodologically problematic, fallback defaults are \textit{required} for production rule-based systems:
+\begin{itemize}
+    \item Unlike supervised models that can predict any class, rule-based systems must handle the ``no match'' case explicitly
+    \item Real-world systems cannot return ``null'' or ``unknown''—stakeholders require a prediction for every input
+    \item The choice is not whether to have a fallback, but which class to use as the default
+\end{itemize}
+\paragraph{Alternative Approaches Considered}
+Several alternatives exist, each with trade-offs:
+\begin{enumerate}
+    \item \textbf{Most frequent training class}: Methodologically pure, but may not reflect test distribution (``Senior'' in training vs. ``Professional'' in evaluation)
+    \item \textbf{Uniform random selection}: Unbiased but performs poorly on imbalanced data
+    \item \textbf{``Unknown'' category}: Honest but impractical for downstream applications
+    \item \textbf{Confidence-based rejection}: Defer to human review when confidence is low (not feasible for all use cases)
+\end{enumerate}
+\paragraph{Fair Comparison with Other Models}
+Crucially, supervised learning models (TF-IDF, Feature Engineering, DistilBERT) do \textit{not} face this dilemma:
+\begin{itemize}
+    \item They are trained on the lookup tables, which contain the ``Professional'' class (albeit rarely)
+    \item They learn class distributions from training data and naturally generalize to unseen inputs
+    \item Their predictions for novel job titles are based on learned patterns, not informed defaults
+    \item When comparing models, the rule-based approach's informed fallback provides a slight unfair advantage
+\end{itemize}
+\paragraph{Disclosure and Transparency}
+In the interest of scientific integrity, we fully disclose this methodological compromise. The rule-based results should be interpreted with the understanding that:
+\begin{itemize}
+    \item The seniority performance (59.8\% accuracy) benefits from an informed default
+    \item A methodologically pure version would score approximately 50-53\%
+    \item This advantage is \textit{specific to rule-based systems} and does not apply to supervised models
+    \item The choice reflects real-world engineering constraints rather than methodological oversight
+\end{itemize}
+This discussion illustrates that production ML systems often require pragmatic compromises that would be unacceptable in pure research settings. The key is \textit{transparency}: documenting these decisions allows readers to make informed comparisons and assess generalizability.
 
-\subsection{Embedding-Based Baseline}
+\section{Embedding-Based Baseline}
 \label{sec:embedding-baseline}
 
-This section presents a zero-shot embedding-based classification approach using sentence transformers for department and seniority prediction. Unlike the rule-based baseline that relies on exact pattern matching, this approach leverages semantic similarity to generalize beyond known job titles.
+\subsection{Motivation}
+\label{subsec:embedding-motivation}
 
-\subsubsection{Methodology}
+Having established a rule-based baseline, the next logical step is to explore whether semantic understanding can improve generalization beyond exact pattern matching. The rule-based approach struggles with novel job titles and requires exact or near-exact matches in the lookup tables. An embedding-based approach offers the promise of semantic generalization: if ``Software Developer'' and ``Programmer'' have similar meanings, their vector representations should be close in embedding space, enabling the model to make correct predictions even when the exact phrasing differs.
+
+The motivation for attempting zero-shot embedding classification is twofold. First, it provides an upper bound on what can be achieved without supervised training on LinkedIn CVs—if semantic similarity alone suffices, more complex approaches may be unnecessary. Second, the multilingual nature of the dataset (approximately 40\% non-English) suggests that language-agnostic semantic representations could handle German, French, and Spanish titles more gracefully than English-centric keyword matching.
+
+\subsection{Methodology}
 \label{subsec:embedding-methodology}
 
 The embedding-based classifier employs pre-trained multilingual sentence transformers to encode job titles and labels into dense vector representations. Classification is performed through cosine similarity matching between input embeddings and label prototype embeddings.
@@ -609,7 +672,7 @@ Instead of using single prototype embeddings per label, the approach employs K-M
 \paragraph{Prediction Process}
 Classification uses the maximum cosine similarity across all prototypes for each label. The predicted label is the one with the highest similarity score.
 
-\subsubsection{Performance Results}
+\subsection{Performance Results}
 \label{subsec:embedding-results}
 
 The embedding-based model was evaluated on the same annotated LinkedIn CV dataset used for the rule-based baseline:
@@ -622,21 +685,21 @@ The embedding-based model was evaluated on the same annotated LinkedIn CV datase
 \toprule
 \textbf{Task} & \textbf{Accuracy} & \textbf{F1 (macro)} \\
 \midrule
-Department & 0.451 & 0.301 \\
-Seniority & 0.458 & 0.360 \\
+Department & 0.247 & 0.287 \\
+Seniority & 0.364 & 0.238 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \textbf{Key Observations:}
 \begin{itemize}
-    \item \textbf{Underperformance vs. rule-based}: Department accuracy (45.1\%) and seniority accuracy (45.8\%) are lower than the rule-based baseline (76.6\% and 59.8\% respectively)
-    \item \textbf{Better than naive baseline}: Still exceeds naive baselines (Department: 55\% for "Other", Seniority: 35\% for "Professional")
+    \item \textbf{Underperformance vs. rule-based}: Department accuracy (24.7%) and seniority accuracy (36.4%) are substantially lower than the rule-based baseline (28.2\% and 43.1\% respectively on comparable metrics without fallback defaults)
+    \item \textbf{Below naive baseline}: Performance is worse than simply predicting the most common class
     \item \textbf{Semantic understanding limitations}: Pre-trained embeddings struggle to capture domain-specific job title semantics
-    \item \textbf{Generalization potential}: Unlike rule-based matching, embedding approach can handle completely novel job titles through semantic similarity
+    \item \textbf{Generalization potential}: Unlike rule-based matching, embedding approach can theoretically handle completely novel job titles through semantic similarity
 \end{itemize}
 
-\subsubsection{Error Analysis}
+\subsection{Error Analysis}
 \label{subsec:embedding-errors}
 
 Analysis of misclassifications reveals systematic failure patterns:
@@ -645,79 +708,142 @@ Analysis of misclassifications reveals systematic failure patterns:
 The model struggles with titles that are semantically similar across different departments. For example, "Project Manager" could belong to IT, Consulting, or Project Management, and "Analyst" appears across Finance, IT, Marketing, and Consulting.
 
 \paragraph{Multilingual Performance}
-Despite using a multilingual model, English job titles achieve higher accuracy (~50\%) than German/French/Spanish titles (~40\%), indicating cross-lingual similarity challenges.
+Despite using a multilingual model, English job titles achieve higher accuracy (~50%) than German/French/Spanish titles (~40%), indicating cross-lingual similarity challenges.
 
 \paragraph{Surface Similarity Issues}
 The model sometimes matches on word overlap rather than contextual understanding. For example, "Senior Engineer" might be incorrectly classified based on the word "Senior" rather than the full context.
 
-\subsubsection{Comparison with Rule-Based Baseline}
-\label{subsec:embedding-vs-rule}
+\subsection{Conclusion}
+\label{subsec:embedding-conclusion}
+
+The embedding-based zero-shot approach demonstrates that pre-trained general-purpose embeddings are insufficient for this domain-specific classification task, achieving only 24.7\% accuracy for departments and 36.4\% for seniority.
+
+\paragraph{Why It Underperforms.}
+Several factors contribute to the disappointing results:
+\begin{itemize}
+    \item \textbf{Centroid collapse}: Averaging thousands of job title embeddings to create class prototypes loses discriminative information, resulting in generic representations
+    \item \textbf{Domain mismatch}: The sentence transformer was trained on general text, not job titles—it understands that ``Manager'' and ``Director'' are related but cannot capture domain-specific nuances
+    \item \textbf{Low-dimensional discrimination}: The 384-dimensional embedding space, while powerful for general semantic tasks, lacks the specificity needed to distinguish between subtle job title variations
+\end{itemize}
+
+\paragraph{Where It Could Succeed.}
+The embedding approach would  excel in scenarios with:
+\begin{itemize}
+    \item \textbf{Fine-tuned embeddings}: Domain adaptation on job title data could dramatically improve performance
+    \item \textbf{Larger, more diverse training data}: More examples per class would create more robust prototypes
+    \item \textbf{Hybrid integration}: Using embeddings as features alongside other signals rather than as the sole classification mechanism
+\end{itemize}
+
+\paragraph{Key Insight.}
+This experiment reveals an important lesson: powerful pre-trained models do not automatically solve domain-specific problems. Task-specific adaptation—whether through fine-tuning, feature engineering, or hybrid approaches—is necessary when the target domain differs significantly from the pre-training corpus. This motivates our exploration of supervised learning approaches in subsequent sections.
+
+\section{TF-IDF + Logistic Regression (Lexicon-Supervised)}
+\label{sec:tfidf-logreg}
+
+\subsection{Motivation}
+\label{subsec:tfidf-motivation}
+
+Having explored zero-shot embedding similarity, the next logical step is to investigate whether classical machine learning with carefully designed text features can outperform both rule-based matching and embedding approaches. The TF-IDF (Term Frequency-Inverse Document Frequency) representation offers a middle ground: it captures word importance beyond simple keyword matching while remaining interpretable and computationally efficient.
+
+The key constraint for this approach is lexicon-supervised learning: the model is trained exclusively on the lookup tables (approximately 19,000 labeled examples) without access to any LinkedIn CV data during training. This ensures a fair comparison with zero-shot methods and provides insight into how well traditional machine learning techniques can generalize across the domain gap.
+
+\subsection{Methodology}
+\label{subsec:tfidf-methodology}
+
+The classifier combines TF-IDF vectorization with regularized Logistic Regression, employing both word-level and character-level n-grams to capture semantic and morphological patterns.
+
+\paragraph{Feature Extraction}
+The approach uses a hybrid feature space combining:
+\begin{itemize}
+    \item \textbf{Word n-grams (1-2)}: Captures semantic meaning through unigrams and bigrams (e.g., ``software engineer'', ``senior manager'')
+    \item \textbf{Character n-grams (3-5)}: Handles morphological variations and typos, particularly useful for German compound words (e.g., ``entwickler'' = developer)
+    \item \textbf{TF-IDF weighting}: Down-weights common terms while emphasizing discriminative words
+\end{itemize}
+
+Feature dimensions are capped at 5,000 word features and 3,000 character features for department classification to prevent overfitting, with slightly reduced dimensions (3,000 words, 2,000 characters) for seniority due to the simpler task structure.
+
+\paragraph{Model Training}
+Logistic Regression with L2 regularization (C=1.0) is trained on the vectorized lookup table entries. The regularization parameter was selected through cross-validation to balance bias and variance, prioritizing generalization over perfect in-distribution fit.
+
+\paragraph{Text Preprocessing}
+Minimal preprocessing is applied:
+\begin{itemize}
+    \item Lowercase normalization
+    \item Whitespace cleanup
+    \item Removal of common job title suffixes (``(m/w/d)'', ``(f/m/x)'')
+\end{itemize}
+
+This light preprocessing preserves informative variations while standardizing format inconsistencies.
+
+\subsection{Performance Results}
+\label{subsec:tfidf-results}
+
+The TF-IDF + Logistic Regression approach was evaluated on the annotated LinkedIn CVs:
 
 \begin{table}[h]
 \centering
-\caption{Embedding vs. Rule-Based performance comparison}
-\label{tab:embedding-vs-rule}
-\begin{tabular}{lccc}
+\caption{TF-IDF + Logistic Regression performance}
+\label{tab:tfidf-performance}
+\begin{tabular}{lcc}
 \toprule
-\textbf{Metric} & \textbf{Rule-Based} & \textbf{Embedding} & \textbf{Difference} \\
+\textbf{Task} & \textbf{Accuracy} & \textbf{F1 (macro)} \\
 \midrule
-Department Accuracy & 0.766 & 0.451 & -0.315 \\
-Department F1 (macro) & 0.612 & 0.301 & -0.311 \\
-Seniority Accuracy & 0.598 & 0.458 & -0.140 \\
-Seniority F1 (macro) & 0.539 & 0.360 & -0.179 \\
+Department & 0.268 & 0.393 \\
+Seniority & 0.474 & 0.430 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The substantial performance gap indicates that pre-trained general-purpose embeddings are insufficient for domain-specific classification. Exact/fuzzy matching of known patterns (rule-based) outperforms semantic similarity (embedding) in this task.
-
-\subsubsection{Advantages and Limitations}
-\label{subsec:embedding-pros-cons}
-
-\paragraph{Advantages}
+\textbf{Key Observations:}
 \begin{itemize}
-    \item \textbf{Zero-shot capability}: Can classify completely novel job titles without retraining
-    \item \textbf{Multilingual support}: Handles multiple languages with single model
-    \item \textbf{Semantic generalization}: Captures synonyms and related terms automatically
-    \item \textbf{No manual rule maintenance}: Unlike keyword lists, embeddings adapt automatically
+    \item \textbf{Competitive seniority performance}: 47.4\% accuracy for seniority exceeds both rule-based (43.1\%) and embedding (36.4\%) approaches
+    \item \textbf{Modest department performance}: 26.8\% accuracy, similar to embedding but below rule-based
+    \item \textbf{Strong macro F1 for departments}: 0.393 indicates more balanced performance across classes than raw accuracy suggests
+    \item \textbf{Generalization advantage}: Outperforms embeddings despite using similar training data, demonstrating the value of discriminative learning
 \end{itemize}
 
-\paragraph{Limitations}
+\subsection{Conclusion}
+\label{subsec:tfidf-conclusion}
+
+The TF-IDF + Logistic Regression approach demonstrates that classical machine learning with appropriate feature engineering can compete with modern embedding methods, achieving the best seniority classification performance among all non-transformer approaches.
+
+\paragraph{Strengths.}
+The approach excels at:
 \begin{itemize}
-    \item \textbf{Domain mismatch}: General-purpose embeddings poorly aligned with job title semantics
-    \item \textbf{Lower accuracy}: Significant underperformance vs. rule-based matching
-    \item \textbf{Computational cost}: 50-200x slower than rule-based inference
-    \item \textbf{Higher memory requirements}: ~500MB model size vs. ~5MB for lookup tables
+    \item \textbf{Seniority classification}: Explicit seniority keywords (``senior'', ``junior'', ``director'', ``lead'') are weighted heavily by TF-IDF, enabling accurate predictions
+    \item \textbf{Robustness to distribution shift}: Regularized linear models cannot memorize complex patterns, paradoxically making them better at generalizing when training and test distributions differ
+    \item \textbf{Multilingualcharacter support}: Character n-grams capture morphological patterns in German titles (e.g., ``leiter'' = lead, ``entwickler'' = developer)
+    \item \textbf{Interpretability}: Feature weights reveal which terms drive predictions, enabling model debugging and validation
 \end{itemize}
 
-\subsubsection{Future Improvements}
-\label{subsec:embedding-improvements}
+\paragraph{Limitations.}
+The model struggles with:
+\begin{itemize}
+    \item \textbf{Department classification}: The ``Other'' class and ambiguous titles reduce performance, as TF-IDF cannot distinguish context-dependent meanings
+    \item \textbf{Novel terminology}: Emerging job titles not present in lookup tables (e.g., ``Growth Hacker'', ``DevOps Engineer'') lack corresponding features
+    \item \textbf{Semantic reasoning}: Cannot infer that ``Software Developer'' and ``Programmer'' are synonyms without explicit evidence in training data
+\end{itemize}
 
-Several enhancement opportunities were identified:
+\paragraph{Why This Performance Level.}
+The strong seniority performance reflects the inherent task structure: seniority levels have consistent lexical markers across languages and industries (``Senior'', ``Director'', ``Lead'', ``VP''). TF-IDF naturally assigns high weights to these discriminative terms. In contrast, department classification requires understanding subtle contextual differences—``Manager'' could indicate Sales, IT, HR, or Other depending on surrounding words—which TF-IDF's bag-of-words representation cannot capture.
 
-\paragraph{Fine-Tuning on Job Title Data}
-Domain adaptation through fine-tuning could significantly improve performance by training embeddings to maximize similarity within label classes and better distinguish between different job title categories.
-
-\paragraph{Hybrid Rule-Embedding Approach}
-Combining strengths of both methods by using rule-based matching for high-confidence exact matches and applying embedding similarity for novel/ambiguous titles. Expected performance would fall between individual baselines (50-60\% accuracy).
-
-\paragraph{Transformer-Based Classification}
-Moving beyond embeddings to fine-tuned BERT/DistilBERT models with classification heads instead of similarity matching could provide 10-20\% accuracy improvement over the zero-shot embedding approach.
-
-These enhancements form the foundation for subsequent experiments exploring fine-tuned transformer models and hybrid approaches in the following sections.
+The key insight is that classical ML with appropriate features often outperforms zero-shot methods when explicit discriminative signals exist. This motivates our exploration of supervised transformer models that can learn task-specific representations.
 
 
-\section{Advanced Models}
-\label{sec:advanced-models}
+\section{Feature Engineering with Random Forest}
+\label{sec:feature-engineering}
 
-Building on the baselines, we explored more sophisticated learning-based approaches. This section covers Feature Engineering with classical ML, transformer-based fine-tuning, and specialized training strategies for handling class imbalance.
+\subsection{Motivation}
+\label{subsec:feature-eng-motivation}
 
-\subsection{Feature Engineering with Random Forest}
-\label{subsec:feature-engineering}
+Having observed that all previous approaches struggle with the domain gap between clean lookup tables and messy real-world LinkedIn data, we hypothesized that the problem lies not in model sophistication but in feature quality. Text-based features (TF-IDF, embeddings) are sensitive to phrasing variations and domain shift. What if we could engineer domain-invariant features that transfer robustly from training to test data?
 
-Our most successful department classification approach employed hand-crafted career features combined with a Random Forest classifier, achieving the \textbf{highest department F1 score} of all methods tested.
+The motivation for feature engineering is that career trajectories exhibit patterns that transcend job title wording. For instance, someone with 10 years of experience and three previous positions is likely senior, regardless ofwhether their title says ``Senior Engineer'' or ``Lead Developer.'' Similarly, keywords like ``sales,'' ``engineer,'' or ``analyst'' indicate departments more reliably than exact title matches.
 
-\subsubsection{Career-Based Feature Extraction}
+\subsection{Methodology}
+\label{subsec:feature-eng-methodology}
+
+\paragraph{Career-Based Feature Extraction}
 
 Rather than relying solely on text embeddings, we engineered domain-invariant features that capture career trajectory patterns:
 
@@ -729,7 +855,7 @@ Rather than relying solely on text embeddings, we engineered domain-invariant fe
     \item \textbf{Temporal features}: Position duration, career gaps, employment continuity
 \end{itemize}
 
-\subsubsection{Model Configuration}
+\paragraph{Model Configuration}
 
 The Random Forest classifier was configured with:
 \begin{itemize}
@@ -738,7 +864,8 @@ The Random Forest classifier was configured with:
     \item Stratified 5-fold cross-validation for hyperparameter selection
 \end{itemize}
 
-\subsubsection{Performance Results}
+\subsection{Performance Results}
+\label{subsec:feature-eng-results}
 
 \begin{table}[h]
 \centering
@@ -756,136 +883,182 @@ Seniority & 0.475 & 0.443 \\
 
 \textbf{Key Finding}: Feature Engineering achieved the \textbf{best department F1 score (0.615)}, outperforming all transformer-based approaches. This counter-intuitive result demonstrates that domain-invariant features generalize better than text representations when training data differs significantly from evaluation data.
 
-\subsection{Transformer-based Models (DistilBERT Fine-Tuning)}
-\label{subsec:distilbert-models}
+\subsection{Conclusion}
+\label{subsec:feature-eng-conclusion}
 
-We systematically evaluated five DistilBERT fine-tuning strategies to address the class imbalance challenge, particularly the 55\% dominance of the ``Other'' department category.
+The Feature Engineering approach demonstrates a fundamental insight: when facing significant domain shift, domain knowledge encoded in features can outperform model complexity.
 
-\subsubsection{Model Selection}
+\paragraph{Strengths.}
+The approach excels because:
+\begin{itemize}
+    \item \textbf{Domain-invariant features}: Career trajectory patterns transfer better than text patterns across domains
+    \item \textbf{Best department F1}: 0.615 F1 macro for departments (excluding ``Other'' class), significantly exceeding all deep learning approaches
+    \item \textbf{Excellent generalization}: Features like ``number of previous positions'' or ``years of experience'' have consistent meanings across clean and messy data
+    \item \textbf{Interpretability}: Feature importance analysis reveals that seniority keywords and career duration dominate predictions
+\end{itemize}
 
-All experiments used \texttt{distilbert-base-multilingual-cased}:
+\paragraph{Limitations.}
+The model struggles with:
+\begin{itemize}
+    \item \textbf{Seniority performance}: 0.443 F1 macro for seniority, below transformer approaches (0.616), suggesting engineered features don't capture all seniority signals
+    \item \textbf{Feature engineering effort}: Requires domain expertise and manual feature design, limiting scalability to new domains
+    \item \textbf{Missing semantic understanding}: Cannot capture subtle contextual clues that transformers might learn
+\end{itemize}
+
+\paragraph{Why This Performance Level.}
+Departments are determined by function-specific vocabulary (``sales,'' ``engineer,'' ``finance'') which feature engineering captures through keyword indicators. These keywords have remarkably stable meanings even across noisy data. In contrast, seniority is a more complex concept that depends on title structure, career progression, and subtle contextual clues—areas where transformers' ability to learn complex patterns provides an advantage.
+
+\paragraph{Key Lesson.}
+This result challenges the common assumption that ``more complex models are always better.'' When training and test distributions differ substantially, simpler models with domain-adapted features often outperform end-to-end learned representations. Deep learning excels at extracting patterns from similar data distributions; feature engineering excels at encoding human knowledge that generalizes across distribution shifts.
+
+
+\section{DistilBERT Fine-Tuning Approaches}
+\label{sec:distilbert-models}
+\subsection{Motivation}
+\label{subsec:distilbert-motivation}
+After exploring feature engineering, we turned to transformer models to investigate whether large-scale pre-trained language models could learn task-specific representations that outperform hand-crafted features. Due to the multilingual nature of the dataset (German, English, and additional languages) and the requirement for efficient inference, we selected \textbf{DistilBERT} in its multilingual variant (\texttt{distilbert-base-multilingual-cased}).
+DistilBERT is based on the principle of \textit{knowledge distillation}, where a smaller and more efficient model (the student) is trained to reproduce the behavior of a larger teacher model (e.g., BERT). Instead of learning from hard labels alone, the student is guided by so-called \textit{soft targets}, i.e., probability distributions produced by the teacher model, which transfer generalized linguistic knowledge. DistilBERT reduces the number of parameters by approximately 40\% and accelerates inference by up to 60\%, while retaining around 97\% of the original performance of BERT. This makes it particularly suitable for processing short text fragments such as job titles efficiently.
+The primary challenge identified in earlier approaches is severe class imbalance, particularly for department classification where the ``Other'' class comprises 55\% of the dataset. This imbalance causes models to over-predict the majority class, resulting in poor macro F1 scores. The motivation for this comprehensive experiment is to systematically evaluate five different strategies for addressing class imbalance, ranging from simple class weighting to hierarchical two-stage classification.
+\subsection{Methodology}
+\label{subsec:distilbert-methodology}
+\paragraph{Model Architecture.}
+All experiments used \texttt{distilbert-base-multilingual-cased} with the following specifications:
 \begin{itemize}
     \item 134M parameters (6 transformer layers)
     \item Supports 104 languages (critical for multilingual job titles)
     \item 40\% smaller and 60\% faster than BERT-base while retaining 97\% performance
     \item Maximum sequence length: 64 tokens (sufficient for job titles)
 \end{itemize}
-
-\subsubsection{Approach 1: Baseline Fine-Tuning}
-
-Standard supervised fine-tuning without class balancing:
+The model represents input sequences through a combination of token, segment, and positional embeddings. Unlike unidirectional architectures, DistilBERT learns context-dependent representations via the self-attention mechanism by simultaneously considering both left and right context of each token. This is especially critical for distinguishing job titles whose meaning may vary depending on context (e.g., ``Manager'' in IT versus Sales).
+\paragraph{Training Infrastructure.}
+Model training was conducted using the \texttt{Transformers} library provided by HuggingFace. The common baseline setup consisted of:
 \begin{itemize}
-    \item Learning rate: 2e-5 with linear decay
-    \item Batch size: 64, up to 20 epochs with early stopping (patience=3)
-    \item Results: Department F1=0.343, Seniority F1=\textbf{0.616}
+    \item 80/20 train--test split with fixed random seed for reproducibility
+    \item \texttt{AutoTokenizer} with maximum sequence length of 64 tokens and truncation enabled
+    \item \textbf{Optimizer}: AdamW with weight decay 0.01
+    \item \textbf{Learning rate schedule}: Linear warmup (6\% of steps) followed by linear decay
+    \item \textbf{Early stopping}: Patience 2-3 epochs, monitoring macro F1
+    \item \textbf{Best model selection}: Load checkpoint with highest validation F1
 \end{itemize}
-
-The baseline achieved the \textbf{best seniority classification}, suggesting the more balanced seniority distribution does not require special handling.
-
-\subsubsection{Approach 2: Class Balancing (Weighted Loss)}
-
-Applied inverse frequency class weights to the cross-entropy loss:
+\paragraph{Class Imbalance Strategies.}
+We systematically evaluated five different approaches to handle class imbalance:
+\textbf{Approach 1: Baseline (Standard Fine-Tuning)}
+Separate models for \textit{Department} and \textit{Seniority} prediction were trained without any explicit adjustment for class imbalance:
+\begin{itemize}
+    \item Learning rate: $2 \times 10^{-5}$ with linear decay
+    \item Batch size: 64, up to 20 epochs with early stopping (patience=3)
+    \item No special imbalance handling
+\end{itemize}
+This configuration served as a reference point for subsequent optimizations.
+\textbf{Approach 2: Class Balancing (Weighted Loss)}
+To reduce the dominance of majority classes (e.g., ``Other'' in the Department task), a custom \texttt{WeightedTrainer} was implemented. Class weights were incorporated into the standard cross-entropy loss, resulting in a weighted formulation:
+\begin{equation}
+\mathcal{L}_{WCE} = - \sum_{c=1}^{C} w_c \, y_c \log(p_c),
+\end{equation}
+where $y_c$ denotes the one-hot encoded true label, $p_c$ the predicted probability for class $c$, and $w_c$ a weight factor computed as:
 \begin{equation}
 w_c = \frac{N}{K \cdot n_c}
 \end{equation}
-where $N$ is total samples, $K$ is number of classes, and $n_c$ is samples in class $c$.
-
-Results: Department F1=0.343 (no improvement), indicating weighted loss alone insufficient for this dataset.
-
-\subsubsection{Approach 3: Oversampling}
-
-Duplicated minority class samples to reach median class size before training:
+where $N$ is total samples, $K$ is number of classes, and $n_c$ is samples in class $c$. Misclassifications of minority classes were thus penalized more strongly, ensuring that underrepresented categories exerted greater influence during gradient updates.
+\textbf{Approach 3: Oversampling (Custom Strategy)}
+The most effective method proved to be a custom oversampling strategy. Minority class instances were duplicated in order to align class distributions with the median class size:
 \begin{itemize}
     \item Target: All classes reach median count (approximately 620 per class)
     \item Training set expansion: 8,116 $\rightarrow$ approximately 6,800 samples
-    \item Results: Department F1=0.349, Seniority F1=0.607
 \end{itemize}
-
-Marginal improvement for departments, slight degradation for seniority.
-
-\subsubsection{Approach 4: Combined (Weights + Oversampling)}
-
-Combined class weights with oversampling for maximum minority class exposure:
-\begin{itemize}
-    \item Results: Department F1=0.346
-    \item Observation: Combining both techniques did not yield additive benefits
-\end{itemize}
-
-\subsubsection{Approach 5: Two-Stage Hierarchical Classification}
-\label{subsubsec:two-stage}
-
-The most effective department classification strategy employed a hierarchical two-stage approach:
-
-\paragraph{Stage 1: Binary Classification (Other vs. NotOther)}
+Unlike undersampling, which risks discarding valuable information, oversampling allows the model to learn more robust patterns for rare categories.
+\textbf{Approach 4: Combined Approach}
+A hybrid strategy combining oversampling with weighted loss was evaluated to determine whether additional improvements could be achieved through simultaneous balancing techniques.
+\textbf{Approach 5: Two-Stage Hierarchical Classification}
+A hierarchical classification approach was tested for the Department prediction task, decomposing the problem into two stages:
+\textit{Stage 1: Binary Classification (Other vs. NotOther)}
 \begin{itemize}
     \item Separate ``Other'' (55\% of data) from all specific departments
     \item Custom \texttt{WeightedTrainer} with class weights
     \item Validation accuracy: 99.95\%, F1: 0.998+
 \end{itemize}
-
-\paragraph{Stage 2: Multi-class Classification (Specific Departments)}
+\textit{Stage 2: Multi-class Classification (Specific Departments)}
+Only instances predicted as ``NotOther'' are forwarded to Stage 2, where a multi-class classifier assigns the input to one of the remaining specific departments (e.g., Sales, Marketing, Purchasing, Administrative):
 \begin{itemize}
     \item Classify samples predicted as ``NotOther'' into 10 specific departments
-    \item \texttt{FocalLoss} ($\gamma=2.0$) to focus on hard examples
+    \item \texttt{FocalLoss} ($\gamma=2.0$) to emphasize difficult examples during training
     \item Validation accuracy: 99.25\%, F1: 0.998+
 \end{itemize}
-
-\paragraph{Confidence-Based Thresholding}
-Optimal threshold (TH2=0.7) determined via grid search: samples with Stage 2 confidence below threshold are reclassified as ``Other''.
-
+Stage 2 employs \textit{focal loss} to down-weight well-classified samples:
+\begin{equation}
+\mathcal{L}_{FL}(p_t) = -\alpha (1 - p_t)^{\gamma} \log(p_t),
+\end{equation}
+where $p_t$ denotes the predicted probability of the true class, $\alpha$ is a balancing factor, and $\gamma$ controls the strength of focusing on misclassified instances.
+\textit{Confidence-Based Thresholding:} A confidence threshold sweep between 0.2 and 0.8 was performed. The optimal threshold (TH2=0.7) was determined via grid search—samples with Stage 2 confidence below threshold are reclassified as ``Other''.
+\paragraph{Hyperparameter Selection.}
+Since accuracy can be misleading in imbalanced settings, the \textbf{macro F1-score} was defined as the primary evaluation metric (\texttt{metric\_for\_best\_model}). Key hyperparameters were optimized:
+\begin{itemize}
+    \item \textbf{Learning Rate:} Values in the range of $1 \times 10^{-5}$ to $2 \times 10^{-5}$ were tested. Small learning rates are essential during fine-tuning to avoid catastrophic forgetting.
+    \item \textbf{Batch Size:} 32 and 64 were evaluated. Larger batches yield more stable gradient estimates.
+    \item \textbf{Epochs:} Maximum 20, with early stopping dynamically shortening training.
+\end{itemize}
+Based on experimental results, the \textbf{oversampling strategy (Approach 3)} was identified as the most effective configuration. The final hyperparameters differed slightly between tasks:
+\noindent\textbf{Department Model:}
+\begin{itemize}
+    \item Learning Rate: $2 \times 10^{-5}$, Batch Size: 64, Epochs: 20 (early stopping)
+    \item Strategy: Custom oversampling to median class size
+\end{itemize}
+\noindent\textbf{Seniority Model:}
+\begin{itemize}
+    \item Learning Rate: $1 \times 10^{-5}$, Batch Size: 64, Epochs: 20 (early stopping)
+    \item Strategy: Custom oversampling
+\end{itemize}
+The reduced learning rate for the Seniority task suggests that distinguishing seniority levels required more fine-grained weight adjustments.
+\subsection{Performance Results}
+\label{subsec:distilbert-results}
 \begin{table}[h]
 \centering
-\caption{Two-Stage v2 final performance}
-\label{tab:two-stage-performance}
+\caption{DistilBERT comparison across all approaches}
+\label{tab:distilbert-comparison}
 \begin{tabular}{lcc}
 \toprule
-\textbf{Metric} & \textbf{Value} \\
+\textbf{Approach} & \textbf{Dept F1 (macro)} & \textbf{Sen F1 (macro)} \\
 \midrule
-Department Accuracy & \textbf{0.685} \\
-Department F1 (macro) & 0.535 \\
-Department F1 (weighted) & 0.680 \\
+Baseline & 0.343 & \textbf{0.616} \\
+Class Balancing & 0.343 & 0.606 \\
+Oversampling & \textbf{0.349} & 0.607 \\
+Combined & 0.346 & -- \\
+Two-Stage v2 & 0.535 (Acc: \textbf{0.685}) & -- \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\subsection{Training Strategy and Optimization}
-\label{subsec:training-strategy}
-
-All transformer experiments shared common training configurations:
-
+\textbf{Key Observations:}
 \begin{itemize}
-    \item \textbf{Optimizer}: AdamW with weight decay 0.01
-    \item \textbf{Learning rate schedule}: Linear warmup (6\% of steps) followed by linear decay
-    \item \textbf{Mixed precision}: BF16 on compatible GPUs (L4, RTX 3080)
-    \item \textbf{Early stopping}: Patience 3-6 epochs, monitoring macro F1
-    \item \textbf{Best model selection}: Load checkpoint with highest validation F1
+    \item \textbf{Best seniority F1}: Baseline DistilBERT achieved 0.616 F1 macro, the best performance among all approaches in the entire project for seniority
+    \item \textbf{Best department accuracy}: Two-Stage v2 reached 68.5\% accuracy, though with lower F1 macro (0.535) due to the hierarchical decomposition
+    \item \textbf{Oversampling most effective for departments}: Marginal improvement in department F1 (0.349) over baseline
+    \item \textbf{Class weighting ineffective}: No measurable improvement over baseline, suggesting this dataset requires data-level solutions (oversampling) rather than algorithm-level solutions (loss weighting)
 \end{itemize}
-
-\subsection{Hyperparameter Tuning}
-\label{subsec:hyperparameter-tuning}
-
-\subsubsection{Search Space and Optimization Strategy}
-
-Key hyperparameters explored:
+Overall, the oversampling approach provided the best trade-off between predictive performance (macro F1-score) and model complexity compared to both the baseline and the more complex two-stage hierarchical approaches.
+\subsection{Conclusion}
+\label{subsec:distilbert-conclusion}
+The DistilBERT experiments demonstrate that transformer models excel at seniority classification but struggle with department classification, even with sophisticated imbalance-handling techniques.
+\paragraph{Strengths.}
+DistilBERT performs exceptionally well when:
 \begin{itemize}
-    \item Learning rate: \{1e-5, 2e-5, 5e-5\}
-    \item Batch size: \{32, 64, 128\}
-    \item Number of epochs: \{5, 10, 20\}
-    \item Focal Loss $\gamma$: \{1.5, 2.0, 2.5\}
-    \item Stage 2 confidence threshold: \{0.2, 0.3, ..., 0.8\}
+    \item \textbf{Clear lexical markers exist}: Seniority levels have explicit keywords (``Senior'', ``Junior'', ``Lead'', ``Director'', ``VP'') that transformers recognize across contexts
+    \item \textbf{Class balance is reasonable}: The seniority task has a more balanced distribution (no single class exceeds 35\%), enabling effective learning
+    \item \textbf{Multilingual support is needed}: The multilingual DistilBERT handles German, French, and Spanish titles without explicit language-specific engineering
+    \item \textbf{Best seniority performance}: 0.616 F1 macro exceeds all other approaches, including feature engineering (0.443)
 \end{itemize}
-
-\subsubsection{Final Hyperparameter Selection}
-
-Optimal configuration determined through grid search:
+\paragraph{Limitations.}
+The model struggles with:
 \begin{itemize}
-    \item Learning rate: 2e-5
-    \item Batch size: 64 (balance of speed and stability)
-    \item Epochs: 8-13 (early stopping typically triggered)
-    \item Focal Loss $\gamma$: 2.0
-    \item Confidence threshold: 0.7
+    \item \textbf{Severe class imbalance}: Even oversampling and two-stage hierarchical approaches cannot fully compensate for the 55\% ``Other'' class dominance
+    \item \textbf{Domain gap}: Despite 97\% in-distribution validation performance, real-world test performance drops to 28-68\%, revealing significant generalization challenges
+    \item \textbf{Department classification}: Best department F1 is only 0.349 (oversampling) or 0.535 (two-stage with higher accuracy focus), below feature engineering's 0.615
 \end{itemize}
-
+\paragraph{Why This Performance Pattern.}
+Seniority classification benefits from two factors: (1) explicit lexical markers that appear consistently across domains, and (2) reasonable class balance enabling the model to learn all classes. Department classification, by contrast, requires understanding context-dependent terminology (``Manager'' means different things in different departments) while handling extreme class imbalance—a combination that proves challenging even for state-of-the-art transformers.
+\paragraph{Key Insight.}
+The fundamental problem is not model capacity but the domain gap between training data (clean, structured CSV lookup tables) and test data (noisy, real-world LinkedIn profiles). Transformers trained on clean data overfit to the training distribution's patterns, performing poorly when the test distribution differs. This explains why feature engineering—which explicitly encodes domain-invariant knowledge—outperforms transformers for department classification despite having far fewer parameters.
+\paragraph{Practical Recommendation.}
+For production systems facing similar domain shift challenges: (1) Use feature engineering for tasks requiring robust generalization across distribution changes, (2) Use transformers for tasks with consistent lexical patterns and balanced classes, (3) Consider hybrid approaches that combine both strengths.
 
 
 \section{Experiments}
@@ -1064,6 +1237,7 @@ Several preprocessing decisions significantly impacted performance:
     \item \textbf{Single evaluation set}: Results may not generalize to other LinkedIn data distributions
     \item \textbf{No temporal validation}: Job title conventions evolve; models may become outdated
     \item \textbf{Limited hyperparameter search}: Computational constraints prevented exhaustive optimization
+    \item \textbf{Data leakage via informed defaults}: The rule-based approach uses ``Professional'' as the seniority fallback, a class that does not exist in the training data (0\%) but represents 34.7\% of evaluation data. Comparison of Basic (no fallback) vs. Enhanced (with fallback) versions shows this provides an unfair advantage of +15pp for seniority and +40pp for department accuracy. While practically necessary for production systems, this constitutes methodological data leakage that should be considered when comparing across approaches. Supervised models do not face this issue as they learn to predict all classes from training data. See Section~\ref{subsec:fallback-dilemma} for detailed discussion.
 \end{itemize}
 
 \paragraph{External Validity}

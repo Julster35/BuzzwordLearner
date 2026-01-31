@@ -5,17 +5,24 @@
     "accuracy": 0.6096491228070176
   },
   "best_seniority": {
-    "approach": "DistilBERT-Baseline",
-    "f1_macro": 0.6157845487845488,
-    "accuracy": 0.7051597051597052
+    "approach": "DistilBERT-Oversampling",
+    "f1_macro": 0.6076373802177906,
+    "accuracy": 0.7100737100737101
   },
   "all_approaches": [
     {
-      "approach": "Rule-Based",
-      "dept_accuracy": 0.3020833333333333,
-      "dept_f1": 0.4291666666666667,
-      "sen_accuracy": 0.4270833333333333,
-      "sen_f1": 0.36459968602825743
+      "approach": "Rule-Based (Basic)",
+      "dept_accuracy": 0.2824267782426778,
+      "dept_f1": 0.44391919635660937,
+      "sen_accuracy": 0.4309623430962343,
+      "sen_f1": 0.3886096575770092
+    },
+    {
+      "approach": "Rule-Based (Enhanced)",
+      "dept_accuracy": 0.6820083682008368,
+      "dept_f1": 0.553,
+      "sen_accuracy": 0.5836820083682008,
+      "sen_f1": 0.548
     },
     {
       "approach": "Embedding Zero-Shot",
@@ -61,29 +68,29 @@
     },
     {
       "approach": "DistilBERT-Baseline",
-      "dept_accuracy": 0.2825040128410915,
-      "dept_f1": 0.3432117066880744,
-      "sen_accuracy": 0.7051597051597052,
-      "sen_f1": 0.6157845487845488
+      "dept_accuracy": 0.2776886035313001,
+      "dept_f1": 0.3273854971930763,
+      "sen_accuracy": 0.6904176904176904,
+      "sen_f1": 0.5841012314676336
     },
     {
       "approach": "DistilBERT-Class Balancing",
-      "dept_accuracy": 0.2744783306581059,
-      "dept_f1": 0.3425960530073483,
+      "dept_accuracy": 0.2841091492776886,
+      "dept_f1": 0.3376921573298182,
       "sen_accuracy": 0.0,
       "sen_f1": 0.0
     },
     {
       "approach": "DistilBERT-Oversampling",
-      "dept_accuracy": 0.2696629213483146,
-      "dept_f1": 0.3488626537697258,
-      "sen_accuracy": 0.7051597051597052,
-      "sen_f1": 0.6066242277193336
+      "dept_accuracy": 0.276083467094703,
+      "dept_f1": 0.3437454637256253,
+      "sen_accuracy": 0.7100737100737101,
+      "sen_f1": 0.6076373802177906
     },
     {
       "approach": "DistilBERT-Combined",
-      "dept_accuracy": 0.2680577849117175,
-      "dept_f1": 0.346463638969651,
+      "dept_accuracy": 0.2825040128410915,
+      "dept_f1": 0.3725526505140611,
       "sen_accuracy": 0.0,
       "sen_f1": 0.0
     },
