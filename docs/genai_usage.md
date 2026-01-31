@@ -857,7 +857,186 @@ BuzzwordLearner/
 
 ---
 
-## Session 16: Two-Stage v2 Integration (2026-01-28)
+## Session 16: Data Quality Analysis & Rule-Based Baseline Refinement (2026-01-25 - 2026-01-31)
+
+### Tool Used
+**GitHub Copilot** (integrated in VS Code)
+
+### Purpose
+Critical analysis of training data quality, identification of missing labels, baseline performance targets establishment, and methodological discussion about rule-based model limitations.
+
+### Context
+
+During implementation of the rule-based baseline (`02_rule_based_baseline.ipynb`), discovered critical data quality issues affecting model performance:
+
+1. **FutureWarning in pandas groupby**: `DataFrameGroupBy.apply()` deprecated behavior with grouping columns
+2. **Missing seniority label**: "Professional" category completely absent from `seniority-v2.csv` despite representing 35% of evaluation data
+3. **Naive baseline calculation**: Need to establish minimum performance thresholds based on class distribution
+
+### Prompts Used
+
+#### Prompt: Fix Pandas Warning
+```
+passe die zelle an dass die meldung nicht mehr kommt [...]
+c:\Users\steen\Desktop\PDS_repo\notebooks\..\src\data\loader.py:70: FutureWarning: 
+DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated
+```
+
+**AI Response**: Added `include_groups=False` to groupby operations, then pivoted to manual iteration approach to avoid accidentally dropping the label column.
+
+#### Prompt: Understanding Cell Functionality
+```
+was passiert hier?
+# Load lookup tables
+dept_df, sen_df = load_label_lists(DATA_DIR)
+```
+
+**AI Response**: Explained the lookup table loading process - loads CSV files, creates normalized text column, deduplicates, and optionally limits examples per class. These tables are the "knowledge base" for rule-based matching.
+
+#### Prompt: Label Count Discrepancy
+```
+die ausgabe sagt es gibt nur 5 seniority levels: dabei gibt es 6
+Professional, Management, Lead, Senior, Director, und Junior
+```
+
+**AI Response**: Investigation revealed that `seniority-v2.csv` only contains 5 labels (Senior, Lead, Director, Management, Junior) - **"Professional" is completely missing** despite appearing in 35% of annotated evaluation data.
+
+**Terminal Command Used**:
+```powershell
+python -c "import pandas as pd; df = pd.read_csv('data/seniority-v2.csv'); 
+print('Unique labels:', df['label'].nunique()); print(); 
+print('Label counts:'); print(df['label'].value_counts())"
+
+# Output:
+# Unique labels: 5
+# Label counts:
+# Senior        3733
+# Lead          3546
+# Director       984
+# Management     756
+# Junior         409
+```
+
+#### Prompt: Baseline Performance Target Documentation
+```
+passe den markdown an den jetzigen stand des notebooks an. und füge als erstes hinzu, 
+dass wir aus der EDA gesehen haben dass 55% der departments "other" ist und 35% der 
+senioritys "professional" würden wir also einfach ein model machen welches zu 100% 
+other und professional zuordnet würden wir 55% und 35% genauigkeit erreichen. ziel 
+sollte es sein diese werte mit jedem model schlagen zu können
+```
+
+**AI Response**: Updated notebook header with naive baseline calculation - any model must beat 55% (Department) and 35% (Seniority) accuracy to be considered useful.
+
+#### Prompt: EDA Label Coverage Visualization
+```
+ich brauch ehier noch einen plot mit zwei plots einmal die unique werte für departments 
+in department csv und in cvs annotated und einen mit den unique werten für seniority 
+csv und annotated csv
+```
+
+**AI Response**: Created side-by-side bar charts comparing label coverage between training CSVs and evaluation data, with warnings for missing labels.
+
+#### Prompt: Simplify to Table Format
+```
+erstelle lediglich eine tabelle mit den unique werten der einzelnen datensätze
+
+keine print statements, lediglich die 2 tabellen und darunter im markdown dann bitte 
+das fazit daraus, dass bei seniority ein label gar nicht in seniority csv vorkommt
+```
+
+**AI Response**: Replaced complex visualization with clean comparison tables and markdown summary documenting the "Professional" gap.
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `src/data/loader.py` | Fixed pandas FutureWarning by replacing `groupby().apply(include_groups=False)` with manual iteration: `for label, group in groupby()` pattern to avoid accidentally dropping label column |
+| `notebooks/02_rule_based_baseline.ipynb` | **Header update**: Added "Baseline Performance Target" section documenting naive baselines (55% Dept, 35% Sen) as minimum thresholds |
+| `notebooks/01_eda.ipynb` | **New section**: Added label coverage comparison tables (Department CSV vs Annotated, Seniority CSV vs Annotated) with markdown analysis documenting "Professional" missing from training data |
+
+### Key Findings Documented
+
+**Label Coverage Analysis** (added to `01_eda.ipynb`):
+
+```markdown
+### Label Coverage Analysis
+
+**Departments:**
+- ✅ Complete coverage: All 11 labels present in both CSV and annotated data
+
+**Seniority:**
+- ⚠️ **Critical finding**: Only 5 labels in seniority-v2.csv (Director, Junior, Lead, 
+  Management, Senior)
+- **"Professional" is completely missing** - represents ~35% of evaluation data
+- ❌ Incomplete coverage: Rule-based classifier cannot match "Professional" directly
+- **Impact**: Recall for this class significantly limited, only assignable via default 
+  fallback mechanism
+```
+
+**Naive Baseline Targets** (added to `02_rule_based_baseline.ipynb`):
+
+```markdown
+## Baseline Performance Target
+
+From EDA: 55% departments are "Other", 35% seniorities are "Professional"
+
+⚠️ **Naive Baseline**: Always predicting most common class yields:
+- Department: 55% accuracy
+- Seniority: 35% accuracy
+
+🎯 **Goal**: Every model must beat these naive thresholds
+```
+
+### Methodological Decisions
+
+**Professional Label Gap - Chosen Approach:**
+- **Decision**: Accept limitation and document thoroughly
+- **Rationale**: 
+  - Maintains methodological integrity (no data leakage)
+  - Demonstrates understanding of train/test separation
+  - Makes baseline weakness explicit for fair ML model comparison
+  - "Professional" assigned via default fallback mechanism only
+
+**Alternative Considered but Rejected:**
+- Mining examples from annotated CVs → Data leakage
+- Using unannotated CVs → Adds uncertainty without ground truth
+- Manual examples → Viable but decided to show limitation first
+
+### Impact on Project
+
+1. **Documented data quality issues** for transparent evaluation
+2. **Established minimum performance bars** (55%/35% accuracy)
+3. **Explained rule-based limitations** upfront - ML models expected to handle "Professional" better through learned patterns
+4. **Maintained methodological rigor** by avoiding data leakage temptation
+
+### Code Examples from Session
+
+**Before (causing FutureWarning):**
+```python
+label_df = label_df.groupby('label', group_keys=False).apply(
+    lambda x: x.sample(min(len(x), max_per_class), random_state=42)
+).reset_index(drop=True)
+```
+
+**After (clean solution):**
+```python
+sampled_groups = []
+for label, group in label_df.groupby('label'):
+    sampled_groups.append(group.sample(min(len(group), max_per_class), random_state=42))
+label_df = pd.concat(sampled_groups, ignore_index=True)
+```
+
+### Key Design Decisions
+
+1. **Transparency over perfection**: Document data limitations rather than hide them
+2. **Fair baselines**: Naive baseline establishes minimum bar for model comparison
+3. **Methodological integrity**: Rejected data leakage shortcuts
+4. **Educational value**: Show why rule-based struggles with missing training examples
+
+---
+
+## Session 17: Two-Stage v2 Integration (2026-01-28)
 
 ### Tool Used
 **Antigravity** (Google DeepMind's agentic coding assistant)
@@ -898,7 +1077,7 @@ and optimized thresholding for better performance.
 
 ---
 
-## Session 17: Submission Report Writing (2026-01-28)
+## Session 18: Submission Report Writing (2026-01-28)
 
 ### Tool Used
 **Antigravity** (Google DeepMind's agentic coding assistant)
@@ -950,7 +1129,7 @@ and submission based)
 
 ---
 
-## Session 18: Notebook Documentation Audit & Repository Cleanup (2026-01-28)
+## Session 19: Notebook Documentation Audit & Repository Cleanup (2026-01-28)
 
 ### Tool Used
 **Antigravity** (Google DeepMind's agentic coding assistant)
@@ -1031,7 +1210,7 @@ and dont forget to update the genai usage with everything we did
 
 ---
 
-## Session 19: Project Evaluation & Dashboard Enhancement (2026-01-28)
+## Session 21: Project Evaluation & Dashboard Enhancement (2026-01-28)
 
 ### Tool Used
 **Antigravity** (Google DeepMind's agentic coding assistant)
@@ -1103,6 +1282,109 @@ Systematic evaluation of the project against all 8 grading criteria:
 |------|-------|--------|
 | Department | Feature Eng + RF | `models/_archive/combined_rf_department.pkl` |
 | Seniority | DistilBERT | `models/transformer_seniority/` |
+
+---
+
+## Session 22: EDA LaTeX Report Creation (2026-01-30 - 2026-01-31)
+
+### Tool Used
+**GitHub Copilot** (integrated in VS Code)
+
+### Purpose
+Create a comprehensive LaTeX report documenting the exploratory data analysis findings, extracting key insights from the EDA notebook and formatting them professionally for academic submission.
+
+#### Prompt: Translation Request
+```german
+das muss alles auf englisch sein
+```
+
+**AI Response**: Translated entire document to English using `multi_replace_string_in_file` tool with 13 separate replacements:
+- Changed `\usepackage[german]{babel}` → `\usepackage[english]{babel}`
+- Translated all section titles and body text
+- Changed comma decimals to period decimals (26,8% → 26.8%)
+- Translated table headers (Anzahl → Count, Prozent → Percent)
+
+#### Prompt: Add Conclusion Section
+```german
+jetzt schreibe hierzu noch eine logische kurz und knappe conclusion mit allen wichtigen 
+erkenntnissen die mein beim erstellen der models beachten sollte
+```
+
+**AI Response**: Created comprehensive conclusion section with:
+- Data Characteristics (quality, title length, first position bias)
+- Class Imbalance Challenges (specific percentages, mitigation strategies)
+- Multilingual Requirements (language distribution, model suggestions)
+- Label Inconsistencies (Professional label mismatch)
+- Career Progression Patterns (seniority trends, department changes)
+- 6 concrete recommendations for model development
+
+#### Prompt: Correct Table Values
+```german
+du musst nochmal die tabellen anpassen. das sind die werte bei department label dictionary:
+[actual values provided from notebook]
+und das bei seniority label dictionary:
+[actual values provided from notebook]
+```
+
+**AI Response**: Updated both tables with correct distributions using `multi_replace_string_in_file`:
+- Department: Marketing 42.34%, Sales 32.80%, IT 12.86% (not the old values)
+- Seniority: Senior 39.59%, Lead 37.61%, Director 10.44% (corrected from old data)
+- Updated text descriptions to reflect new dominant categories
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `reports/eda_report.tex` | Complete LaTeX EDA report with 9 sections, 10 tables, 8 figures |
+
+### Key Design Decisions
+
+1. **Structure Following EDA Flow**: Report follows exact notebook structure (Annotated → Lookup Tables → Comparisons → Conclusion)
+2. **Figure References**: All plots reference existing files in `reports/figures/` directory
+3. **Bilingual to English**: Started with German requirements, translated to English for academic submission
+4. **Data-Driven Tables**: All tables populated with exact values from notebook analysis
+5. **Actionable Conclusion**: Recommendations section provides concrete model development guidance
+
+### Code Examples from Session
+
+**Multi-replacement Pattern Used:**
+```python
+replacements = [
+    {
+        "filePath": "eda_report.tex",
+        "oldString": "\\usepackage[german]{babel}",
+        "newString": "\\usepackage[english]{babel}",
+        "explanation": "Change document language"
+    },
+    # ... 12 more replacements
+]
+```
+
+**Table Format:**
+```latex
+\begin{table}[H]
+\centering
+\begin{tabular}{lrr}
+\toprule
+\textbf{Department} & \textbf{Count} & \textbf{Percent (\%)} \\
+\midrule
+Marketing & 4,295 & 42.34 \\
+Sales & 3,328 & 32.80 \\
+% ... more rows
+\bottomrule
+\end{tabular}
+\caption{Distribution of Department Labels in Lookup Table}
+\label{tab:dept_lookup_distribution}
+\end{table}
+```
+
+### Impact on Project
+
+1. **Professional Documentation**: LaTeX report ready for academic submission
+2. **Reproducible Analysis**: All values extracted from notebook with figure references
+3. **Model Development Roadmap**: Conclusion section provides concrete guidance for subsequent modeling work
+4. **Data Quality Transparency**: Missing "Professional" label documented upfront
+5. **Multilingual Awareness**: Language distribution and requirements clearly stated
 
 ---
 
