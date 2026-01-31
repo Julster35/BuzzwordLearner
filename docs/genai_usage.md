@@ -1390,3 +1390,304 @@ Sales & 3,328 & 32.80 \\
 
 *This document is continuously updated throughout the project development.*
 
+###################################
+
+
+---
+
+## Session 9: Notebook Refactors + BoW Improvements (2026-01-31)
+
+### Tool Used
+**ChatGPT (OpenAI Codex CLI)**
+
+### Purpose
+Improve the Bag-of-Words notebook and make DistilBERT notebooks fully self-contained (no `src` imports, no result saving), then switch all data paths to absolute paths.
+
+### Prompts Used
+
+```
+wie könnte man die ergebnisse bei 08_BagOfWords.ipynb noch verbessern ?
+```
+
+```
+Kannst du das bitte einbauen
+```
+
+```
+ne pruefe ob die sachen die du vorhin angepasst hast auch da sind.
+```
+
+```
+ja bitte
+```
+
+```
+Kannst du den Code bei Notebook 09 und 10 so gestalten das es nur die daten nimmt und alles im notebook selbst ausfuehrt ohne auf andere sachen zu verweisen, damit meine ich nichts mit src ordner und so einfach direkte pfadaufrufe und runnen der sachen die da sind ohne abspeichern und sonst was.
+```
+
+```
+Bitte pruefe bei Notebook 09 und 10 nochmal genau das du die paths direkt aufrufst und nicht "DATA_DIR = Path('../data')" machst sondern den ganzen pfad immer angibst.
+```
+
+### AI Response Summary
+- Proposed improvements for BoW by adding TF-IDF, char n-grams, class weighting, and preprocessing.
+- Refactored `09_distilbert.ipynb` and `10_distilbert_improvements.ipynb` to inline all loader/model code so notebooks run without `src` imports.
+- Removed result/model saving from notebooks; training uses temporary output directories only.
+- Switched `DATA_DIR` to an absolute path for direct data access.
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `notebooks/08_BagOfWords.ipynb` | Replaced CountVectorizer with TF-IDF word+char features, added preprocessing (abbrev normalization, token filtering), updated metadata. |
+| `notebooks/09_distilbert.ipynb` | Inlined data loading and TransformerClassifier code, removed result saving, removed `src` imports. |
+| `notebooks/10_distilbert_improvements.ipynb` | Inlined data loading and TransformerClassifier code, removed result saving, removed `src` imports, disabled silver block, removed `src` embedding classifier usage. |
+| `notebooks/09_distilbert.ipynb` | Updated `DATA_DIR` to absolute path for direct file access. |
+| `notebooks/10_distilbert_improvements.ipynb` | Updated `DATA_DIR` to absolute path for direct file access. |
+
+### Key Design Decisions
+
+1. **Self-contained notebooks**: All data loading and model utilities are embedded directly in the notebooks to avoid external dependencies.
+2. **No artifact persistence**: Training outputs are not saved to project folders; temporary output directories are used to satisfy HuggingFace Trainer requirements.
+3. **Absolute data paths**: Avoids reliance on relative paths when running notebooks from different working directories.
+4. **BoW robustness**: Added TF-IDF with word+char n-grams and preprocessing to improve real-world generalization on short titles.
+
+---
+
+## Session 10: DistilBERT HuggingFace Alignment (2026-01-31)
+
+### Tool Used
+**ChatGPT (OpenAI Codex CLI)**
+
+### Purpose
+Ensure notebooks 09 and 10 explicitly use DistilBERT components from HuggingFace and avoid non-DistilBERT backbones.
+
+### Prompts Used
+
+```
+Kannst du Notebook 09 und 10 so anpassen können das er Distillbert von huggingface benutzt wird und so verstehst du ?
+```
+
+### AI Response Summary
+- Replaced `AutoTokenizer`/`AutoModelForSequenceClassification` with `DistilBertTokenizerFast` and `DistilBertForSequenceClassification` in both notebooks.
+- Reduced backbone testing in notebook 10 to only `BASE_MODEL` to keep the experiments strictly on DistilBERT.
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `notebooks/09_distilbert.ipynb` | Switched to DistilBERT-specific tokenizer/model classes. |
+| `notebooks/10_distilbert_improvements.ipynb` | Switched to DistilBERT-specific tokenizer/model classes and limited `BACKBONES` to `BASE_MODEL`. |
+
+### Key Design Decisions
+
+1. **Explicit DistilBERT usage**: Using `DistilBertTokenizerFast` and `DistilBertForSequenceClassification` removes ambiguity about the backbone.
+2. **Backbone isolation**: Restricting `BACKBONES` to `BASE_MODEL` keeps comparisons within DistilBERT only.
+
+
+---
+
+## Session 11: Notebook Analysis + New Baselines (2026-01-31)
+
+### Tool Used
+**ChatGPT (OpenAI Codex CLI)**
+
+### Purpose
+Analyze all existing notebooks, add a Bag-of-Words baseline (with/without oversampling), and create DistilBERT experiment notebooks with baseline, tuning, and improvement variants.
+
+### Prompts Used
+
+```
+Analysiere alle Notebooks die es hier im repo gibt.
+```
+
+```
+Kannst du nun ein neues Notebook erstellen bitte das Notebook 08_BagOfWords.ipynb und da den Code schreiben fuer die BagOfWords variante mit und ohne oversampling.
+```
+
+```
+kannst du noch ein notebook erstellen bitte. Und zwar das 09_distilbert.ipynb und dort dann bitte erst plain distillbert machen.
+```
+
+```
+was denkst du was man bei notebook 09 noch machen kann was helfen koennte bessere performance rauszuholen ?
+```
+
+```
+kannst du die sachen in einem neuen notebook machen also 10
+```
+
+### AI Response Summary
+- Audited all notebooks, extracted structure, data dependencies, and saved results, and flagged inconsistencies (e.g., missing 99_final_comparison, silver data schema mismatch, and result schema differences).
+- Created a new Bag-of-Words baseline notebook with oversampling comparison and result export.
+- Created a DistilBERT experiment notebook with baseline, tuning grid, and four targeted experiments, each documented in Markdown.
+- Proposed additional improvement avenues and implemented them in a new notebook (two-stage fine-tuning, backbone tests, label smoothing + max_length sweep, input variants, optional silver augmentation with toggles).
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `notebooks/08_BagOfWords.ipynb` | New notebook: CountVectorizer + Logistic Regression; baseline vs oversampling; saves `bow_results.json` on run. |
+| `notebooks/09_distilbert.ipynb` | New notebook: plain DistilBERT baseline. |
+| `notebooks/10_distilbert_improvements.ipynb` | New notebook: backbone comparison, label smoothing/max_length, input variants, optional silver augmentation; results saved to JSON. |
+
+### Key Design Decisions
+
+1. **Consistency with earlier setups**: Training uses lookup tables, evaluation uses annotated CVs for real-world comparison.
+2. **Experiment toggles**: Long-running sections can be enabled/disabled to manage runtime.
+3. **Structured documentation**: Each section explains the hypothesis and expected impact.
+4. **Result artifacts**: JSON outputs allow later comparison across approaches.
+
+---
+
+## Session 12: DistilBERT Notebook 09 Data Audit (2026-01-31)
+
+### Tool Used
+**ChatGPT (OpenAI Codex CLI)**
+
+### Purpose
+Explain where the data in `09_distilbert.ipynb` comes from and what the model predicts, then list concrete CSV columns and a few sample rows.
+
+### Prompts Used
+
+```
+Kannst du bitte notebook 09_distilbert.ipynb durschauen und sagen von wo du die daten bekommst und was das ziel ist also was predicted wird und so
+```
+
+```
+Ja bitte die konkreten Spalten der CSVs mir auflisten
+```
+
+```
+auch bitte ein paar beispiele
+```
+
+### AI Response Summary
+- Identified training data sources as the lookup CSVs `department-v2.csv` and `seniority-v2.csv` and evaluation data as `linkedin-cvs-annotated.json`.
+- Clarified the two prediction tasks: `department` and `seniority` classification from job titles.
+- Listed the CSV columns (`text`, `label`) and provided sample rows from each file.
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| _None_ | No files were changed; analysis only. |
+
+### Key Design Decisions
+
+1. **Direct inspection**: Read the CSVs directly to list actual column names and sample rows.
+2. **Task clarity**: Mapped each dataset to its role (training vs evaluation) and the predicted labels.
+
+---
+
+## Session 13: Language Detection for LinkedIn Positions (2026-01-31)
+
+### Tool Used
+**ChatGPT (OpenAI Codex CLI)**
+
+### Purpose
+Identify which languages appear in `linkedin-cvs-annotated.json`, then repeat the analysis using only the `position` field.
+
+### Prompts Used
+
+```
+kannst du dir die linkedin-csv-annotated.json anschauen und mir bitte nenen auf welchen sprachen die ganzen einträge sind ich sehe paar deutsche paar englische aber vielleicht gibt es noch andere.
+```
+
+```
+nur anhand position
+```
+
+### AI Response Summary
+- Detected languages across entries and reported the language distribution.
+- Refined the analysis to use only the `position` field and returned the updated language counts.
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| _None_ | No files were changed; analysis only. |
+
+### Key Design Decisions
+
+1. **Field focus**: Re-ran language detection using only `position` to match the refined request.
+2. **Aggregate reporting**: Presented results as language counts for quick inspection.
+
+---
+
+## Session 14: Seniority Evaluation Without Filtering (2026-01-31)
+
+### Tool Used
+**ChatGPT (OpenAI Codex CLI)**
+
+### Purpose
+Add an unfiltered seniority evaluation so `Professional` labels are not dropped, and make the notebook include a dedicated evaluation cell.
+
+### Prompts Used
+
+```
+Bei der evaluation der seniority wird ein feld herausgefiltert kann das sein ?
+```
+
+```
+kannst du auch noch ein evaluation machen wo bei seniority nichts gefiltert wird
+```
+
+```
+nein ich wollte einfach noch eine zelle haben bei meinem notebook
+
+08_distilbert_comparison.ipynb
+```
+
+### AI Response Summary
+- Identified that seniority evaluation can be filtered because the label list excludes `Professional` and evaluation code filters to known label classes.
+- Added an unfiltered evaluation option in the shared metrics utility (toggle to keep all predictions).
+- Inserted a new notebook cell to evaluate seniority on the full evaluation set (no label filtering), reporting metrics and a classification report.
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `src/evaluation/metrics.py` | Added `filter_none` flag to optionally disable filtering of `None` predictions while still reporting coverage. |
+| `notebooks/08_distilbert_comparison.ipynb` | Added a new code cell to run unfiltered seniority evaluation for Baseline and Oversampling models. |
+
+### Key Design Decisions
+
+1. **Unfiltered seniority**: Evaluate on all annotated seniority labels, including `Professional`, to avoid silent sample drops.
+2. **Minimal disruption**: Added a new notebook cell rather than changing existing evaluation flow.
+3. **Backward compatible**: Default behavior in metrics stays unchanged unless `filter_none=False` is passed.
+
+---
+
+## Session 15: DistilBERT Comparison Notebook Summary (2026-01-31)
+
+### Tool Used
+**ChatGPT (OpenAI Codex CLI)**
+
+### Purpose
+Summarize all models, configurations, and adjustments in `08_distilbert_comparison.ipynb`, then confirm whether seniority was evaluated with and without filtering.
+
+### Prompts Used
+
+```
+Kannst du mir bitte alles niederschreiben was in Notebook "08_distilbert_comparison.ipynb" für modelle sind mit verschiedenen konfigurationen und anpassungen was alles versucht wurde und fokusiert wurde
+```
+
+```
+wurde genannt das wir seinority einmal mit einem filter auf professional prüfen und einmal ohne ?
+```
+
+### AI Response Summary
+- Extracted and summarized all five DistilBERT approaches (Baseline, Weighted Loss, Oversampling, Combined, Two-Stage) including hyperparameters, training setup, and evaluation logic.
+- Highlighted the extra unfiltered seniority evaluation (including `Professional`) and confirmed it runs for both Baseline and Oversampling.
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| _None_ | No files were changed; analysis only. |
+
+### Key Design Decisions
+
+1. **Full coverage**: Listed every experiment section and its configuration to ensure the notebook can be re-understood without opening it.
+2. **Evaluation clarity**: Explicitly called out the separate unfiltered seniority evaluation to avoid confusion about dropped labels.
