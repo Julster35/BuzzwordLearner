@@ -1,8 +1,8 @@
 {
   "best_department": {
-    "approach": "Feature Engineering (Improved)",
-    "f1_macro": 0.614535204138736,
-    "accuracy": 0.6096491228070176
+    "approach": "Rule-Based (Enhanced)",
+    "f1_macro": 0.553,
+    "accuracy": 0.6820083682008368
   },
   "best_seniority": {
     "approach": "DistilBERT-Oversampling",
@@ -54,8 +54,8 @@
     },
     {
       "approach": "Feature Engineering (Improved)",
-      "dept_accuracy": 0.6096491228070176,
-      "dept_f1": 0.614535204138736,
+      "dept_accuracy": 0.2824267782426778,
+      "dept_f1": 0.24800072106169915,
       "sen_accuracy": 0.47489539748953974,
       "sen_f1": 0.4430268180212052
     },
