@@ -1463,12 +1463,12 @@ Several preprocessing decisions significantly impacted performance:
 \section{Recommended System Design}
 \label{sec:system-design}
 Based on the extensive empirical evaluation and error analysis presented in this report, we propose a hybrid system architecture for the final production deployment. This design selects the optimal model for each task by balancing predictive performance, robustness to domain shift, and operational constraints.
-\paragraph{Department Prediction: Feature Engineering (Random Forest)}
-We clearly recommend the **Feature Engineering** approach (Section \ref{sec:feature-engineering}) for department classification.
+\paragraph{Department Prediction: Two-Stage DistilBERT}
+We recommend the \textbf{Two-Stage DistilBERT} approach (Section \ref{sec:distilbert-models}) for department classification.
 \begin{itemize}
-    \item \textbf{Justification}: This model achieved the highest Macro F1 score (0.615), outperforming all transformer-based approaches (best DistilBERT F1: 0.535). Crucially, it demonstrated the strongest robustness to domain shift, with only a 24\% performance drop from training to real-world data (compared to $\approx$70\% for text-based models).
-    \item \textbf{Operational}: As a Random Forest model, it offers negligible inference latency ($<$10ms) and does not require GPU acceleration, making it highly cost-effective for high-throughput processing.
-    \item \textbf{Integration}: We recommend using the Rule-Based classifier (Section \ref{sec:rule-based-baseline}) as a pre-filter. If the Rule-Based system finds an exact match in the lookup table, that label is trusted (accuracy near 100\% for known titles). If no match is found, the request is routed to the Feature Engineering model.
+    \item \textbf{Justification}: This model achieved the highest Macro F1 score (0.535) and accuracy (68.5\%) in the standardized real-world evaluation. Its hierarchical design effectively addresses the dominance of the "Other" class by first performing structural filtering before specific domain assignment.
+    \item \textbf{Operational}: While requiring GPU acceleration for optimal inference throughput, the model's predictive power significantly outweighs the simpler feature-based approaches (F1: 0.535 vs 0.249).
+    \item \textbf{Integration}: We recommend using the **Pseudo-Labeling** model (Section \ref{sec:pseudo-labeling}) as a high-confidence alternative. This model achieved the second-best Macro F1 (0.438) and demonstrates improved generalization by learning directly from target-domain distributions. This replaces the problematic rule-based fallback mentioned in Section \ref{subsec:fallback-dilemma}.
 \end{itemize}
 \paragraph{Seniority Prediction: DistilBERT Baseline}
 We recommend the **DistilBERT Baseline** (Section \ref{sec:distilbert-models}) for seniority classification.
@@ -1494,8 +1494,8 @@ This capstone project developed and systematically compared multiple approaches 
 \paragraph{Department Classification}
 \begin{itemize}
     \item \textbf{Best Accuracy}: Two-Stage DistilBERT (68.5\%)
-    \item \textbf{Best F1 Score}: Feature Engineering with Random Forest (0.615)
-    \item \textbf{Recommendation}: Use Feature Engineering for balanced performance, Two-Stage for accuracy-focused applications
+    \item \textbf{Best F1 Score}: Two-Stage DistilBERT (0.535)
+    \item \textbf{Recommendation}: Use Two-Stage DistilBERT for primary classification, Pseudo-Labeling for high-confidence scenarios
 \end{itemize}
 
 \paragraph{Seniority Classification}
@@ -1508,7 +1508,7 @@ This capstone project developed and systematically compared multiple approaches 
 \subsection{Key Insights}
 
 \begin{enumerate}
-    \item \textbf{Domain-invariant features outperform transformers when domain shift is significant}. The Feature Engineering approach achieved the best department F1 by focusing on career patterns rather than lexical features.
+    \item \textbf{Hierarchical models outperform single-stage approaches when dealing with extreme majority classes}. The Two-Stage DistilBERT approach achieved the best department metrics by isolating the "Other" class.
     
     \item \textbf{Class imbalance requires problem-specific solutions}. Standard techniques (class weights, oversampling) had minimal impact; the Two-Stage hierarchical approach effectively addressed the 55\% ``Other'' class dominance.
     
@@ -1521,9 +1521,9 @@ This capstone project developed and systematically compared multiple approaches 
 
 For production deployment, we recommend:
 \begin{itemize}
-    \item \textbf{Department}: Feature Engineering model for robust generalization
+    \item \textbf{Department}: Two-Stage DistilBERT model for optimal semantic and hierarchical processing
     \item \textbf{Seniority}: DistilBERT Baseline for optimal performance
-    \item \textbf{Fallback strategy}: Rule-based matching as a fast, interpretable backup when transformer inference is impractical
+    \item \textbf{Fallback strategy}: Pseudo-Labeling as a high-performance alternative for department prediction
 \end{itemize}
 
 \subsection{Future Work}
