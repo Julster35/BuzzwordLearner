@@ -1730,3 +1730,100 @@ can you update the genai usage
 1. **Realistic Evaluation**: Chose to include the "Other" category in the final reported metrics. While it lowers nominal accuracy, it provides a more truthful assessment of the model's reliability on noisy real-world data.
 2. **Technical Depth**: Added detailed explanations mapping career metrics (tenure, position count) to seniority expectations.
 3. **Structured Patching**: Used a script-based approach for notebook editing to ensure consistency across multiple cell types (markdown and code).
+
+---
+
+## Session 23: Final Comparison Visual Refinement (2026-01-31)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Refine the visualizations in `99_final_comparison.ipynb` to treat the "Rule-based (Enhanced)" model as a reference baseline, ensure it appears at the bottom of comparisons, and use appropriate metrics (Accuracy and F1 Macro).
+
+### Prompts Used
+
+```
+[Instructions to move Rule-based Enhanced to the bottom of charts and tables]
+```
+
+```
+great but final plot number 2 should compare accuracy not f1 marco again
+```
+
+```
+i also need accuracy for department for the second plot
+```
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `notebooks/99_final_comparison.ipynb` | Updated `load_all_results` to flag reference models. Adjusted ranking tables to move references to bottom. Completely overhauled plotting logic in cell 13 to show Accuracy for both Department and Seniority as requested. |
+
+### Key Design Decisions
+
+1. **Reference Labeling**: Reference models are now enclosed in brackets `(Model Name)` to clearly distinguish them from candidate models.
+2. **Color Coding**: Used a distinct gray (`#95a5a6`) for reference bars, green for the best-performing candidate, and blue for others.
+3. **Metric Selection**: Switched the primary visual comparison for both tasks to **Accuracy** after iterative user feedback, while maintaining F1 Macro in the first plot for a balanced view.
+
+---
+
+## Session 24: Merge Conflict Resolution (2026-01-31)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Resolve a complex merge conflict involving `99_final_comparison.ipynb` and related binary results files (`.png`, `.json`).
+
+### Prompts Used
+
+```
+i have a merge conflict, i want to use my notebook 99 and my results here pls help
+```
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `notebooks/99_final_comparison.ipynb` | Conflict resolved by keeping local version (`--ours`). |
+| `notebooks/results/final_comparison.png` | Conflict resolved by keeping local version. |
+| `notebooks/results/final_comparison_accuracy.png` | Conflict resolved by keeping local version. |
+| `notebooks/results/final_summary.json` | Conflict resolved by keeping local version. |
+
+### Key Design Decisions
+
+1. **Strategy Choice**: Used `git checkout --ours` to prioritize the user's latest local work over conflicting remote changes, as explicitly requested.
+2. **Repository Consistency**: Staged all resolved files and finalized the merge with a descriptive commit message.
+
+---
+
+## Session 25: Documentation Synchronization (2026-01-31)
+
+### Tool Used
+**Antigravity** (Google DeepMind's agentic coding assistant)
+
+### Purpose
+Update `genai_usage.md` to include all recent sessions and ensure documentation completeness for the final project submission.
+
+### Prompts Used
+
+```
+can you update the gen Ai usage with the last sessions i had with you that are not in there yet
+```
+
+### Files Modified
+
+| File | Changes Made |
+|------|-------------|
+| `docs/genai_usage.md` | Appended detailed logs for Sessions 23, 24, and 25. |
+
+### Key Design Decisions
+
+1. **Information Synthesis**: Aggregated disjointed session history into a cohesive narrative for the final report.
+2. **Verification**: Cross-referenced `task.md` and `walkthrough.md` to ensure all significant AI interactions were captured.
+
+---
+
+*This document is continuously updated throughout the project development.*
