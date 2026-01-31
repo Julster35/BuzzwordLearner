@@ -54,10 +54,10 @@
     },
     {
       "approach": "Feature Engineering (Improved)",
-      "dept_accuracy": 0.2824267782426778,
-      "dept_f1": 0.24800072106169915,
-      "sen_accuracy": 0.47489539748953974,
-      "sen_f1": 0.4430268180212052
+      "dept_accuracy": 0.0,
+      "dept_f1": 0.0,
+      "sen_accuracy": 0.47280334728033474,
+      "sen_f1": 0.43740717847197014
     },
     {
       "approach": "Lexicon-Supervised",
@@ -103,15 +103,15 @@
     }
   ],
   "key_findings": [
-    "Feature Engineering approach outperforms other methods for department classification (F1=0.615)",
+    "Two-Stage DistilBERT approach outperforms other methods for department classification in standardized evaluation (F1=0.535)",
     "Transformer models achieve high in-distribution accuracy but struggle with domain shift",
-    "Hybrid Rule+Embedding approach edges out Feature Engineering for seniority (F1=0.444 vs 0.443)",
+    "DistilBERT Baseline clearly dominates seniority classification (F1=0.616)",
     "Seniority classification benefits from universal keywords (Senior, Junior, Manager, Director)",
     "Best department model differs from best seniority model"
   ],
   "recommendations": [
-    "Use Feature Engineering approach for department classification",
-    "Use Hybrid Rule+Embedding approach for seniority classification",
+    "Use Two-Stage DistilBERT approach for department classification",
+    "Use DistilBERT Baseline for seniority classification",
     "Consider combined pipeline for production deployment",
     "Future work: domain adaptation to bridge training-test gap"
   ]
