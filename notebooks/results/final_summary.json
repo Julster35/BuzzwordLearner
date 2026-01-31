@@ -1,13 +1,13 @@
 {
   "best_department": {
-    "approach": "Rule-Based (Enhanced)",
-    "f1_macro": 0.553,
-    "accuracy": 0.6820083682008368
+    "approach": "DistilBERT-Two-Stage",
+    "f1_macro": 0.5340461557465038,
+    "accuracy": 0.680577849117175
   },
   "best_seniority": {
-    "approach": "DistilBERT-Oversampling",
-    "f1_macro": 0.6076373802177906,
-    "accuracy": 0.7100737100737101
+    "approach": "Feature Engineering (Improved)",
+    "f1_macro": 0.4430268180212052,
+    "accuracy": 0.47489539748953974
   },
   "all_approaches": [
     {
@@ -15,91 +15,104 @@
       "dept_accuracy": 0.2824267782426778,
       "dept_f1": 0.44391919635660937,
       "sen_accuracy": 0.4309623430962343,
-      "sen_f1": 0.3886096575770092
+      "sen_f1": 0.3886096575770092,
+      "is_reference": false
     },
     {
       "approach": "Rule-Based (Enhanced)",
       "dept_accuracy": 0.6820083682008368,
       "dept_f1": 0.553,
       "sen_accuracy": 0.5836820083682008,
-      "sen_f1": 0.548
+      "sen_f1": 0.548,
+      "is_reference": true
     },
     {
       "approach": "Embedding Zero-Shot",
       "dept_accuracy": 0.24686192468619247,
       "dept_f1": 0.2872740223422604,
       "sen_accuracy": 0.36401673640167365,
-      "sen_f1": 0.2384194584926621
+      "sen_f1": 0.2384194584926621,
+      "is_reference": false
     },
     {
       "approach": "Hybrid Rule+Embedding",
       "dept_accuracy": 0.4791666666666667,
       "dept_f1": 0.3645044346138737,
       "sen_accuracy": 0.4652777777777778,
-      "sen_f1": 0.433671040587522
+      "sen_f1": 0.433671040587522,
+      "is_reference": false
     },
     {
       "approach": "Transformer",
       "dept_accuracy": 0.3075313807531381,
       "dept_f1": 0.35333076348651904,
       "sen_accuracy": 0.46443514644351463,
-      "sen_f1": 0.434194455859588
+      "sen_f1": 0.434194455859588,
+      "is_reference": false
     },
     {
       "approach": "Pseudo-Labeling",
       "dept_accuracy": 0.4435146443514644,
       "dept_f1": 0.43779211247396527,
       "sen_accuracy": 0.48326359832635984,
-      "sen_f1": 0.4368621422542991
+      "sen_f1": 0.4368621422542991,
+      "is_reference": false
     },
     {
       "approach": "Feature Engineering (Improved)",
       "dept_accuracy": 0.2824267782426778,
       "dept_f1": 0.24800072106169915,
       "sen_accuracy": 0.47489539748953974,
-      "sen_f1": 0.4430268180212052
+      "sen_f1": 0.4430268180212052,
+      "is_reference": false
     },
     {
       "approach": "Lexicon-Supervised",
       "dept_accuracy": 0.2680577849117175,
       "dept_f1": 0.3928531234185301,
       "sen_accuracy": 0.47351524879614765,
-      "sen_f1": 0.4301289799253856
+      "sen_f1": 0.4301289799253856,
+      "is_reference": false
     },
     {
       "approach": "DistilBERT-Baseline",
       "dept_accuracy": 0.2776886035313001,
       "dept_f1": 0.3273854971930763,
-      "sen_accuracy": 0.6904176904176904,
-      "sen_f1": 0.5841012314676336
+      "sen_accuracy": 0.4510433386837881,
+      "sen_f1": 0.4039247041263642,
+      "is_reference": false
     },
     {
       "approach": "DistilBERT-Class Balancing",
       "dept_accuracy": 0.2841091492776886,
       "dept_f1": 0.3376921573298182,
-      "sen_accuracy": 0.0,
-      "sen_f1": 0.0
+      "sen_accuracy": 0.4510433386837881,
+      "sen_f1": 0.4039247041263642,
+      "is_reference": false
     },
     {
       "approach": "DistilBERT-Oversampling",
       "dept_accuracy": 0.276083467094703,
       "dept_f1": 0.3437454637256253,
-      "sen_accuracy": 0.7100737100737101,
-      "sen_f1": 0.6076373802177906
+      "sen_accuracy": 0.463884430176565,
+      "sen_f1": 0.4142793406420306,
+      "is_reference": false
     },
     {
       "approach": "DistilBERT-Combined",
       "dept_accuracy": 0.2825040128410915,
       "dept_f1": 0.3725526505140611,
-      "sen_accuracy": 0.0,
-      "sen_f1": 0.0
+      "sen_accuracy": 0.463884430176565,
+      "sen_f1": 0.4142793406420306,
+      "is_reference": false
     },
     {
       "approach": "DistilBERT-Two-Stage",
-      "dept_accuracy": 0.6853932584269663,
-      "dept_f1": 0.5353367494842654,
+      "dept_accuracy": 0.680577849117175,
+      "dept_f1": 0.5340461557465038,
       "sen_accuracy": 0.0,
-      "sen_f1": 0.0
+      "sen_f1": 0.0,
+      "is_reference": false
     }
   ],
   "key_findings": [
