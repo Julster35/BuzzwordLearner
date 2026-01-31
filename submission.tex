@@ -1546,6 +1546,17 @@ Several directions could improve performance:
     \item \textbf{Cross-lingual transfer}: Leveraging multilingual models for non-English CVs
 \end{itemize}
 
+\section{Individual Contributions}
+In accordance with project guidelines, this section details the specific roles and technical contributions of each group member:
+
+\begin{itemize}
+    \item \textbf{Steen Stiller} focused on exploratory data analysis, rule-based systems, and embedding-based baselines. He performed a comprehensive EDA, creating detailed visualizations for career trajectories and department transitions. He engineered the optimized rule-based classifier and developed the embedding-based zeroshot classification pipeline using Sentence-Transformers. Furthermore, he created a deployment application for the baseline model and authored the corresponding technical documentation for these components.
+    
+    \item \textbf{Batuhan Kalkan} led the development of deep learning architectures and transformer optimization. He implemented the transformer-based pipeline using multilingual DistilBERT and conducted extensive research into loss function engineering (e.g., Focal Loss) and oversampling strategies to mitigate class imbalance. His key contribution was the design of the hierarchical two-stage classification framework, which delivered the project's highest accuracy for department prediction.
+    
+    \item \textbf{Julien Froidefond} served as the project coordinator and lead for the classical ML pipeline, pseudo-labeling, and final evaluation. He designed the repository architecture and the central data loading modules. He developed the feature-engineering-based Random Forest models and the semi-supervised pseudo-labeling pipeline. Most importantly, he spearheaded the final model comparison and results consolidation, ensuring a rigorous evaluation across all twelve experimental setups.
+\end{itemize}
+
 \section{GenAI Usage Documentation}
 \label{sec:genai-usage}
 
