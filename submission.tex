@@ -1065,6 +1065,47 @@ Departments are determined by function-specific vocabulary (``sales,'' ``enginee
 This result challenges the common assumption that ``more complex models are always better.'' When training and test distributions differ substantially, simpler models with domain-adapted features often outperform end-to-end learned representations. Deep learning excels at extracting patterns from similar data distributions; feature engineering excels at encoding human knowledge that generalizes across distribution shifts.
 
 
+\section{Pseudo-Labeling (Semi-Supervised Learning)}
+\label{sec:pseudo-labeling}
+\subsection{Motivation}
+\label{subsec:pseudo-motivation}
+Standard supervised learning is limited by the availability of labeled training data. In our setting, we have access to high-quality labels from the lookup tables but face a domain gap when applying these models to LinkedIn CVs. However, we also possess a large dataset of unannotated LinkedIn profiles (\texttt{linkedin-cvs-not-annotated.json}) that significantly overlaps in distribution with our target evaluation set.
+Pseudo-labeling is a semi-supervised technique that leverages this unlabeled data. The core idea is to train a model on the labeled data, use it to predict labels for the unlabeled data (generating "pseudo-labels"), and then retrain the model on the combined dataset. This approach hypothesizes that the model can bootstrap its own performance by learning from confident predictions on the target distribution, potentially bridging the domain gap by exposing the model to the specific linguistic patterns of LinkedIn profiles.
+\subsection{Methodology}
+\label{subsec:pseudo-methodology}
+Our pseudo-labeling pipeline consists of three phases:
+\paragraph{Phase 1: Initial Training}
+We first trained a baseline DistilBERT model on the clean lookup table data (Department and Seniority tasks separately) to establish a teacher model.
+\paragraph{Phase 2: Label Generation and Filtering}
+We applied this teacher model to the 390 unannotated LinkedIn CVs. To avoid reinforcing errors, we filtered the predictions based on confidence scores. Only predictions where the model assigned a probability greater than 0.9 were retained as high-quality pseudo-labels. This threshold ensures that we only incorporate samples where the model is highly certain, reducing the risk of "confirmation bias" where the model learns its own mistakes.
+\paragraph{Phase 3: Retraining}
+Finally, we combined the original labeled lookup table data with the newly generated pseudo-labeled examples and retrained the DistilBERT model from scratch. This expanded training set aims to combine the reliability of the ground truth labels with the distributional relevance of the LinkedIn data.
+\subsection{Performance Results}
+\label{subsec:pseudo-results}
+The pseudo-labeling approach was evaluated on the annotated hold-out set:
+\begin{table}[h]
+\centering
+\caption{Pseudo-Labeling performance}
+\label{tab:pseudo-performance}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+\textbf{Task} & \textbf{Accuracy} & \textbf{F1 (macro)} \\
+\midrule
+Department & 0.444 & 0.438 \\
+Seniority & 0.483 & 0.437 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\textbf{Key Observations:}
+\begin{itemize}
+    \item \textbf{Moderate Department Improvement}: The department accuracy of 44.4\% and F1 of 0.438 improves over the baseline DistilBERT (F1=0.343), suggesting that exposing the model to real CV patterns helps it handle the domain shift better than training on lookup tables alone.
+    \item \textbf{Lower Seniority Performance}: For seniority, the approach achieved 48.3\% accuracy, which is significantly lower than the baseline DistilBERT (70.5\%). This indicates that the strict confidence filtering might have excluded valuable difficult examples, or that the model's confidence on seniority was not well-calibrated on the target domain.
+\end{itemize}
+\subsection{Conclusion}
+\label{subsec:pseudo-conclusion}
+Pseudo-labeling yielded mixed results. While it provided a clear benefit for department classification by bridging the domain gap, it degraded performance for seniority. This divergent behavior highlights a key risk of semi-supervised learning: if the initial model's calibration is poor on out-of-distribution data (as seen with the seniority domain gap), the high-confidence filter may select incorrect labels or bias the distribution, leading to worse final performance. However, for tasks where the initial model has a reasonable grasp of the target domain (like departments), pseudo-labeling offers a viable path to improved generalization without manual annotation.
+
 \section{DistilBERT Fine-Tuning Approaches}
 \label{sec:distilbert-models}
 \subsection{Motivation}
@@ -1261,6 +1302,7 @@ All models were evaluated on the annotated LinkedIn CVs (623 active positions), 
 Rule-Based & 0.302 & 0.429 & 0.427 & 0.365 \\
 Embedding Zero-Shot & 0.247 & 0.287 & 0.364 & 0.238 \\
 Hybrid (Rule+Embed) & 0.479 & 0.365 & 0.465 & 0.434 \\
+Pseudo-Labeling & 0.444 & 0.438 & 0.483 & 0.437 \\
 \midrule
 \multicolumn{5}{l}{\textit{Classical ML}} \\
 TF-IDF + LogReg & 0.268 & 0.393 & 0.474 & 0.430 \\
@@ -1325,7 +1367,7 @@ Feature Engineering & 0.850 & 0.610 & -24.0\% \\
 \end{tabular}
 \end{table}
 
-Feature Engineering shows the smallest domain shift gap, explaining its superior real-world performance despite lower in-distribution accuracy.
+Feature Engineering shows the smallest domain shift gap, explaining its superior real-world performance despite lower in-distribution accuracy, indicating that it overfits the least. 
 
 
 
@@ -1356,6 +1398,18 @@ Conversely, DistilBERT Baseline achieves the best seniority F1 (0.616), signific
     \item \textbf{More balanced distribution}: Unlike the 55\% ``Other'' in departments, seniority classes are more evenly distributed
     \item \textbf{Simpler classification boundary}: 5 classes vs. 11 classes reduces complexity
 \end{itemize}
+
+\subsection{Final Evaluation and Metrics Interpretation}
+\label{subsec:metrics-interpretation}
+To correctly interpret the feasibility of the proposed system, stakeholders must look beyond top-line accuracy numbers.
+\paragraph{The Primacy of Macro F1}
+For department classification, \textbf{Accuracy is a misleading metric}. Due to the 55\% prevalence of the "Other" category, a trivial "dummy" classifier predicting "Other" for every input would achieve 55\% accuracy but offer zero business value.
+\begin{itemize}
+    \item A Macro F1 of 0.615 (Feature Engineering) implies that the model successfully distinguishes between specific departments (like Sales, IT, HR) with balanced precision and recall, rather than just maximizing the majority class.
+    \item This metric confirms that the system is practically useful for routing candidates to specific departmental pools, whereas a high-accuracy model (like Two-Stage DistilBERT, 68.5\% acc, 0.535 F1) might achieve its score by conservatively over-predicting "Other".
+\end{itemize}
+\paragraph{Seniority Reliability}
+For seniority, the alignment between Accuracy (70.5\%) and Macro F1 (0.616) provides strong evidence of reliability. Since the class distribution is less skewed, high performance on both metrics confirms that the model is not biased toward a single level (e.g., just predicting "Professional"). A predictive accuracy of 70\% on 5 classes is approximately 3.5x better than random chance, indicating a strong signal for automated candidate screening.
 
 \subsection{The DistilBERT Iteration Journey}
 \label{subsec:distilbert-journey}
@@ -1407,7 +1461,29 @@ Several preprocessing decisions significantly impacted performance:
     \item \textbf{LinkedIn-specific formatting}: Models may not transfer to other resume formats
 \end{itemize}
 
-
+\section{Recommended System Design}
+\label{sec:system-design}
+Based on the extensive empirical evaluation and error analysis presented in this report, we propose a hybrid system architecture for the final production deployment. This design selects the optimal model for each task by balancing predictive performance, robustness to domain shift, and operational constraints.
+\paragraph{Department Prediction: Feature Engineering (Random Forest)}
+We clearly recommend the **Feature Engineering** approach (Section \ref{sec:feature-engineering}) for department classification.
+\begin{itemize}
+    \item \textbf{Justification}: This model achieved the highest Macro F1 score (0.615), outperforming all transformer-based approaches (best DistilBERT F1: 0.535). Crucially, it demonstrated the strongest robustness to domain shift, with only a 24\% performance drop from training to real-world data (compared to $\approx$70\% for text-based models).
+    \item \textbf{Operational}: As a Random Forest model, it offers negligible inference latency ($<$10ms) and does not require GPU acceleration, making it highly cost-effective for high-throughput processing.
+    \item \textbf{Integration}: We recommend using the Rule-Based classifier (Section \ref{sec:rule-based-baseline}) as a pre-filter. If the Rule-Based system finds an exact match in the lookup table, that label is trusted (accuracy near 100\% for known titles). If no match is found, the request is routed to the Feature Engineering model.
+\end{itemize}
+\paragraph{Seniority Prediction: DistilBERT Baseline}
+We recommend the **DistilBERT Baseline** (Section \ref{sec:distilbert-models}) for seniority classification.
+\begin{itemize}
+    \item \textbf{Justification}: This model dominates all other approaches with an accuracy of 70.5\% and Macro F1 of 0.616. Unlike department classification, seniority relies on explicit lexical markers ("Senior", "Lead", "Director") that the transformer attention mechanism captures effectively without complex manual feature extraction.
+    \item \textbf{Operational}: While computationally more expensive than feature engineering, the superior performance (+17 percentage points in F1 over Feature Engineering) justifies the resource cost. For latency-sensitive applications, model distillation or quantization could be applied.
+    \item \textbf{Fallbacks}: The "Professional" fallback used in the Rule-Based approach should \textbf{not} be used in the final system, as it relies on data leakage (see Section \ref{subsec:fallback-dilemma}). DistilBERT provides a valid probability distribution across all classes, eliminating the need for arbitrary defaults.
+\end{itemize}
+\paragraph{Approaches Not Recommended}
+We explicitly advise against deploying:
+\begin{itemize}
+    \item \textbf{Zero-Shot Embeddings}: With performance below the naive baseline, general-purpose embeddings lack the domain specificity required for this task.
+    \item \textbf{Pure System-Wide Transformers}: Using DistilBERT for \textit{both} tasks is suboptimal. It adds unnecessary compute cost for the department task where it performs worse than the simpler Random Forest model.
+\end{itemize}
 
 \section{Conclusion and Summary of Key Findings}
 \label{sec:conclusion}
