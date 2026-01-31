@@ -57,10 +57,9 @@ These approaches train on **lookup tables** and evaluate on **annotated LinkedIn
 
 These approaches train on **annotated CV data** (different setup than zero-shot).
 
-### 06_feature_engineering.ipynb
-**Approach 5**: Feature engineering + Random Forest
-- Hand-crafted career features + TF-IDF
-- **⭐ Best Department F1 (0.615)**
+| `06_feature_engineering.ipynb` | Feature Engineering + Career Features (Improved)
+| Feature trajectory + Random Forest
+| **⭐ Best Seniority F1 (0.437)**
 - **Training**: Lookup tables + pseudo-labeled CVs
 - Feature importance analysis
 
@@ -79,8 +78,9 @@ These approaches train on **annotated CV data** (different setup than zero-shot)
 - **Oversampling**: Minority class duplication
 - **Combined**: Weights + oversampling
 - **Two-Stage v2**: Hierarchical (Other vs NotOther → specific) with FocalLoss
-- **⭐ Best Seniority F1 (0.616)**: Baseline
-- **⭐ Best Department Accuracy (68.5%)**: Two-Stage
+- **⭐ Best Seniority Accuracy (47.3%)**: Feature Engineering
+- **⭐ Best Department Accuracy (68.1%)**: Two-Stage
+- **⭐ Best Department F1 (0.534)**: Two-Stage
 
 ---
 

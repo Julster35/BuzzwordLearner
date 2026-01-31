@@ -12,7 +12,7 @@ This machine learning project predicts:
 1. **Professional domain** (Marketing, IT, Sales, Consulting, etc.)
 2. **Seniority level** (Junior, Senior, Lead, Management, etc.)
 
-We implement **6 different approaches**, from rule-based baselines to fine-tuned transformers.
+We implement **8 different approaches**, from rule-based baselines to fine-tuned transformers.
 
 ---
 

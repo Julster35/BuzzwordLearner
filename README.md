@@ -51,8 +51,13 @@ pip install -r requirements.txt
 | Approach | Description | File |
 |----------|-------------|------|
 | **1. Rule-based** | Baseline string matching against label lists | `src/models/rule_based.py` |
-| **2. Embedding-based** | Zero-shot classification with sentence embeddings | `src/models/embedding_classifier.py` |
-| **5. TF-IDF + ML** | Traditional ML with TF-IDF features | `src/models/feature_ml.py` |
+| **2. Embedding-based**| Zero-shot classification with sentence embeddings | `src/models/embedding_classifier.py` |
+| **3. Transformer (Zero-Shot)** | DistilBERT fine-tuned on lookup tables | `src/models/transformer_classifier.py` |
+| **4. Pseudo-Labeling** | Semi-supervised learning using silver labels | `src/data/pseudo_labeler.py` |
+| **5. Feature Engineering** | Career trajectory features + Random Forest | `src/models/feature_ml.py` |
+| **6. TF-IDF + ML** | Traditional ML with TF-IDF features | `src/models/feature_ml.py` |
+| **7. Lexicon Supervised**| Domain-specific lexicon with supervised learning | `07_lexicon_supervised_baseline.ipynb` |
+| **8. Two-Stage DistilBERT**| Hierarchical classification for class imbalance | `08_distilbert_comparison.ipynb` |
 
 ## Quick Start
 
@@ -101,9 +106,9 @@ plot_confusion_matrix(df['domain'].tolist(), predictions, title="Domain Predicti
 | `03.5_rule_based+embedding.ipynb` | Hybrid | Rule-based with embedding fallback |
 | `04_transformer_on_lookups.ipynb` | Transformer | DistilBERT fine-tuned on lookup tables |
 | `05_pseudo_labeling.ipynb` | Pseudo-Label | High-confidence pseudo-labels + transformer |
-| `06_feature_engineering.ipynb` | Feature Eng | Career features + Random Forest (**Best Dept F1**) |
+| `06_feature_engineering.ipynb` | Feature Eng | Career features + Random Forest (**Best Seniority F1: 0.44**) |
 | `07_lexicon_supervised_baseline.ipynb` | TF-IDF LogReg | Lexicon-supervised interpretable baseline |
-| `08_distilbert_comparison.ipynb` | DistilBERT | 5 approaches: Baseline, Balancing, Oversampling, Combined, Two-Stage |
+| `08_distilbert_comparison.ipynb` | DistilBERT | 5 approaches: Baseline, Balancing, Oversampling, Combined, **Two-Stage (Best Dept Acc: 68%)** |
 | `99_final_comparison.ipynb` | Comparison | Load all results, visualize, rank approaches |
 
 ## Documentation
