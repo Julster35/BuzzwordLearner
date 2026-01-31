@@ -145,7 +145,7 @@
     \JMUTitle
       {Predicting Career Domain and Seniority from LinkedIn Profiles}        % Title of the paper
       {Group 10: Julien Froidefond, Batuhan Kalkan, Steen Stiller}           % First and last name of the author
-      {Carry Potter, Törke, 2785417}
+      {Carry Potter, 2768939, 2785417}
       
       {Capstone Project} % Type of the work
       {W\"urzburg}                           % Place
@@ -160,38 +160,6 @@
 \pagenumbering{Roman} 
     \setcounter{page}{1}
 
-\addcontentsline{toc}{section}{List of Figures}%
-\markboth{List of Figures}{List of Figures}
-\listoffigures
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Tabellenverzeichnis   %%
-%%  wirt automatisch erstellt  %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\addcontentsline{toc}{section}{List of Tables}%
-\markboth{List of tables}{List of Tables}
-\listoftables
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Abkürzungsverzeichnis %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section*{List of Abbreviations}
-\addcontentsline{toc}{section}{List of Abbreviations}%
-\markboth{List of Abbreviations}{List of Abbreviations}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Abkürzungen %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{acronym}[ECU]
-\acro{cv}[CV]{Curriculum Vitae}
-\acro{ai}[AI]{Artificial Intelligence}
-\acro{eda}[EDA]{Exploratory Data Analysis}
-\end{acronym}
-
-\newpage
-\tableofcontents
-
-
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Short Summary   %%
@@ -199,8 +167,31 @@
 \lhead{Abstract}
 \section*{Abstract}
 
-In this capstone project, we develop an end-to-end machine learning pipeline that predicts a person’s current professional domain and seniority level using only information contained in their LinkedIn-style CV. The target labels refer to the individual’s current job, identified by an “ACTIVE” status in the profile data. Using a hand-labeled dataset provided by SnapAddy, we investigate how signals from semi-structured career histories (e.g., job titles, descriptions, skills, and timelines) can be transformed into reliable features for supervised prediction. We implement and compare multiple approaches, including a rule-based baseline using curated label lists and more flexible NLP methods such as embedding-based similarity matching and modern text representations. Our evaluation focuses on predictive performance and robustness to noisy, incomplete, and heterogeneous profile formats. The resulting system provides a practical framework for automated career attribute inference and highlights the trade-offs between interpretable heuristics and data-driven language models for real-world CV understanding.
+In this capstone project, we develop an end-to-end machine learning pipeline that predicts a person’s current professional domain and seniority level using only information contained in their LinkedIn-style Curriculum Vitae (CV). The target labels refer to the individual’s current job, identified by an “ACTIVE” status in the profile data. Using a hand-labeled dataset provided by SnapAddy, we investigate how signals from semi-structured career histories (e.g., job titles, descriptions, skills, and timelines) can be transformed into reliable features for supervised prediction. We implement and compare multiple approaches, including a rule-based baseline using curated label lists and more flexible NLP methods such as embedding-based similarity matching and modern text representations. Our evaluation focuses on predictive performance and robustness to noisy, incomplete, and heterogeneous profile formats. The resulting system provides a practical framework for automated career attribute inference and highlights the trade-offs between interpretable heuristics and data-driven language models for real-world CV understanding.
+\clearpage
+\lhead{\nouppercase{\leftmark}}
 
+\newpage
+\tableofcontents
+
+\clearpage
+\pagestyle{plain} % oder empty, wenn auch keine Fußzeile/Seitenzahl
+
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+
+\section*{List of Abbreviations}
+\addcontentsline{toc}{section}{List of Abbreviations}
+\begin{acronym}[ECU]
+\acro{cv}[CV]{Curriculum Vitae}
+\acro{eda}[EDA]{Exploratory Data Analysis}
+\end{acronym}
+
+\pagestyle{fancy} % zurück zum normalen Stil
+\setlength{\parskip}{0.5em}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Settings  %%
@@ -214,7 +205,7 @@ In this capstone project, we develop an end-to-end machine learning pipeline tha
 %%  Main Section  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-In this capstone project, we develop an end-to-end machine learning pipeline to predict two key attributes of an individual's \textit{current} job from their LinkedIn CV data: (i) the professional domain (\textit{department}) and (ii) the seniority level. The prediction target is defined exclusively by the position marked as \texttt{ACTIVE} in each profile, and model performance is evaluated on a hand-labeled dataset provided by SnapAddy.
+In this capstone project, we develop an machine learning pipeline to predict two key attributes of an individual's \textit{current} job from their LinkedIn CV data: (i) the professional domain (\textit{department}) and (ii) the seniority level. The classification and evaluated is done on a hand-labeled dataset provided by SnapAddy.
 
 Our work covers the full workflow from exploratory data analysis and data preprocessing to model development, comparison, and evaluation. We implement at least one transparent baseline approach (rule-based matching) and at least one additional learning-based method, and we document assumptions, limitations, and potential failure cases. The final deliverables include a reproducible code base (notebook-based pipeline), an evaluation of the proposed approaches on the labeled dataset, and written documentation suitable for a final report and presentation.
 
@@ -224,7 +215,7 @@ The task is to predict two categorical target variables --- \textit{department} 
 The main challenges arise from heterogeneous and noisy text data, including inconsistent job titles, varying levels of detail, missing descriptions, and occasional multilingual entries. In addition, both targets are context-dependent: domain boundaries can be fuzzy due to overlapping terminology, and seniority indicators may differ strongly across industries and company sizes. The objective is to build a robust and reproducible pipeline that generalizes well to unseen profiles while clearly documenting assumptions, limitations, and potential failure cases.
 
 
-\section{Datasets Description}
+\subsection{Datasets Description}
 
 Four datasets are provided that serve different purposes within the machine learning pipeline.
 The \texttt{linkedin-cvs-annotated.json} dataset contains structured LinkedIn CVs, with individual career entries annotated with the target variables \textit{department} (professional domain) and \textit{seniority}. Importantly, this annotated dataset is used exclusively for evaluation purposes to assess model performance. It is not used for training to avoid overfitting and to provide an unbiased measure of model generalization.
@@ -233,11 +224,10 @@ In addition to these two JSON datasets, two CSV files provide auxiliary resource
 The \texttt{department-v2.csv} file comprises a lexicon that maps job-related textual expressions to department labels, while the \texttt{seniority-v2.csv} file analogously maps textual patterns to seniority levels.
 These two lexica form the primary training data for most approaches. They can be used to construct rule-based classifiers, train supervised models, or support weakly supervised labeling strategies.
 
-
-\section{Exploratory Data Analysis (EDA)}
+\section{Exploratory Data Analysis}
 \label{sec:eda}
 
-The exploratory data analysis serves to systematically investigate the BuzzwordLearner dataset for predicting career domains and seniority levels from LinkedIn profiles. The goal is to develop a comprehensive understanding of the data structure, distributions, and potential challenges for modeling.
+The exploratory data analysis (EDA) serves to systematically investigate the BuzzwordLearner data for predicting career domains and seniority levels from LinkedIn profiles. The goal is to develop a comprehensive understanding of the data structure, distributions, and potential challenges for modeling.
 
 \subsection{Dataset Overview}
 \label{subsec:dataset-overview}
@@ -251,23 +241,161 @@ The dataset consists of four main components:
 \end{itemize}
 Each resume is structured as a list of positions, where each position contains the following attributes: \texttt{organization}, \texttt{position} (job title), \texttt{startDate}, \texttt{endDate}, \texttt{status} (ACTIVE/INACTIVE/UNKNOWN), as well as the target variables \texttt{department} and \texttt{seniority} (only in annotated data).
 
-\subsection{Career History Patterns}
+\subsection{Annotated Dataset Analysis}
+
+The annotated dataset comprises 609 LinkedIn resumes with a total of 2,638 position entries. Data quality is high: there are no missing values except for a negligible number in start and end dates. Additionally, no duplicate rows were identified in the dataset.
+
+\subsubsection{Career History Patterns}
 \label{subsec:career-patterns}
 The analysis of career trajectories reveals the following characteristics:
 \begin{itemize}
     \item \textbf{Positions per CV}: On average, resumes contain 4.5 positions (median: 4), with a range from 1 to 20 positions
     \item \textbf{Active positions}: 623 active positions from the annotated CVs form the evaluation dataset
-    \item \textbf{Multiple employments}: Approx. 8\% of individuals have multiple active positions simultaneously
 \end{itemize}
 
-The focus on active positions (status = ACTIVE) aligns with the task of classifying the current professional situation.
+As shown in Figure~\ref{fig:positions_per_cv}, most CVs contain only a small number of positions, while a few individuals exhibit substantially longer career histories.
 
-\subsection{Department Distribution}
+\begin{figure}[H]
+    \centering
+    \caption{Distribution of the number of positions per CV}
+    \includegraphics[width=0.75\textwidth]{figures/num_pos_cv.png}
+    \label{fig:positions_per_cv}
+\end{figure}
+
+The average duration of a position is 28.3 months. A particularly striking pattern is observed in Figure~\ref{fig:duration_sequence}. The first position: with an average of only 4 months, it is significantly shorter than all subsequent positions. This suggests that first entries are often side jobs, internships, or temporary entry-level positions. Therefore, there is a high probability that the department or seniority level changes after this first position.
+
+\begin{figure}[H]
+    \centering
+    \caption{Average position duration by career sequence}
+    \includegraphics[width=0.75\textwidth]{figures/avg_duration_by_career_sequence.png}
+    \label{fig:duration_sequence}
+\end{figure}
+
+In addition to the number of positions per CV, the dataset also provides insights into the average duration of employment across different departments and seniority levels.
+
+As illustrated in Figure~\ref{fig:avg_position_duration_dept}, the average position duration varies notably across departments. Roles in Purchasing, Human Resources, and Customer Support tend to exhibit the longest average employment periods, exceeding the overall mean. In contrast, Administrative and Consulting positions show substantially shorter durations, indicating higher turnover or more temporary career paths.
+
+\begin{figure}[H]
+    \centering
+    \caption{Average department duration (months)}
+    \includegraphics[width=0.75\textwidth]{figures/avg_duration_dept.png}
+    \label{fig:avg_position_duration_dept}
+\end{figure}
+
+In addition to that Figure~\ref{fig:avg_position_duration_sen}. Director, Senior, and Lead positions are associated with significantly longer average tenures, reflecting more stable career stages. Conversely, Junior roles display the shortest duration, which is consistent with early-career mobility and transitional job phases. Overall, these findings highlight that both departmental context and seniority level influence career stability, which may provide useful signals for downstream classification tasks.
+
+\begin{figure}[H]
+    \centering
+    \caption{Average seniority duration (months).}
+    \includegraphics[width=0.7\textwidth]{figures/avg_duration_seniority.png}
+    \label{fig:avg_position_duration_sen}
+\end{figure}
+
+Seniority tends to increase over the course of a career, as can be observed in Figure~\ref{fig:seniority_progression}. This corresponds to the expected career development, where candidates achieve higher positions with increasing professional experience.
+
+\begin{figure}[H]
+    \centering
+    \caption{Seniority development over career}
+    \includegraphics[width=1\textwidth]{figures/seniority_progression_analysis.png}
+    \label{fig:seniority_progression}
+\end{figure}
+
+The analysis of department stability shows the following distribution:
+\begin{itemize}
+    \item 25\% of resumes show no department change
+    \item 34.8\% have one change
+    \item 26\% have two changes
+    \item Only 14.1\% show three or more department changes
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \caption{Department changes across career}
+    \includegraphics[width=0.70\textwidth]{figures/department_stability.png}
+    \label{fig:dept_stability}
+\end{figure}
+
+Analysis of the 15 most common department transitions reveals that they either lead from or to the "Other" category. Therefore, no clear patterns in department changes can be identified, suggesting heterogeneous career development across different functional areas.
+
+\begin{figure}[h]
+    \centering
+    \caption{Most frequent department transitions}
+    \includegraphics[width=1 \textwidth]{figures/department_transitions.png}
+    \label{fig:department_transitions.png}
+\end{figure}
+
+\subsubsection{Text Characteristics of Position Titles}
+\label{subsec:text-characteristics}
+
+Position titles in the dataset are generally short, with a median length of 32 characters and only 4 words, as shown in Figure~\ref{fig:title_length_distribution}. This limited context requires models that can extract meaningful information from few tokens.
+
+\begin{figure}[H]
+    \centering
+    \caption{Distribution of position title lengths in characters and words}
+    \includegraphics[width=1\textwidth]{figures/title_length_distribution.png}
+    \label{fig:title_length_distribution}
+\end{figure}
+
+\subsubsection{Multilinguality}
+\label{subsec:multilingualism}
+
+The dataset contains multiple languages. Language detection is challenging due to the short text lengths of position titles, which often contain only 2-5 words. This makes clear language separation difficult, as titles may mix languages or lack sufficient context for reliable classification. Despite these challenges, addressing multilinguality is crucial for model performance. Approaches require multilingual embeddings (e.g., \texttt{paraphrase-multilingual-MiniLM-L12-v2}) and language-agnostic features to ensure robust predictions across all languages.
+
+A simple heuristic method was applied to detect the language of position titles. The most commonly native languages in Europe are Russian, German, French, English, and Turkish. Since the dataset contains no Cyrillic characters, Russian was excluded. The remaining languages were broadly categorized.
+
+\begin{table}[H]
+\centering
+\caption{Detected languages in position titles}
+\footnotesize
+\begin{tabular}{lrr}
+\toprule
+\textbf{Language} & \textbf{Count} & \textbf{Percent (\%)} \\
+\midrule 
+English & 1150 & 43.59 \\
+Other & 600 & 22.74 \\
+German & 434 & 16.45 \\
+French & 387 & 14.67 \\
+Turkish & 43 & 1.66 \\
+
+\bottomrule
+\end{tabular}
+\label{tab:languages}
+\end{table}
+
+English dominates the dataset, followed by Other. This multilingualism is relevant for model development, as a multilingual approach may be necessary to ensure robust classification across language boundaries. The results do not aim to provide precise language identification; rather, they highlight the importance of multilingual considerations, as reliable classification in this setting can only be achieved using approaches that operate in a language-agnostic manner.
+
+\subsubsection{Analysis of Active Positions}
+
+After filtering to only active positions (current jobs), the following picture emerges:
+
+\begin{table}[H]
+\centering
+\caption{Distribution of active positions per resume}
+\footnotesize
+\begin{tabular}{lrr}
+\toprule
+\textbf{Active Positions} & \textbf{Number of CVs} & \textbf{Percent (\%)} \\
+\midrule
+1 & 484 & 79.48 \\
+2 & 99 & 16.26 \\
+3 & 20 & 3.28 \\
+4 & 4 & 0.66 \\
+5 & 2 & 0.33 \\
+\bottomrule
+\end{tabular}
+\label{tab:active_positions}
+\end{table}
+
+The vast majority (79.48\%) of candidates have only one active job, while 16.32\% hold two concurrent positions. This could indicate side jobs, consulting activities, or part-time work.
+
+\subsubsection{Department Distribution}
 \label{subsec:department-distribution}
 
 The analysis of department labels reveals a significant \textbf{class imbalance} in the active positions:
-\begin{table}[h]
+\begin{table}[H]
 \centering
+\caption{Distribution of departments in active positions}
+\footnotesize
 \begin{tabular}{lr}
 \toprule
 \textbf{Department} & \textbf{Proportion (\%)} \\
@@ -285,89 +413,138 @@ Administrative & 2.2 \\
 Customer Support & 1.0 \\
 \bottomrule
 \end{tabular}
-\caption{Distribution of departments in active positions}
 \label{tab:department-distribution}
 \end{table}
 
-\textbf{Modeling implication}: The dominance of "Other" (55\%) as a catch-all category requires class weighting or resampling techniques to avoid bias toward the majority class.
+\textbf{Modeling implication}: The dominance of "Other" as a catch-all category requires class weighting or resampling techniques to avoid bias toward the majority class.
 
-\subsection{Seniority Distribution}
+\subsubsection{Seniority Distribution}
 \label{subsec:seniority-distribution}
 
-In contrast to departments, the seniority distribution shows a more balanced structure:
-\begin{table}[h]
+The dataset contains 6 unique seniority labels with the distribution shown in Table \ref{tab:seniority-distribution}:
+
+\begin{table}[H]
 \centering
+\caption{Distribution of seniority levels}
+\footnotesize
 \begin{tabular}{lr}
 \toprule
 \textbf{Seniority Level} & \textbf{Proportion (\%)} \\
 \midrule
-Professional & 34.7 \\
-Management & 30.8 \\
-Lead & 20.1 \\
-Senior & 7.1 \\
-Director & 5.5 \\
 Junior & 1.9 \\
+Professional & 34.7 \\
+Senior & 7.1 \\
+Lead & 20.1 \\
+Management & 30.8 \\
+Director & 5.5 \\
 \bottomrule
 \end{tabular}
-\caption{Distribution of seniority levels in the annotated dataset}
 \label{tab:seniority-distribution}
 \end{table}
 
-All seniority levels are represented, with Professional and Management positions expectedly dominating.
+The seniority distribution shows a clear dominance of the \textit{Professional} (34.7\%) and \textit{Management} (30.8\%) levels. Lead positions are also well represented at 20.1\%, while Junior positions are significantly underrepresented at only 1.9\%.
 
-\subsection{Text Characteristics of Position Titles}
-\label{subsec:text-characteristics}
+\subsection{Department Label Dictionary Analysis}
 
-Position titles are compact: average 35 characters (median: 32) and 3.5 words (median: 3), mostly 2--5 words. This limited context poses challenges for language models and requires approaches that effectively handle few but informative tokens.
+The department lookup table contains 10,145 unique entries in various languages, mapping job titles to 11 unique department labels. This comprehensive dictionary serves as the foundation for department classification. The distribution of department labels in the lookup table is shown in Table \ref{tab:dept_lookup_distribution}.
 
-\subsection{Multilinguality}
-\label{subsec:multilingualism}
+\begin{table}[H]
+\centering
+\caption{Distribution of department labels in lookup Table}
+\footnotesize
+\begin{tabular}{lrr}
+\toprule
+\textbf{Department} & \textbf{Count} & \textbf{Percent (\%)} \\
+\midrule
+Marketing & 4,295 & 42.34 \\
+Sales & 3,328 & 32.80 \\
+Information Technology & 1,305 & 12.86 \\
+Business Development & 620 & 6.11 \\
+Project Management & 201 & 1.98 \\
+Consulting & 167 & 1.65 \\
+Administrative & 83 & 0.82 \\
+Other & 42 & 0.41 \\
+Purchasing & 40 & 0.39 \\
+Customer Support & 33 & 0.33 \\
+Human Resources & 31 & 0.31 \\
+\bottomrule
+\end{tabular}
+\label{tab:dept_lookup_distribution}
+\end{table}
 
-The dataset contains multiple languages (English $\sim$60\%, German $\sim$25\%, others $\sim$15\%). Language detection is challenging due to the short text lengths of position titles, which often contain only 2--5 words. This makes clear language separation difficult, as titles may mix languages or lack sufficient context for reliable classification. Despite these challenges, addressing multilinguality is crucial for model performance. The approach requires multilingual embeddings (e.g., \texttt{paraphrase-multilingual-MiniLM-L12-v2}) and language-agnostic features to ensure robust predictions across all languages.
+The lookup table shows a different distribution than the annotated dataset, with \textit{Marketing} (42.34\%) and \textit{Sales} (32.80\%) dominating, followed by \textit{Information Technology} (12.86\%). Notably, \textit{Other} represents only 0.41\% in the lookup table, contrasting sharply with its 55.2\% prevalence in the annotated dataset. The multilingual nature of the dictionary enables cross-language classification.
 
-\subsection{Label Dictionary Analysis}
-\label{subsec:label-dictionaries}
+\subsection{Seniority Label Dictionary Analysis}
 
-The provided dictionaries contain 10,000+ department and 9,000+ seniority mappings with text characteristics similar to the actual position titles (avg. 28--30 characters). These enable rule-based baseline approaches and can serve as additional features for supervised models.
+The seniority lookup table comprises 9,428 entries. In contrast to the annotated dataset, this lookup table contains only 5 unique labels. Notably, the \textit{Professional} label is completely absent from the lookup table, representing a significant difference in label definitions between the two data sources. The distribution is presented in Table \ref{tab:sen_lookup_distribution}.
 
+\begin{table}[H]
+\centering
+\caption{Distribution of Seniority Labels in Lookup Table}
+\footnotesize
+\begin{tabular}{lrr}
+\toprule
+\textbf{Seniority Level} & \textbf{Count} & \textbf{Percent (\%)} \\
+\midrule
+Junior & 409 & 4.34 \\
+Senior & 3,733 & 39.59 \\
+Lead & 3,546 & 37.61 \\
+Management & 756 & 8.02 \\
+Director & 984 & 10.44 \\
+\bottomrule
+\end{tabular}
+\label{tab:sen_lookup_distribution}
+\end{table}
+
+The absence of the \textit{Professional} level in the lookup table, despite its prevalence (34.7\%) in the annotated dataset, presents a challenge for model development.
+
+\subsection{Label Distribution Comparison}
+
+The comparison between lookup table and annotated dataset distributions reveals important insights for model training. Figure \ref{fig:dept_comparison} illustrates the department label distributions across both sources.
+
+\begin{figure}[H]
+    \centering
+    \caption{Department label distribution: Lookup Table vs. Annotated Dataset}
+    \includegraphics[width=0.95\textwidth]{figures/dept_distribution_comparison.png}
+    \label{fig:dept_comparison}
+\end{figure}
+
+While the overall patterns are similar, notable differences exist in the relative proportions of certain departments. The Other category remains consistently high in both sources, indicating a substantial number of positions that do not fit neatly into predefined categories. In addition, the lookup table shows an overrepresentation of Marketing and Sales, and a major mismatch is observed for the Other label: while it is almost absent in the annotated dataset, it accounts for 55.2\% of all active positions, highlighting a substantial distribution shift between the annotation source and the data encountered in practice.
+
+Figure \ref{fig:sen_comparison} highlights the critical difference in seniority distributions. The complete absence of the \textit{Professional} label in the lookup table, combined with the significantly higher proportion of \textit{Senior} positions (29.14\% vs. 7.1\%), suggests that positions annotated as \textit{Professional} in the dataset might correspond to \textit{Senior} or other categories in the lookup table. Additionally, the unequal distribution across labels introduces class imbalance challenges that must be addressed in model training through techniques such as weighted loss functions or oversampling strategies.
+
+\begin{figure}[H]
+    \centering
+    \caption{Seniority label distribution: Lookup Table vs. Annotated Dataset}
+    \includegraphics[width=0.95\textwidth]{figures/seniority_distribution_comparison.png}
+    \label{fig:sen_comparison}
+\end{figure}
+
+\subsection{Unannotated Dataset Analysis}
+
+The unannotated dataset consists of 390 LinkedIn resumes and exhibits remarkably similar characteristics to the annotated dataset. The distribution of position statuses (active, inactive, and unknown) closely mirrors that of the annotated data, suggesting consistent data collection practices across both datasets.
+
+Key similarities include:
+\begin{itemize}
+    \item \textbf{Number of positions per CV:} The unannotated dataset shows a comparable distribution of position counts, with most resumes containing between 2 and 7 positions.
+    \item \textbf{Title length:} Both character count and word count in position titles are consistent across annotated and unannotated datasets.
+    \item \textbf{Language distribution:} The multilingual composition remains similar, with German and English as the predominant languages.
+\end{itemize}
+
+These similarities strongly suggest that models trained on the annotated dataset will generalize well to the unannotated data for inference. The primary difference lies in the absence of ground truth department and seniority labels, which are the targets for prediction. This consistency validates the representativeness of the annotated training data and supports confidence in deployment to the larger unannotated dataset.
 
 \subsection{Key Findings and Implications}
 \label{subsec:key-findings}
-Overall, the dataset exhibits several central challenges that should be considered when developing and interpreting model results. 
-The input data is highly heterogeneous, as job titles and descriptions are provided as semi-structured free text with substantial variation, including abbreviations, inconsistent formatting, and mixed languages, while semantically similar roles are not consistently standardized. 
-In addition, the distribution of the target labels is noticeably imbalanced for both \textit{department} and \textit{seniority}, and even more so for their joint combinations, which may bias the model towards majority classes. 
-Furthermore, the annotations themselves introduce uncertainty because department and seniority assignments rely on human interpretation and therefore may contain borderline cases or inconsistencies. 
-This issue is particularly relevant for seniority prediction, since job titles are not a reliable proxy for hierarchical level and can have different meanings depending on the organizational context. 
-For instance, identical titles may correspond to substantially different responsibilities in small companies compared to large enterprises, making some label assignments inherently context-dependent in the absence of additional information such as company size or industry.
-In summary, the following essential findings emerge with relevance for modeling:
-\begin{enumerate}
-    \item \textbf{Class imbalance for departments}: Requires special treatment (class weighting, SMOTE, stratified sampling)
-    
-    \item \textbf{Short text sequences}: Limit contextual information; concise representations necessary
-    
-    \item \textbf{Multilingual data}: Mandatory: Use of multilingual models or language-independent features
-    
-    \item \textbf{Available label dictionaries}: Enable training supervised models with 10,145 department and 9,428 seniority mappings
-    
-    \item \textbf{Sufficient training data volume}: CSV lexicon data provides strong foundation for supervised learning
-    
-    \item \textbf{Evaluation dataset}: 623 active positions from annotated CVs enable unbiased performance assessment
-    
-    \item \textbf{Domain shift challenge}: Models trained on clean CSV data must generalize to noisy real-world LinkedIn CVs
-\end{enumerate}
-These findings guide the choice of modeling strategies: The primary challenge is bridging the domain gap between structured lookup tables (training data) and unstructured LinkedIn profiles (evaluation data). A combination of rule-based baselines, embedding-based similarity methods, feature engineering, and fine-tuning of pre-trained transformer models appears promising.
-\subsection{Conclusion}
-The exploratory data analysis reveals that this task presents a unique learning challenge characterized by a significant domain shift between training and evaluation data. 
-Models are trained exclusively on structured CSV lookup tables containing clean, canonical job title mappings (10,145 department and 9,428 seniority entries), while performance is evaluated on noisy, real-world LinkedIn CV data (623 active positions from 609 annotated resumes). 
-This domain gap is the defining characteristic of the task and represents the primary modeling challenge.
-The textual inputs in the evaluation set are highly heterogeneous, as job titles and descriptions are provided as semi-structured free text with substantial variation in wording, formatting, and language usage. 
-Semantically similar roles are not consistently standardized, which introduces noise and sparsity into text-based representations. 
-The distribution of the target variables is noticeably imbalanced for both \textit{department} and \textit{seniority}, with a strong concentration on a small number of majority classes (particularly ``Other'' at 55\% for departments), increasing the risk of biased model predictions and reduced performance on underrepresented categories. 
-Moreover, the quality of the labels is inherently limited by their reliance on human interpretation, leading to potential inconsistencies and ambiguous assignments, particularly for seniority levels. 
-This ambiguity is further amplified by the absence of contextual information such as company size, industry, or organizational structure, meaning that identical job titles may correspond to substantially different responsibilities across organizations. 
-Taken together, these findings underline that success on this task requires models that can generalize effectively across distribution shifts, rather than simply memorizing training patterns. 
-Approaches that encode domain-invariant knowledge (such as feature engineering) may outperform end-to-end learned representations (such as transformers) that risk overfitting to the clean training distribution. 
-This distinction will prove crucial in understanding the experimental results presented in subsequent sections.
+Overall, the dataset exhibits several central challenges that must be considered when developing and interpreting model results. 
+First, the input data is highly heterogeneous: job titles and descriptions are semi-structured free text with substantial variation, including abbreviations, inconsistent formatting, and mixed languages, while semantically similar roles are not consistently standardized. 
+Second, the target labels are clearly imbalanced for both \textit{department} and \textit{seniority}, and even more strongly for their joint combinations, which can bias models towards majority classes. 
+Third, the annotations introduce uncertainty because department and seniority assignments rely on human interpretation and may contain borderline cases or inconsistencies. 
+This is particularly relevant for seniority prediction, as job titles are an imperfect proxy for hierarchical level and can vary by organizational context (e.g., the same title may imply different responsibilities in small firms versus large enterprises). 
+Finally, the setup involves a pronounced domain shift: while large CSV label dictionaries enable strong supervision, models must generalize from clean lookup-table patterns to noisy, real-world LinkedIn-style CVs.
+
+In conclusion, robust performance depends on methods that handle noisy short texts, multilinguality, and label imbalance while explicitly addressing the domain gap between structured training resources and unstructured profile data, making a combination of rule-based baselines and language-model-based representations a practical modeling direction.
+
+
 
 
 \section{Rule-Based Baseline with Optimizations}
@@ -378,7 +555,7 @@ This distinction will prove crucial in understanding the experimental results pr
 
 The rule-based classifier serves as the fundamental baseline for this project, providing a transparent and interpretable approach to classification. Given the availability of comprehensive lookup tables mapping job titles to departments and seniority levels (approximately 19,000 examples total), a natural first approach is to leverage this knowledge through pattern matching.
 
-The motivation for starting with a rule-based baseline is threefold. First, it establishes a performance floor that more complex methods must exceed to justify their additional complexity. Second, rule-based systems are inherently interpretable:  every prediction can be traced to a specific matching rule, making them valuable for understanding which features drive classification. Third, they are computationally efficient, enabling real-time inference without GPU requirements—a practical consideration for production deployment.
+The motivation for starting with a rule-based baseline is threefold. First, it establishes a performance floor that more complex methods must exceed to justify their additional complexity. Second, rule-based systems are inherently interpretable:  every prediction can be traced to a specific matching rule, making them valuable for understanding which features drive classification. Third, they are computationally efficient, enabling real-time inference without GPU requirements.
 
 \subsection{Methodology}
 \label{subsec:rule-based-methodology}
@@ -389,53 +566,32 @@ The rule-based classifier employs a hierarchical matching strategy using lookup 
     \item \textbf{Exact matching} (O(1)): Direct lookup of job title in the dictionary
     \item \textbf{Substring matching} (O(n)): Detection of dictionary entries as substrings in the job title
     \item \textbf{Keyword matching} (O(n)): Predefined keyword patterns for common job roles (e.g., "engineer" $\rightarrow$ IT, "manager" $\rightarrow$ Management)
-    \item \textbf{Fuzzy matching} (O(n·m)): Similarity-based matching using \texttt{difflib.SequenceMatcher}
+    \item \textbf{Fuzzy matching} (O(n·m)): Similarity-based matching using \textit{difflib.SequenceMatcher}
     \item \textbf{Default fallback}: Assignment of default categories when no match is found
 \end{enumerate}
 
-This ordered execution ensures optimal computational efficiency while maintaining high matching accuracy. The fuzzy matching stage is only invoked when faster methods fail, with additional length-based pre-filtering to eliminate impossible matches.
+This ordered execution ensures optimal computational efficiency while maintaining high matching accuracy.
 
 \subsubsection{Model Optimizations}
 \label{subsec:rule-based-optimizations}
 
-Several critical improvements were implemented to significantly enhance model performance:
+Several targeted optimizations were applied to substantially improve the performance of the rule-based baseline.
 
-\paragraph{Text Normalization}
-The most impactful optimization involved standardizing all text inputs through:
-\begin{itemize}
-    \item \textbf{Lowercase conversion}: Ensures case-insensitive matching ("Senior Engineer" = "senior engineer")
-    \item \textbf{Whitespace normalization}: Removes excessive spacing, tabs, and newlines
-    
-    Example: "Senior~~Software~~~Engineer" $\rightarrow$ "senior software engineer"
-\end{itemize}
+\textbf{Text Normalization:}
+All input texts were standardized using lowercase conversion and whitespace normalization, addressing inconsistent capitalization, formatting artifacts, and excessive spacing in real-world job titles.
 
-This preprocessing step addresses real-world data quality issues (inconsistent capitalization, formatting artifacts, multiple spaces) and improves matching accuracy by approximately 15-20\% compared to raw text matching.
+\textbf{Fallback Strategy:}
+When no lookup match is found, defaults are required. ``Other'' was used for department and ``Professional'' for seniority. While statistically reasonable for departments (55\% of evaluation data), this introduces a methodological issue for seniority, as ``Professional'' does not occur in the training lexicon. This trade-off between methodological purity and practical system design is discussed in Section~\ref{subsec:fallback-dilemma}.
 
-\paragraph{Removal of Output Constraints}
-Initial implementations imposed artificial limitations on prediction distributions:
-\begin{itemize}
-    \item \textbf{Department capping removal}: Early versions limited certain department predictions to avoid over-prediction. This constraint was removed to allow the model to reflect true data distributions.
-    \item \textbf{Seniority "Other" category removal}: Unlike departments, seniority levels have a fixed taxonomy (Director, Junior, Lead, Management, Professional, Senior). The "Other" category was eliminated, forcing the model to always select one of the six defined levels with "Professional" as the most reasonable fallback.
-\end{itemize}
+\textbf{Fuzzy Matching Hyperparameter Tuning:}
+The fuzzy matching threshold controls the minimum similarity required for a match (range: 0.0--1.0). A systematic evaluation was conducted to determine the optimal threshold.
 
-These changes improved recall and prevented artificial suppression of correct predictions.
-
-\paragraph{Fallback Strategy}
-When no lookup table match is found, the classifier must assign a default value. The chosen defaults were:
-\begin{itemize}
-    \item \textbf{Department}: ``Other'' (the catch-all category for unclassified roles)
-    \item \textbf{Seniority}: ``Professional'' (mid-level position, most reasonable default)
-\end{itemize}
-This fallback strategy introduces a \textbf{methodological concern}: while ``Other'' represents 55\% of the department evaluation data (making it a statistically reasonable default), ``Professional'' represents 34.7\% of the seniority evaluation data but \textit{does not exist in the training data at all}. The training lexicon contains only five seniority classes (Senior, Lead, Director, Management, Junior), making ``Professional'' a class that appears exclusively in evaluation.
-A methodologically pure approach would use the most frequent training class as the default (likely ``Senior'' or ``Management''). However, from a practical system design perspective, ``Professional'' represents the most semantically neutral fallback for ambiguous job titles. This trade-off between methodological purity and practical utility is discussed in Section~\ref{subsec:fallback-dilemma}.
-
-\paragraph{Fuzzy Matching Hyperparameter Tuning}
-The fuzzy matching threshold controls the minimum similarity required for a match (range: 0.0--1.0). A systematic evaluation was conducted to determine the optimal threshold:
 
 \begin{table}[h]
 \centering
 \caption{Fuzzy matching threshold impact on department accuracy}
 \label{tab:fuzzy-threshold}
+\footnotesize
 \begin{tabular}{ccc}
 \toprule
 \textbf{Threshold} & \textbf{Accuracy} & \textbf{Precision/Recall Trade-off} \\
@@ -452,12 +608,13 @@ The threshold of 0.8 (80\% similarity required) provided the best balance betwee
 \subsubsection{Performance Results}
 \label{subsec:rule-based-results}
 
-The optimized rule-based model was evaluated on two distinct test sets to assess both in-distribution performance and real-world generalization:
+The optimized rule-based model was evaluated on the lookup table itself and the annotated dataset to assess both in-distribution performance and real-world generalization:
 
 \begin{table}[h]
 \centering
 \caption{Rule-based baseline performance comparison}
 \label{tab:rule-based-performance}
+\footnotesize
 \begin{tabular}{lcc}
 \toprule
 \textbf{Task} & \textbf{In-Distribution (CSV)} & \textbf{Real-World (JSON)} \\
@@ -482,19 +639,12 @@ Seniority F1 (weighted) & 1.000 & 0.627 \\
     \item Significant performance gap between in-distribution (100\%) and real-world data (60-77\%) reveals the challenge of generalizing from lookup tables to natural job title variations not present in the dictionaries
 \end{itemize}
 
-\subsubsection{Error Analysis}
+\subsubsection{Error Analysis and Efficiency}
 \label{subsec:rule-based-errors}
 
-Analysis of misclassifications reveals characteristic failure modes:
+Misclassifications primarily arise from novel or creative job titles, ambiguous roles lacking contextual cues, multi-domain positions, and non-English titles not covered by the English-centric lookup tables. These failure modes motivate the use of semantic representations beyond surface-level pattern matching.
 
-\begin{itemize}
-    \item \textbf{Novel job titles}: Modern roles like "Growth Hacker", "DevOps Engineer", or "Scrum Master" are absent from lookup tables
-    \item \textbf{Ambiguous titles}: Generic titles like "Manager" or "Specialist" lack context for accurate department assignment
-    \item \textbf{Multi-domain roles}: Positions spanning multiple departments (e.g., "Sales \& Marketing Manager") create classification ambiguity
-    \item \textbf{Language variations}: International job titles or non-English terms are not covered by the English-centric lookup tables
-\end{itemize}
-
-These limitations motivate the exploration of embedding-based and transformer-based approaches capable of semantic understanding beyond exact pattern matching.
+Despite these limitations, the rule-based approach offers strong practical advantages: sub-millisecond inference time, no training requirement, and full interpretability, making it suitable for low-latency and transparent production settings.
 
 \subsubsection{Computational Efficiency}
 \label{subsec:rule-based-efficiency}
@@ -513,7 +663,7 @@ These properties make the rule-based baseline an attractive choice for productio
 
 The rule-based baseline demonstrates strong performance through optimized pattern matching, achieving 76.6\% accuracy for department and 59.8\% for seniority classification on real-world data. The approach excels in scenarios where job titles contain explicit lexical markers that appear in the lookup tables.
 
-\paragraph{Strengths.}
+\paragraph{Strengths}
 The rule-based approach performs well when:
 \begin{itemize}
     \item \textbf{Exact or near-exact matches exist}: Titles like ``Senior Software Engineer'' or ``Marketing Manager'' are classified with high confidence
@@ -522,7 +672,7 @@ The rule-based approach performs well when:
     \item \textbf{Low latency is critical}: Sub-millisecond inference time makes real-time applications feasible
 \end{itemize}
 
-\paragraph{Limitations.}
+\paragraph{Limitations}
 The approach struggles with:
 \begin{itemize}
     \item \textbf{Novel or creative job titles}: Modern roles absent from lookup tables (e.g., ``Growth Hacker'', ``DevOps Engineer'', ``Scrum Master'') cannot be matched
@@ -531,7 +681,7 @@ The approach struggles with:
     \item \textbf{Multilingual coverage}: The English-centric lookup tables underperform on non-English titles despite multilingual data in the test set
 \end{itemize}
 
-\paragraph{Why This Performance Level.}
+\paragraph{Why This Performance Level}
 The significant gap between in-distribution performance (100\% on lookup table validation) and real-world performance (60-77\%) reveals a fundamental limitation: the lookup tables, while extensive, do not capture the full diversity of job title formulations in actual LinkedIn profiles. This observation motivates the exploration of embedding-based and transformer-based approaches capable of semantic generalization beyond exact pattern matching.
 
 \subsection{Further Improvements and Investigations}
@@ -549,7 +699,7 @@ The current keyword matching relies on a manually curated set of predefined patt
 \end{itemize}
 
 \paragraph{Multilingual Support}
-The current implementation is predominantly English-centric, limiting performance on French, Spanish, and other European job titles present in the dataset (~40\% non-English content). Potential improvements include:
+The current implementation is predominantly English-centric, limiting performance on French, Spanish, and other European job titles present in the dataset (approx. 40\% non-English content). Potential improvements include:
 \begin{itemize}
     \item \textbf{Language detection}: Automatic identification of input language to apply language-specific rules
     \item \textbf{Translation normalization}: Translating non-English titles to English before matching, or maintaining multilingual lookup tables
@@ -681,6 +831,7 @@ The embedding-based model was evaluated on the same annotated LinkedIn CV datase
 \centering
 \caption{Embedding-based baseline performance}
 \label{tab:embedding-performance}
+\footnotesize
 \begin{tabular}{lcc}
 \toprule
 \textbf{Task} & \textbf{Accuracy} & \textbf{F1 (macro)} \\
@@ -784,6 +935,7 @@ The TF-IDF + Logistic Regression approach was evaluated on the annotated LinkedI
 \centering
 \caption{TF-IDF + Logistic Regression performance}
 \label{tab:tfidf-performance}
+\footnotesize
 \begin{tabular}{lcc}
 \toprule
 \textbf{Task} & \textbf{Accuracy} & \textbf{F1 (macro)} \\
@@ -871,6 +1023,7 @@ The Random Forest classifier was configured with:
 \centering
 \caption{Feature Engineering performance on real-world evaluation set}
 \label{tab:feature-eng-performance}
+\footnotesize
 \begin{tabular}{lcc}
 \toprule
 \textbf{Task} & \textbf{Accuracy} & \textbf{F1 (macro)} \\
@@ -1015,6 +1168,7 @@ The reduced learning rate for the Seniority task suggests that distinguishing se
 \centering
 \caption{DistilBERT comparison across all approaches}
 \label{tab:distilbert-comparison}
+\footnotesize
 \begin{tabular}{lcc}
 \toprule
 \textbf{Approach} & \textbf{Dept F1 (macro)} & \textbf{Sen F1 (macro)} \\
@@ -1038,7 +1192,8 @@ Overall, the oversampling approach provided the best trade-off between predictiv
 \subsection{Conclusion}
 \label{subsec:distilbert-conclusion}
 The DistilBERT experiments demonstrate that transformer models excel at seniority classification but struggle with department classification, even with sophisticated imbalance-handling techniques.
-\paragraph{Strengths.}
+
+\textbf{Strengths:}
 DistilBERT performs exceptionally well when:
 \begin{itemize}
     \item \textbf{Clear lexical markers exist}: Seniority levels have explicit keywords (``Senior'', ``Junior'', ``Lead'', ``Director'', ``VP'') that transformers recognize across contexts
@@ -1046,18 +1201,22 @@ DistilBERT performs exceptionally well when:
     \item \textbf{Multilingual support is needed}: The multilingual DistilBERT handles German, French, and Spanish titles without explicit language-specific engineering
     \item \textbf{Best seniority performance}: 0.616 F1 macro exceeds all other approaches, including feature engineering (0.443)
 \end{itemize}
-\paragraph{Limitations.}
+
+\v{Limitations:}
 The model struggles with:
 \begin{itemize}
     \item \textbf{Severe class imbalance}: Even oversampling and two-stage hierarchical approaches cannot fully compensate for the 55\% ``Other'' class dominance
     \item \textbf{Domain gap}: Despite 97\% in-distribution validation performance, real-world test performance drops to 28-68\%, revealing significant generalization challenges
     \item \textbf{Department classification}: Best department F1 is only 0.349 (oversampling) or 0.535 (two-stage with higher accuracy focus), below feature engineering's 0.615
 \end{itemize}
-\paragraph{Why This Performance Pattern.}
+
+\textbf{Why This Performance Pattern:}
 Seniority classification benefits from two factors: (1) explicit lexical markers that appear consistently across domains, and (2) reasonable class balance enabling the model to learn all classes. Department classification, by contrast, requires understanding context-dependent terminology (``Manager'' means different things in different departments) while handling extreme class imbalance—a combination that proves challenging even for state-of-the-art transformers.
-\paragraph{Key Insight.}
+
+\textbf{Key Insight:}
 The fundamental problem is not model capacity but the domain gap between training data (clean, structured CSV lookup tables) and test data (noisy, real-world LinkedIn profiles). Transformers trained on clean data overfit to the training distribution's patterns, performing poorly when the test distribution differs. This explains why feature engineering—which explicitly encodes domain-invariant knowledge—outperforms transformers for department classification despite having far fewer parameters.
-\paragraph{Practical Recommendation.}
+
+\textbf{Practical Recommendation:}
 For production systems facing similar domain shift challenges: (1) Use feature engineering for tasks requiring robust generalization across distribution changes, (2) Use transformers for tasks with consistent lexical patterns and balanced classes, (3) Consider hybrid approaches that combine both strengths.
 
 
@@ -1093,6 +1252,7 @@ All models were evaluated on the annotated LinkedIn CVs (623 active positions), 
 \centering
 \caption{Comprehensive comparison of all approaches on evaluation set}
 \label{tab:final-comparison}
+\footnotesize
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Approach} & \textbf{Dept Acc} & \textbf{Dept F1} & \textbf{Sen Acc} & \textbf{Sen F1} \\
@@ -1152,6 +1312,7 @@ The significant performance gap between in-distribution (lookup table validation
 \begin{table}[h]
 \centering
 \caption{In-distribution vs. Real-world performance gap}
+\footnotesize
 \label{tab:domain-shift}
 \begin{tabular}{lccc}
 \toprule
@@ -1237,7 +1398,7 @@ Several preprocessing decisions significantly impacted performance:
     \item \textbf{Single evaluation set}: Results may not generalize to other LinkedIn data distributions
     \item \textbf{No temporal validation}: Job title conventions evolve; models may become outdated
     \item \textbf{Limited hyperparameter search}: Computational constraints prevented exhaustive optimization
-    \item \textbf{Data leakage via informed defaults}: The rule-based approach uses ``Professional'' as the seniority fallback, a class that does not exist in the training data (0\%) but represents 34.7\% of evaluation data. Comparison of Basic (no fallback) vs. Enhanced (with fallback) versions shows this provides an unfair advantage of +15pp for seniority and +40pp for department accuracy. While practically necessary for production systems, this constitutes methodological data leakage that should be considered when comparing across approaches. Supervised models do not face this issue as they learn to predict all classes from training data. See Section~\ref{subsec:fallback-dilemma} for detailed discussion.
+    \item \textbf{Data leakage via informed defaults}: The rule-based approach uses ``Professional'' as the seniority fallback, a class that does not exist in the training data (0\%) but represents 34.7\% of evaluation data. Comparison of Basic (no fallback) vs. Enhanced (with fallback) versions shows this provides an unfair advantage of +15pp for seniority and +40pp for department accuracy.. While practically necessary for production systems, this constitutes methodological data leakage that should be considered when comparing across approaches. Supervised models do not face this issue as they learn to predict all classes from training data. See Section~\ref{subsec:fallback-dilemma} for detailed discussion.
 \end{itemize}
 
 \paragraph{External Validity}
@@ -1369,6 +1530,6 @@ All code, notebooks, and documentation are available in the project repository:
 %% Affidavit must be adapted 
 %% in declaration.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{declaration.tex}
+%\input{declaration.tex}
 
 \end{document}
