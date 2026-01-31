@@ -1410,11 +1410,11 @@ wie könnte man die ergebnisse bei 08_BagOfWords.ipynb noch verbessern ?
 ```
 
 ```
-Kannst du das bitte einbaue
+Kannst du das bitte einbauen
 ```
 
 ```
-ne pruefe ob die sachen die du vorhin angepasst hast bei 08 auch da sind.
+ne pruefe ob die sachen die du vorhin angepasst hast auch da sind.
 ```
 
 ```
@@ -1506,7 +1506,7 @@ Kannst du nun ein neues Notebook erstellen bitte das Notebook 08_BagOfWords.ipyn
 ```
 
 ```
-kannst du noch ein notebook erstellen bitte. Und zwar das 09_distilbert.ipynb und dort dann bitte erst plain distillbert, danach hyperparameter tuning, danach andere experimente ( so 4 stueck ) ein ganzes notebook bitte. Auch immer in Markdown dokumentieren was du damit bezwecken willst und was es heisst dies das.
+kannst du noch ein notebook erstellen bitte. Und zwar das 09_distilbert.ipynb und dort dann bitte erst plain distillbert machen.
 ```
 
 ```
@@ -1514,7 +1514,7 @@ was denkst du was man bei notebook 09 noch machen kann was helfen koennte besser
 ```
 
 ```
-kannst du die sachen in einem neuen notebook machen also 10_
+kannst du die sachen in einem neuen notebook machen also 10
 ```
 
 ### AI Response Summary
@@ -1528,8 +1528,8 @@ kannst du die sachen in einem neuen notebook machen also 10_
 | File | Changes Made |
 |------|-------------|
 | `notebooks/08_BagOfWords.ipynb` | New notebook: CountVectorizer + Logistic Regression; baseline vs oversampling; saves `bow_results.json` on run. |
-| `notebooks/09_distilbert.ipynb` | New notebook: plain DistilBERT baseline, hyperparameter tuning grid, and four experiments; Markdown explains intent per section. |
-| `notebooks/10_distilbert_improvements.ipynb` | New notebook: two-stage fine-tuning, backbone comparison, label smoothing/max_length, input variants, optional silver augmentation; results saved to JSON. |
+| `notebooks/09_distilbert.ipynb` | New notebook: plain DistilBERT baseline. |
+| `notebooks/10_distilbert_improvements.ipynb` | New notebook: backbone comparison, label smoothing/max_length, input variants, optional silver augmentation; results saved to JSON. |
 
 ### Key Design Decisions
 
