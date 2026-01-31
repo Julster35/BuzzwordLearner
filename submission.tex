@@ -1028,38 +1028,37 @@ The Random Forest classifier was configured with:
 \toprule
 \textbf{Task} & \textbf{Accuracy} & \textbf{F1 (macro)} \\
 \midrule
-Department & 0.610 & \textbf{0.615} \\
+Department & 0.282 & 0.248 \\
 Seniority & 0.475 & 0.443 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Key Finding}: Feature Engineering achieved the \textbf{best department F1 score (0.615)}, outperforming all transformer-based approaches. This counter-intuitive result demonstrates that domain-invariant features generalize better than text representations when training data differs significantly from evaluation data.
+\textbf{Key Finding}: Feature Engineering achieved a \textbf{Department F1 score of 0.249} and a \textbf{Seniority F1 score of 0.437} when evaluated on the full real-world dataset (including the dominant "Other" class). While the model captures structural signals, its performance for functional domains is heavily influenced by the 'Other' category distribution in real-world CVs.
 
 \subsection{Conclusion}
 \label{subsec:feature-eng-conclusion}
 
-The Feature Engineering approach demonstrates a fundamental insight: when facing significant domain shift, domain knowledge encoded in features can outperform model complexity.
+The Feature Engineering approach demonstrates a fundamental insight: while domain knowledge encoded in structural features (like tenure and position count) provides a robust floor for seniority prediction, text-based department classification remains sensitive to vocabulary shift.
 
 \paragraph{Strengths.}
 The approach excels because:
 \begin{itemize}
-    \item \textbf{Domain-invariant features}: Career trajectory patterns transfer better than text patterns across domains
-    \item \textbf{Best department F1}: 0.615 F1 macro for departments (excluding ``Other'' class), significantly exceeding all deep learning approaches
-    \item \textbf{Excellent generalization}: Features like ``number of previous positions'' or ``years of experience'' have consistent meanings across clean and messy data
-    \item \textbf{Interpretability}: Feature importance analysis reveals that seniority keywords and career duration dominate predictions
+    \item \textbf{Career trajectory robustness}: Career patterns transfer better than text patterns across domains for seniority evaluation.
+    \item \textbf{Generalization floor}: Features like ``number of previous positions'' or ``years of experience'' provide consistent signals across data sources, achieving 0.437 F1 for seniority.
+    \item \textbf{Interpretability}: Feature importance analysis reveals that seniority keywords and career duration dominate the model's decision-making process.
 \end{itemize}
 
 \paragraph{Limitations.}
 The model struggles with:
 \begin{itemize}
-    \item \textbf{Seniority performance}: 0.443 F1 macro for seniority, below transformer approaches (0.616), suggesting engineered features don't capture all seniority signals
-    \item \textbf{Feature engineering effort}: Requires domain expertise and manual feature design, limiting scalability to new domains
-    \item \textbf{Missing semantic understanding}: Cannot capture subtle contextual clues that transformers might learn
+    \item \textbf{Department performance with "Other"}: The F1 score is 0.249 when the "Other" class is included, indicating that structural features alone cannot easily distinguish specific functional domains from the "Other" majority when the lexicon is clean.
+    \item \textbf{Feature engineering effort}: Requires manual design, limiting scalability to new classification schemas compared to end-to-end models.
+    \item \textbf{Missing semantic understanding}: Does not capture the full semantic depth of job titles that larger transformers might learn.
 \end{itemize}
 
 \paragraph{Why This Performance Level.}
-Departments are determined by function-specific vocabulary (``sales,'' ``engineer,'' ``finance'') which feature engineering captures through keyword indicators. These keywords have remarkably stable meanings even across noisy data. In contrast, seniority is a more complex concept that depends on title structure, career progression, and subtle contextual clues—areas where transformers' ability to learn complex patterns provides an advantage.
+Departments are determined by function-specific vocabulary. While keyword density features capture some of this, they lack the flexibility of n-gram or transformer representations. Seniority, being a more structural concept (tenure, level), is better suited for this feature-based approach than the semantic task of department classification.
 
 \paragraph{Key Lesson.}
 This result challenges the common assumption that ``more complex models are always better.'' When training and test distributions differ substantially, simpler models with domain-adapted features often outperform end-to-end learned representations. Deep learning excels at extracting patterns from similar data distributions; feature engineering excels at encoding human knowledge that generalizes across distribution shifts.
@@ -1247,8 +1246,8 @@ DistilBERT performs exceptionally well when:
 The model struggles with:
 \begin{itemize}
     \item \textbf{Severe class imbalance}: Even oversampling and two-stage hierarchical approaches cannot fully compensate for the 55\% ``Other'' class dominance
-    \item \textbf{Domain gap}: Despite 97\% in-distribution validation performance, real-world test performance drops to 28-68\%, revealing significant generalization challenges
-    \item \textbf{Department classification}: Best department F1 is only 0.349 (oversampling) or 0.535 (two-stage with higher accuracy focus), below feature engineering's 0.615
+    \item \textbf{Domain gap}: Despite 94\% in-distribution validation performance, real-world test performance drops to 24-44\%, revealing significant generalization challenges
+    \item \textbf{Department classification}: Best department F1 is 0.354 (Two-Stage DistilBERT), outperforming Feature Engineering's corrected result of 0.248
 \end{itemize}
 
 \textbf{Why This Performance Pattern:}
@@ -1258,7 +1257,7 @@ Seniority classification benefits from two factors: (1) explicit lexical markers
 The fundamental problem is not model capacity but the domain gap between training data (clean, structured CSV lookup tables) and test data (noisy, real-world LinkedIn profiles). Transformers trained on clean data overfit to the training distribution's patterns, performing poorly when the test distribution differs. This explains why feature engineering—which explicitly encodes domain-invariant knowledge—outperforms transformers for department classification despite having far fewer parameters.
 
 \textbf{Practical Recommendation:}
-For production systems facing similar domain shift challenges: (1) Use feature engineering for tasks requiring robust generalization across distribution changes, (2) Use transformers for tasks with consistent lexical patterns and balanced classes, (3) Consider hybrid approaches that combine both strengths.
+For production systems facing similar domain shift challenges: (1) Use Two-Stage Transformer models for department classification to handle majority class dominance and hierarchical complexity, (2) Use transformers for tasks with consistent lexical patterns and balanced classes, (3) Reserve feature engineering for specific scenarios where lexical overlap is minimal but structural features are strong.
 
 
 \section{Experiments}
@@ -1306,7 +1305,7 @@ Pseudo-Labeling & 0.444 & 0.438 & 0.483 & 0.437 \\
 \midrule
 \multicolumn{5}{l}{\textit{Classical ML}} \\
 TF-IDF + LogReg & 0.268 & 0.393 & 0.474 & 0.430 \\
-\textbf{Feature Engineering} & 0.610 & \textbf{0.615} & 0.475 & 0.443 \\
+Feature Engineering & 0.282 & 0.248 & 0.475 & 0.443 \\
 \midrule
 \multicolumn{5}{l}{\textit{Transformer-based (DistilBERT)}} \\
 Baseline & 0.283 & 0.343 & \textbf{0.705} & \textbf{0.616} \\
@@ -1320,9 +1319,9 @@ Two-Stage v2 & \textbf{0.685} & 0.535 & -- & -- \\
 
 \textbf{Key Findings:}
 \begin{enumerate}
-    \item \textbf{Department Classification}: Feature Engineering achieves the best F1 (0.615), while Two-Stage achieves the best accuracy (68.5\%)
+    \item \textbf{Department Classification}: Two-Stage DistilBERT achieves the best F1 (0.535) and the best accuracy (68.5\%) overall in the standardized real-world evaluation.
     \item \textbf{Seniority Classification}: DistilBERT Baseline clearly dominates (F1=0.616, Acc=70.5\%)
-    \item \textbf{Accuracy vs. F1 Trade-off}: Two-Stage optimizes for accuracy (important when ``Other'' is prevalent), while Feature Engineering optimizes for balanced performance across all classes
+    \item \textbf{The Majority Class Challenge}: All models struggle with the weighted Macro F1 when the 55\% "Other" class is included, highlighting the need for more representative training data for non-target roles.
 \end{enumerate}
 
 \subsection{Error Analysis}
@@ -1362,7 +1361,7 @@ The significant performance gap between in-distribution (lookup table validation
 \midrule
 Rule-Based & 1.000 & 0.302 & -69.8\% \\
 DistilBERT Baseline & 0.999 & 0.283 & -71.6\% \\
-Feature Engineering & 0.850 & 0.610 & -24.0\% \\
+Feature Engineering & 0.941 & 0.282 & -65.9\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1379,14 +1378,14 @@ Feature Engineering shows the smallest domain shift gap, explaining its superior
 
 The experimental results reveal several counter-intuitive findings that merit deeper analysis.
 
-\paragraph{Why Feature Engineering Beats Transformers for Department Classification}
+\paragraph{Why Two-Stage DistilBERT Leads Department Classification}
 
-The Feature Engineering approach (F1=0.615) outperformed all DistilBERT variants for department classification. This result contradicts the common assumption that deep learning models should dominate text classification tasks. The explanation lies in \textbf{domain shift}:
+The Two-Stage DistilBERT approach (F1=0.535) outperformed Feature Engineering (F1=0.248) once the "Other" class was correctly accounted for. The success of the hierarchical strategy is attributed to:
 
 \begin{itemize}
-    \item \textbf{Training-evaluation mismatch}: Lookup tables contain standardized job titles, while real CVs contain diverse, informal variations
-    \item \textbf{Feature invariance}: Hand-crafted career features (tenure patterns, keyword density, title structure) transfer better across domains
-    \item \textbf{Overfitting to surface patterns}: Transformers learn lexical patterns that don't generalize to unseen formulations
+    \item \textbf{Separation of Concerns}: Identifying whether a title is a "target" department before classifying the specific department reduces noise.
+    \item \textbf{Semantic Depth}: Transformers capture nuances in LinkedIn titles (multilingual, creative) that fixed keyword features struggle to normalize.
+    \item \textbf{Generalization}: Despite the domain shift, the transformer's broader linguistic priors provide a more robust baseline than rigid feature-based sets when dealing with the high diversity of the "Other" class.
 \end{itemize}
 
 \paragraph{Why DistilBERT Excels at Seniority Classification}
@@ -1405,8 +1404,8 @@ To correctly interpret the feasibility of the proposed system, stakeholders must
 \paragraph{The Primacy of Macro F1}
 For department classification, \textbf{Accuracy is a misleading metric}. Due to the 55\% prevalence of the "Other" category, a trivial "dummy" classifier predicting "Other" for every input would achieve 55\% accuracy but offer zero business value.
 \begin{itemize}
-    \item A Macro F1 of 0.615 (Feature Engineering) implies that the model successfully distinguishes between specific departments (like Sales, IT, HR) with balanced precision and recall, rather than just maximizing the majority class.
-    \item This metric confirms that the system is practically useful for routing candidates to specific departmental pools, whereas a high-accuracy model (like Two-Stage DistilBERT, 68.5\% acc, 0.535 F1) might achieve its score by conservatively over-predicting "Other".
+    \item A Macro F1 of 0.354 (Two-Stage DistilBERT) implies that while the model faces challenges with the dominant "Other" class, it maintains the highest discriminative power among all tested variants.
+    \item This metric confirms that identifying specific departments remains the primary bottleneck for the career pathing system.
 \end{itemize}
 \paragraph{Seniority Reliability}
 For seniority, the alignment between Accuracy (70.5\%) and Macro F1 (0.616) provides strong evidence of reliability. Since the class distribution is less skewed, high performance on both metrics confirms that the model is not biased toward a single level (e.g., just predicting "Professional"). A predictive accuracy of 70\% on 5 classes is approximately 3.5x better than random chance, indicating a strong signal for automated candidate screening.
@@ -1464,12 +1463,12 @@ Several preprocessing decisions significantly impacted performance:
 \section{Recommended System Design}
 \label{sec:system-design}
 Based on the extensive empirical evaluation and error analysis presented in this report, we propose a hybrid system architecture for the final production deployment. This design selects the optimal model for each task by balancing predictive performance, robustness to domain shift, and operational constraints.
-\paragraph{Department Prediction: Feature Engineering (Random Forest)}
-We clearly recommend the **Feature Engineering** approach (Section \ref{sec:feature-engineering}) for department classification.
+\paragraph{Department Prediction: Two-Stage DistilBERT}
+We recommend the \textbf{Two-Stage DistilBERT} approach (Section \ref{sec:distilbert-models}) for department classification.
 \begin{itemize}
-    \item \textbf{Justification}: This model achieved the highest Macro F1 score (0.615), outperforming all transformer-based approaches (best DistilBERT F1: 0.535). Crucially, it demonstrated the strongest robustness to domain shift, with only a 24\% performance drop from training to real-world data (compared to $\approx$70\% for text-based models).
-    \item \textbf{Operational}: As a Random Forest model, it offers negligible inference latency ($<$10ms) and does not require GPU acceleration, making it highly cost-effective for high-throughput processing.
-    \item \textbf{Integration}: We recommend using the Rule-Based classifier (Section \ref{sec:rule-based-baseline}) as a pre-filter. If the Rule-Based system finds an exact match in the lookup table, that label is trusted (accuracy near 100\% for known titles). If no match is found, the request is routed to the Feature Engineering model.
+    \item \textbf{Justification}: This model achieved the highest Macro F1 score (0.535) and accuracy (68.5\%) in the standardized real-world evaluation. Its hierarchical design effectively addresses the dominance of the "Other" class by first performing structural filtering before specific domain assignment.
+    \item \textbf{Operational}: While requiring GPU acceleration for optimal inference throughput, the model's predictive power significantly outweighs the simpler feature-based approaches (F1: 0.535 vs 0.249).
+    \item \textbf{Integration}: We recommend using the **Pseudo-Labeling** model (Section \ref{sec:pseudo-labeling}) as a high-confidence alternative. This model achieved the second-best Macro F1 (0.438) and demonstrates improved generalization by learning directly from target-domain distributions. This replaces the problematic rule-based fallback mentioned in Section \ref{subsec:fallback-dilemma}.
 \end{itemize}
 \paragraph{Seniority Prediction: DistilBERT Baseline}
 We recommend the **DistilBERT Baseline** (Section \ref{sec:distilbert-models}) for seniority classification.
@@ -1495,8 +1494,8 @@ This capstone project developed and systematically compared multiple approaches 
 \paragraph{Department Classification}
 \begin{itemize}
     \item \textbf{Best Accuracy}: Two-Stage DistilBERT (68.5\%)
-    \item \textbf{Best F1 Score}: Feature Engineering with Random Forest (0.615)
-    \item \textbf{Recommendation}: Use Feature Engineering for balanced performance, Two-Stage for accuracy-focused applications
+    \item \textbf{Best F1 Score}: Two-Stage DistilBERT (0.535)
+    \item \textbf{Recommendation}: Use Two-Stage DistilBERT for primary classification, Pseudo-Labeling for high-confidence scenarios
 \end{itemize}
 
 \paragraph{Seniority Classification}
@@ -1509,7 +1508,7 @@ This capstone project developed and systematically compared multiple approaches 
 \subsection{Key Insights}
 
 \begin{enumerate}
-    \item \textbf{Domain-invariant features outperform transformers when domain shift is significant}. The Feature Engineering approach achieved the best department F1 by focusing on career patterns rather than lexical features.
+    \item \textbf{Hierarchical models outperform single-stage approaches when dealing with extreme majority classes}. The Two-Stage DistilBERT approach achieved the best department metrics by isolating the "Other" class.
     
     \item \textbf{Class imbalance requires problem-specific solutions}. Standard techniques (class weights, oversampling) had minimal impact; the Two-Stage hierarchical approach effectively addressed the 55\% ``Other'' class dominance.
     
@@ -1522,9 +1521,9 @@ This capstone project developed and systematically compared multiple approaches 
 
 For production deployment, we recommend:
 \begin{itemize}
-    \item \textbf{Department}: Feature Engineering model for robust generalization
+    \item \textbf{Department}: Two-Stage DistilBERT model for optimal semantic and hierarchical processing
     \item \textbf{Seniority}: DistilBERT Baseline for optimal performance
-    \item \textbf{Fallback strategy}: Rule-based matching as a fast, interpretable backup when transformer inference is impractical
+    \item \textbf{Fallback strategy}: Pseudo-Labeling as a high-performance alternative for department prediction
 \end{itemize}
 
 \subsection{Future Work}
